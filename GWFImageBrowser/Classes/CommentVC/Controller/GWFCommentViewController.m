@@ -24,7 +24,7 @@
     
     [self setupSubViews];
 }
-
+// 发表评论页面UI搭建
 - (void)setupSubViews {
     
 }
