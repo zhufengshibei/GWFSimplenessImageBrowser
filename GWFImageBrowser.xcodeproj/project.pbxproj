@@ -1,0 +1,958 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9FF93115DEE1E0447D91E601 /* Pods_GWFImageBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D80C961AC264EF64005A920 /* Pods_GWFImageBrowser.framework */; };
+		CE487788209993E60027E109 /* JYCWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CE487787209993E60027E109 /* JYCWindow.m */; };
+		CE48778F2099951A0027E109 /* GWFCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE48778E2099951A0027E109 /* GWFCommentViewController.m */; };
+		CE4877962099A6FB0027E109 /* GWFImageBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4877952099A6FB0027E109 /* GWFImageBrowserViewController.m */; };
+		CEB7E6F3208EBED300DBACD4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEB7E6F1208EBED300DBACD4 /* Main.storyboard */; };
+		CEB7E6F5208EBED400DBACD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEB7E6F4208EBED400DBACD4 /* Assets.xcassets */; };
+		CEB7E6F8208EBED400DBACD4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEB7E6F6208EBED400DBACD4 /* LaunchScreen.storyboard */; };
+		CEB7E6FB208EBED400DBACD4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E6FA208EBED400DBACD4 /* main.m */; };
+		CEB7E705208EBED400DBACD4 /* GWFImageBrowserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E704208EBED400DBACD4 /* GWFImageBrowserTests.m */; };
+		CEB7E710208EBED400DBACD4 /* GWFImageBrowserUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E70F208EBED400DBACD4 /* GWFImageBrowserUITests.m */; };
+		CEB7E724208EBFC500DBACD4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E722208EBFC500DBACD4 /* AppDelegate.m */; };
+		CEB7E74A208EC0AD00DBACD4 /* GWFNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E730208EC0AC00DBACD4 /* GWFNavigationController.m */; };
+		CEB7E74B208EC0AD00DBACD4 /* GWFTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E733208EC0AC00DBACD4 /* GWFTabBarController.m */; };
+		CEB7E74C208EC0AD00DBACD4 /* GWFTabbar.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E737208EC0AD00DBACD4 /* GWFTabbar.m */; };
+		CEB7E74D208EC0AD00DBACD4 /* GWFMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E73B208EC0AD00DBACD4 /* GWFMeViewController.m */; };
+		CEB7E74E208EC0AD00DBACD4 /* GWFHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E740208EC0AD00DBACD4 /* GWFHomeViewController.m */; };
+		CEB7E74F208EC0AD00DBACD4 /* GWFDiscoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E747208EC0AD00DBACD4 /* GWFDiscoverViewController.m */; };
+		CEB7E754208EC3D100DBACD4 /* UIImage+GWFUIImage.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E753208EC3D100DBACD4 /* UIImage+GWFUIImage.m */; };
+		CEB7E757208EC43600DBACD4 /* UIBarButtonItem+GWFItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E756208EC43600DBACD4 /* UIBarButtonItem+GWFItem.m */; };
+		CEC3991F209AFF4500A8BFD7 /* GWFImageBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC3991E209AFF4500A8BFD7 /* GWFImageBrowserCell.m */; };
+		CED85A57209AE69E00DC473A /* GWFSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED85A56209AE69E00DC473A /* GWFSettingViewController.m */; };
+		CED85A5A209AEDAC00DC473A /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = CED85A58209AEDAC00DC473A /* ProgressView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CEB7E701208EBED400DBACD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEB7E6E0208EBED200DBACD4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CEB7E6E7208EBED200DBACD4;
+			remoteInfo = GWFImageBrowser;
+		};
+		CEB7E70C208EBED400DBACD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEB7E6E0208EBED200DBACD4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CEB7E6E7208EBED200DBACD4;
+			remoteInfo = GWFImageBrowser;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		093EDCB5B10E6F42E57F8AD2 /* Pods-GWFImageBrowser.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GWFImageBrowser.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GWFImageBrowser/Pods-GWFImageBrowser.debug.xcconfig"; sourceTree = "<group>"; };
+		5D80C961AC264EF64005A920 /* Pods_GWFImageBrowser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GWFImageBrowser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		68CAE6FEF5B9D4A970BCDA65 /* Pods-GWFImageBrowser.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GWFImageBrowser.release.xcconfig"; path = "Pods/Target Support Files/Pods-GWFImageBrowser/Pods-GWFImageBrowser.release.xcconfig"; sourceTree = "<group>"; };
+		CE487786209993E50027E109 /* JYCWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYCWindow.h; sourceTree = "<group>"; };
+		CE487787209993E60027E109 /* JYCWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYCWindow.m; sourceTree = "<group>"; };
+		CE48778D2099951A0027E109 /* GWFCommentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GWFCommentViewController.h; sourceTree = "<group>"; };
+		CE48778E2099951A0027E109 /* GWFCommentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GWFCommentViewController.m; sourceTree = "<group>"; };
+		CE4877942099A6FB0027E109 /* GWFImageBrowserViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GWFImageBrowserViewController.h; sourceTree = "<group>"; };
+		CE4877952099A6FB0027E109 /* GWFImageBrowserViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GWFImageBrowserViewController.m; sourceTree = "<group>"; };
+		CEB7E6E8208EBED200DBACD4 /* GWFImageBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GWFImageBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEB7E6F2208EBED300DBACD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		CEB7E6F4208EBED400DBACD4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CEB7E6F7208EBED400DBACD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		CEB7E6F9208EBED400DBACD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEB7E6FA208EBED400DBACD4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		CEB7E700208EBED400DBACD4 /* GWFImageBrowserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GWFImageBrowserTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEB7E704208EBED400DBACD4 /* GWFImageBrowserTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GWFImageBrowserTests.m; sourceTree = "<group>"; };
+		CEB7E706208EBED400DBACD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEB7E70B208EBED400DBACD4 /* GWFImageBrowserUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GWFImageBrowserUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEB7E70F208EBED400DBACD4 /* GWFImageBrowserUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GWFImageBrowserUITests.m; sourceTree = "<group>"; };
+		CEB7E711208EBED400DBACD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEB7E721208EBFC500DBACD4 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		CEB7E722208EBFC500DBACD4 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		CEB7E730208EC0AC00DBACD4 /* GWFNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWFNavigationController.m; sourceTree = "<group>"; };
+		CEB7E731208EC0AC00DBACD4 /* GWFTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWFTabBarController.h; sourceTree = "<group>"; };
+		CEB7E732208EC0AC00DBACD4 /* GWFNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWFNavigationController.h; sourceTree = "<group>"; };
+		CEB7E733208EC0AC00DBACD4 /* GWFTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWFTabBarController.m; sourceTree = "<group>"; };
+		CEB7E736208EC0AC00DBACD4 /* GWFTabbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWFTabbar.h; sourceTree = "<group>"; };
+		CEB7E737208EC0AD00DBACD4 /* GWFTabbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWFTabbar.m; sourceTree = "<group>"; };
+		CEB7E73A208EC0AD00DBACD4 /* GWFMeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWFMeViewController.h; sourceTree = "<group>"; };
+		CEB7E73B208EC0AD00DBACD4 /* GWFMeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWFMeViewController.m; sourceTree = "<group>"; };
+		CEB7E740208EC0AD00DBACD4 /* GWFHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWFHomeViewController.m; sourceTree = "<group>"; };
+		CEB7E741208EC0AD00DBACD4 /* GWFHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWFHomeViewController.h; sourceTree = "<group>"; };
+		CEB7E746208EC0AD00DBACD4 /* GWFDiscoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWFDiscoverViewController.h; sourceTree = "<group>"; };
+		CEB7E747208EC0AD00DBACD4 /* GWFDiscoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWFDiscoverViewController.m; sourceTree = "<group>"; };
+		CEB7E750208EC0FF00DBACD4 /* GWFImageHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GWFImageHeader.pch; sourceTree = "<group>"; };
+		CEB7E752208EC3D100DBACD4 /* UIImage+GWFUIImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+GWFUIImage.h"; sourceTree = "<group>"; };
+		CEB7E753208EC3D100DBACD4 /* UIImage+GWFUIImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+GWFUIImage.m"; sourceTree = "<group>"; };
+		CEB7E755208EC43600DBACD4 /* UIBarButtonItem+GWFItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+GWFItem.h"; sourceTree = "<group>"; };
+		CEB7E756208EC43600DBACD4 /* UIBarButtonItem+GWFItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+GWFItem.m"; sourceTree = "<group>"; };
+		CEC3991D209AFF4500A8BFD7 /* GWFImageBrowserCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GWFImageBrowserCell.h; sourceTree = "<group>"; };
+		CEC3991E209AFF4500A8BFD7 /* GWFImageBrowserCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GWFImageBrowserCell.m; sourceTree = "<group>"; };
+		CED85A55209AE69E00DC473A /* GWFSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GWFSettingViewController.h; sourceTree = "<group>"; };
+		CED85A56209AE69E00DC473A /* GWFSettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GWFSettingViewController.m; sourceTree = "<group>"; };
+		CED85A58209AEDAC00DC473A /* ProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressView.m; sourceTree = "<group>"; };
+		CED85A59209AEDAC00DC473A /* ProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressView.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CEB7E6E5208EBED200DBACD4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9FF93115DEE1E0447D91E601 /* Pods_GWFImageBrowser.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEB7E6FD208EBED400DBACD4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEB7E708208EBED400DBACD4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		10BD7CD994E20539CF64D7B9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				093EDCB5B10E6F42E57F8AD2 /* Pods-GWFImageBrowser.debug.xcconfig */,
+				68CAE6FEF5B9D4A970BCDA65 /* Pods-GWFImageBrowser.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		8416B6D5A728F3FAB2AC838A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5D80C961AC264EF64005A920 /* Pods_GWFImageBrowser.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CE487789209995020027E109 /* CommentVC */ = {
+			isa = PBXGroup;
+			children = (
+				CE48778A209995020027E109 /* Controller */,
+				CE48778B209995020027E109 /* Model */,
+				CE48778C209995020027E109 /* View */,
+			);
+			path = CommentVC;
+			sourceTree = "<group>";
+		};
+		CE48778A209995020027E109 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				CE48778D2099951A0027E109 /* GWFCommentViewController.h */,
+				CE48778E2099951A0027E109 /* GWFCommentViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		CE48778B209995020027E109 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		CE48778C209995020027E109 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CE4877902099A6E60027E109 /* ImageBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				CE4877912099A6E60027E109 /* Controller */,
+				CE4877922099A6E60027E109 /* Model */,
+				CE4877932099A6E60027E109 /* View */,
+			);
+			path = ImageBrowser;
+			sourceTree = "<group>";
+		};
+		CE4877912099A6E60027E109 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				CE4877942099A6FB0027E109 /* GWFImageBrowserViewController.h */,
+				CE4877952099A6FB0027E109 /* GWFImageBrowserViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		CE4877922099A6E60027E109 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		CE4877932099A6E60027E109 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CED85A59209AEDAC00DC473A /* ProgressView.h */,
+				CED85A58209AEDAC00DC473A /* ProgressView.m */,
+				CEC3991D209AFF4500A8BFD7 /* GWFImageBrowserCell.h */,
+				CEC3991E209AFF4500A8BFD7 /* GWFImageBrowserCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CEB7E6DF208EBED200DBACD4 = {
+			isa = PBXGroup;
+			children = (
+				CEB7E6EA208EBED200DBACD4 /* GWFImageBrowser */,
+				CEB7E703208EBED400DBACD4 /* GWFImageBrowserTests */,
+				CEB7E70E208EBED400DBACD4 /* GWFImageBrowserUITests */,
+				CEB7E6E9208EBED200DBACD4 /* Products */,
+				10BD7CD994E20539CF64D7B9 /* Pods */,
+				8416B6D5A728F3FAB2AC838A /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		CEB7E6E9208EBED200DBACD4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CEB7E6E8208EBED200DBACD4 /* GWFImageBrowser.app */,
+				CEB7E700208EBED400DBACD4 /* GWFImageBrowserTests.xctest */,
+				CEB7E70B208EBED400DBACD4 /* GWFImageBrowserUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CEB7E6EA208EBED200DBACD4 /* GWFImageBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				CEB7E71D208EBFC500DBACD4 /* Classes */,
+				CEB7E6F1208EBED300DBACD4 /* Main.storyboard */,
+				CEB7E6F4208EBED400DBACD4 /* Assets.xcassets */,
+				CEB7E6F6208EBED400DBACD4 /* LaunchScreen.storyboard */,
+				CEB7E750208EC0FF00DBACD4 /* GWFImageHeader.pch */,
+				CEB7E6F9208EBED400DBACD4 /* Info.plist */,
+				CEB7E6FA208EBED400DBACD4 /* main.m */,
+			);
+			path = GWFImageBrowser;
+			sourceTree = "<group>";
+		};
+		CEB7E703208EBED400DBACD4 /* GWFImageBrowserTests */ = {
+			isa = PBXGroup;
+			children = (
+				CEB7E704208EBED400DBACD4 /* GWFImageBrowserTests.m */,
+				CEB7E706208EBED400DBACD4 /* Info.plist */,
+			);
+			path = GWFImageBrowserTests;
+			sourceTree = "<group>";
+		};
+		CEB7E70E208EBED400DBACD4 /* GWFImageBrowserUITests */ = {
+			isa = PBXGroup;
+			children = (
+				CEB7E70F208EBED400DBACD4 /* GWFImageBrowserUITests.m */,
+				CEB7E711208EBED400DBACD4 /* Info.plist */,
+			);
+			path = GWFImageBrowserUITests;
+			sourceTree = "<group>";
+		};
+		CEB7E71D208EBFC500DBACD4 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				CE487789209995020027E109 /* CommentVC */,
+				CEB7E72E208EC0AC00DBACD4 /* MainGroup */,
+				CEB7E73E208EC0AD00DBACD4 /* Home */,
+				CEB7E744208EC0AD00DBACD4 /* Discover */,
+				CEB7E738208EC0AD00DBACD4 /* Me */,
+				CEB7E720208EBFC500DBACD4 /* Other */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		CEB7E720208EBFC500DBACD4 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				CEB7E751208EC3D100DBACD4 /* Tools */,
+				CEB7E721208EBFC500DBACD4 /* AppDelegate.h */,
+				CEB7E722208EBFC500DBACD4 /* AppDelegate.m */,
+				CE487786209993E50027E109 /* JYCWindow.h */,
+				CE487787209993E60027E109 /* JYCWindow.m */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
+		CEB7E72E208EC0AC00DBACD4 /* MainGroup */ = {
+			isa = PBXGroup;
+			children = (
+				CEB7E72F208EC0AC00DBACD4 /* Controller */,
+				CEB7E734208EC0AC00DBACD4 /* Model */,
+				CEB7E735208EC0AC00DBACD4 /* View */,
+			);
+			path = MainGroup;
+			sourceTree = "<group>";
+		};
+		CEB7E72F208EC0AC00DBACD4 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				CEB7E732208EC0AC00DBACD4 /* GWFNavigationController.h */,
+				CEB7E730208EC0AC00DBACD4 /* GWFNavigationController.m */,
+				CEB7E731208EC0AC00DBACD4 /* GWFTabBarController.h */,
+				CEB7E733208EC0AC00DBACD4 /* GWFTabBarController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		CEB7E734208EC0AC00DBACD4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		CEB7E735208EC0AC00DBACD4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CEB7E736208EC0AC00DBACD4 /* GWFTabbar.h */,
+				CEB7E737208EC0AD00DBACD4 /* GWFTabbar.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CEB7E738208EC0AD00DBACD4 /* Me */ = {
+			isa = PBXGroup;
+			children = (
+				CEB7E739208EC0AD00DBACD4 /* Controller */,
+				CEB7E73C208EC0AD00DBACD4 /* Model */,
+				CEB7E73D208EC0AD00DBACD4 /* View */,
+			);
+			path = Me;
+			sourceTree = "<group>";
+		};
+		CEB7E739208EC0AD00DBACD4 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				CED85A54209AE69000DC473A /* SettingVC */,
+				CEB7E73A208EC0AD00DBACD4 /* GWFMeViewController.h */,
+				CEB7E73B208EC0AD00DBACD4 /* GWFMeViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		CEB7E73C208EC0AD00DBACD4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		CEB7E73D208EC0AD00DBACD4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CEB7E73E208EC0AD00DBACD4 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				CEB7E73F208EC0AD00DBACD4 /* Controller */,
+				CEB7E742208EC0AD00DBACD4 /* Model */,
+				CEB7E743208EC0AD00DBACD4 /* View */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		CEB7E73F208EC0AD00DBACD4 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				CEB7E741208EC0AD00DBACD4 /* GWFHomeViewController.h */,
+				CEB7E740208EC0AD00DBACD4 /* GWFHomeViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		CEB7E742208EC0AD00DBACD4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		CEB7E743208EC0AD00DBACD4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CEB7E744208EC0AD00DBACD4 /* Discover */ = {
+			isa = PBXGroup;
+			children = (
+				CEB7E745208EC0AD00DBACD4 /* Controller */,
+				CEB7E748208EC0AD00DBACD4 /* Model */,
+				CEB7E749208EC0AD00DBACD4 /* View */,
+			);
+			path = Discover;
+			sourceTree = "<group>";
+		};
+		CEB7E745208EC0AD00DBACD4 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				CEB7E746208EC0AD00DBACD4 /* GWFDiscoverViewController.h */,
+				CEB7E747208EC0AD00DBACD4 /* GWFDiscoverViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		CEB7E748208EC0AD00DBACD4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		CEB7E749208EC0AD00DBACD4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CEB7E751208EC3D100DBACD4 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				CE4877902099A6E60027E109 /* ImageBrowser */,
+				CEB7E755208EC43600DBACD4 /* UIBarButtonItem+GWFItem.h */,
+				CEB7E756208EC43600DBACD4 /* UIBarButtonItem+GWFItem.m */,
+				CEB7E752208EC3D100DBACD4 /* UIImage+GWFUIImage.h */,
+				CEB7E753208EC3D100DBACD4 /* UIImage+GWFUIImage.m */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		CED85A54209AE69000DC473A /* SettingVC */ = {
+			isa = PBXGroup;
+			children = (
+				CED85A55209AE69E00DC473A /* GWFSettingViewController.h */,
+				CED85A56209AE69E00DC473A /* GWFSettingViewController.m */,
+			);
+			path = SettingVC;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CEB7E6E7208EBED200DBACD4 /* GWFImageBrowser */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CEB7E714208EBED400DBACD4 /* Build configuration list for PBXNativeTarget "GWFImageBrowser" */;
+			buildPhases = (
+				F6E76D49020BDC3EDDF53D8A /* [CP] Check Pods Manifest.lock */,
+				CEB7E6E4208EBED200DBACD4 /* Sources */,
+				CEB7E6E5208EBED200DBACD4 /* Frameworks */,
+				CEB7E6E6208EBED200DBACD4 /* Resources */,
+				756E76818C529AE97087412A /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GWFImageBrowser;
+			productName = GWFImageBrowser;
+			productReference = CEB7E6E8208EBED200DBACD4 /* GWFImageBrowser.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CEB7E6FF208EBED400DBACD4 /* GWFImageBrowserTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CEB7E717208EBED400DBACD4 /* Build configuration list for PBXNativeTarget "GWFImageBrowserTests" */;
+			buildPhases = (
+				CEB7E6FC208EBED400DBACD4 /* Sources */,
+				CEB7E6FD208EBED400DBACD4 /* Frameworks */,
+				CEB7E6FE208EBED400DBACD4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CEB7E702208EBED400DBACD4 /* PBXTargetDependency */,
+			);
+			name = GWFImageBrowserTests;
+			productName = GWFImageBrowserTests;
+			productReference = CEB7E700208EBED400DBACD4 /* GWFImageBrowserTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		CEB7E70A208EBED400DBACD4 /* GWFImageBrowserUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CEB7E71A208EBED400DBACD4 /* Build configuration list for PBXNativeTarget "GWFImageBrowserUITests" */;
+			buildPhases = (
+				CEB7E707208EBED400DBACD4 /* Sources */,
+				CEB7E708208EBED400DBACD4 /* Frameworks */,
+				CEB7E709208EBED400DBACD4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CEB7E70D208EBED400DBACD4 /* PBXTargetDependency */,
+			);
+			name = GWFImageBrowserUITests;
+			productName = GWFImageBrowserUITests;
+			productReference = CEB7E70B208EBED400DBACD4 /* GWFImageBrowserUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CEB7E6E0208EBED200DBACD4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = GWF;
+				LastUpgradeCheck = 0930;
+				ORGANIZATIONNAME = user;
+				TargetAttributes = {
+					CEB7E6E7208EBED200DBACD4 = {
+						CreatedOnToolsVersion = 9.3;
+					};
+					CEB7E6FF208EBED400DBACD4 = {
+						CreatedOnToolsVersion = 9.3;
+						TestTargetID = CEB7E6E7208EBED200DBACD4;
+					};
+					CEB7E70A208EBED400DBACD4 = {
+						CreatedOnToolsVersion = 9.3;
+						TestTargetID = CEB7E6E7208EBED200DBACD4;
+					};
+				};
+			};
+			buildConfigurationList = CEB7E6E3208EBED200DBACD4 /* Build configuration list for PBXProject "GWFImageBrowser" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CEB7E6DF208EBED200DBACD4;
+			productRefGroup = CEB7E6E9208EBED200DBACD4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CEB7E6E7208EBED200DBACD4 /* GWFImageBrowser */,
+				CEB7E6FF208EBED400DBACD4 /* GWFImageBrowserTests */,
+				CEB7E70A208EBED400DBACD4 /* GWFImageBrowserUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CEB7E6E6208EBED200DBACD4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEB7E6F8208EBED400DBACD4 /* LaunchScreen.storyboard in Resources */,
+				CEB7E6F5208EBED400DBACD4 /* Assets.xcassets in Resources */,
+				CEB7E6F3208EBED300DBACD4 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEB7E6FE208EBED400DBACD4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEB7E709208EBED400DBACD4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		756E76818C529AE97087412A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-GWFImageBrowser/Pods-GWFImageBrowser-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GWFImageBrowser/Pods-GWFImageBrowser-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F6E76D49020BDC3EDDF53D8A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GWFImageBrowser-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CEB7E6E4208EBED200DBACD4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CED85A57209AE69E00DC473A /* GWFSettingViewController.m in Sources */,
+				CE4877962099A6FB0027E109 /* GWFImageBrowserViewController.m in Sources */,
+				CEB7E757208EC43600DBACD4 /* UIBarButtonItem+GWFItem.m in Sources */,
+				CEB7E74D208EC0AD00DBACD4 /* GWFMeViewController.m in Sources */,
+				CEB7E74F208EC0AD00DBACD4 /* GWFDiscoverViewController.m in Sources */,
+				CE48778F2099951A0027E109 /* GWFCommentViewController.m in Sources */,
+				CEB7E74C208EC0AD00DBACD4 /* GWFTabbar.m in Sources */,
+				CEB7E74B208EC0AD00DBACD4 /* GWFTabBarController.m in Sources */,
+				CE487788209993E60027E109 /* JYCWindow.m in Sources */,
+				CEB7E724208EBFC500DBACD4 /* AppDelegate.m in Sources */,
+				CEB7E6FB208EBED400DBACD4 /* main.m in Sources */,
+				CEC3991F209AFF4500A8BFD7 /* GWFImageBrowserCell.m in Sources */,
+				CED85A5A209AEDAC00DC473A /* ProgressView.m in Sources */,
+				CEB7E754208EC3D100DBACD4 /* UIImage+GWFUIImage.m in Sources */,
+				CEB7E74E208EC0AD00DBACD4 /* GWFHomeViewController.m in Sources */,
+				CEB7E74A208EC0AD00DBACD4 /* GWFNavigationController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEB7E6FC208EBED400DBACD4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEB7E705208EBED400DBACD4 /* GWFImageBrowserTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEB7E707208EBED400DBACD4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEB7E710208EBED400DBACD4 /* GWFImageBrowserUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CEB7E702208EBED400DBACD4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CEB7E6E7208EBED200DBACD4 /* GWFImageBrowser */;
+			targetProxy = CEB7E701208EBED400DBACD4 /* PBXContainerItemProxy */;
+		};
+		CEB7E70D208EBED400DBACD4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CEB7E6E7208EBED200DBACD4 /* GWFImageBrowser */;
+			targetProxy = CEB7E70C208EBED400DBACD4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		CEB7E6F1208EBED300DBACD4 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEB7E6F2208EBED300DBACD4 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		CEB7E6F6208EBED400DBACD4 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEB7E6F7208EBED400DBACD4 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		CEB7E712208EBED400DBACD4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		CEB7E713208EBED400DBACD4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CEB7E715208EBED400DBACD4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 093EDCB5B10E6F42E57F8AD2 /* Pods-GWFImageBrowser.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RDN9E95292;
+				GCC_PREFIX_HEADER = GWFImageBrowser/GWFImageHeader.pch;
+				INFOPLIST_FILE = GWFImageBrowser/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = first.GWFImageBrowser;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CEB7E716208EBED400DBACD4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 68CAE6FEF5B9D4A970BCDA65 /* Pods-GWFImageBrowser.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RDN9E95292;
+				GCC_PREFIX_HEADER = GWFImageBrowser/GWFImageHeader.pch;
+				INFOPLIST_FILE = GWFImageBrowser/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = first.GWFImageBrowser;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CEB7E718208EBED400DBACD4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RDN9E95292;
+				INFOPLIST_FILE = GWFImageBrowserTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = first.GWFImageBrowserTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GWFImageBrowser.app/GWFImageBrowser";
+			};
+			name = Debug;
+		};
+		CEB7E719208EBED400DBACD4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RDN9E95292;
+				INFOPLIST_FILE = GWFImageBrowserTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = first.GWFImageBrowserTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GWFImageBrowser.app/GWFImageBrowser";
+			};
+			name = Release;
+		};
+		CEB7E71B208EBED400DBACD4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RDN9E95292;
+				INFOPLIST_FILE = GWFImageBrowserUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = first.GWFImageBrowserUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GWFImageBrowser;
+			};
+			name = Debug;
+		};
+		CEB7E71C208EBED400DBACD4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RDN9E95292;
+				INFOPLIST_FILE = GWFImageBrowserUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = first.GWFImageBrowserUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GWFImageBrowser;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CEB7E6E3208EBED200DBACD4 /* Build configuration list for PBXProject "GWFImageBrowser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEB7E712208EBED400DBACD4 /* Debug */,
+				CEB7E713208EBED400DBACD4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CEB7E714208EBED400DBACD4 /* Build configuration list for PBXNativeTarget "GWFImageBrowser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEB7E715208EBED400DBACD4 /* Debug */,
+				CEB7E716208EBED400DBACD4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CEB7E717208EBED400DBACD4 /* Build configuration list for PBXNativeTarget "GWFImageBrowserTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEB7E718208EBED400DBACD4 /* Debug */,
+				CEB7E719208EBED400DBACD4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CEB7E71A208EBED400DBACD4 /* Build configuration list for PBXNativeTarget "GWFImageBrowserUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEB7E71B208EBED400DBACD4 /* Debug */,
+				CEB7E71C208EBED400DBACD4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CEB7E6E0208EBED200DBACD4 /* Project object */;
+}

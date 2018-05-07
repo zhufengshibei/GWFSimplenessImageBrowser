@@ -1,0 +1,59 @@
+//
+//  GWFImageHeader.pch
+//  GWFImageBrowser
+//
+//  Created by user on 2018/4/24.
+//  Copyright © 2018年 user. All rights reserved.
+//
+
+//把数据写入到本地，调用时只需传入写入到本地的文件夹路径及文件名即可
+#define GWFWriteToFile(filePath) [responseObject writeToFile:[NSString stringWithFormat:@"%@",filePath] atomically:YES];
+
+#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
+#define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
+
+#define defaultWith 750 //根据iphone6而来 可根据具体情况修改
+#define LabelFont(I)  [UIFont systemFontOfSize:(int)(SCREEN_WIDTH/defaultWith*I)]
+#define GENERAL_SIZE(I)  (int)(SCREEN_WIDTH/defaultWith*I)
+
+#define RGBACOLOR(r,g,b,a) [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:(a)]
+
+#define CELLSIZE CGSizeMake(SCREEN_WIDTH/3, (SCREEN_WIDTH/3))
+
+#define GWF_MAINTHREAD_ASYNC(block)\
+if ([NSThread isMainThread]) {\
+block();\
+} else {\
+dispatch_async(dispatch_get_main_queue(), block);\
+}
+
+
+#import "GWFNavigationController.h"
+#import "GWFHomeViewController.h"
+#import "GWFDiscoverViewController.h"
+#import "GWFMeViewController.h"
+#import "GWFCommentViewController.h"
+
+
+#import "UIBarButtonItem+GWFItem.h"
+#import "UIImage+GWFUIImage.h"
+
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "UIImage+GIF.h"
+#import "FLAnimatedImage.h"
+#import <WebKit/WebKit.h>
+
+#define COMMENTVCNOTIFICATIONJUMP [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(jumpButton) name:@"JUMPOTHERCONTROLLER" object:nil];
+
+// 悬浮按钮点击事件
+#define COMMENTVCNOTIFICATIONJUMPCLICK -(void)jumpButton { \
+    GWFCommentViewController *commentVC= [[GWFCommentViewController alloc] init]; \
+    [self.navigationController pushViewController:commentVC animated:YES]; \
+}
+
+
+
+
+
+
+
