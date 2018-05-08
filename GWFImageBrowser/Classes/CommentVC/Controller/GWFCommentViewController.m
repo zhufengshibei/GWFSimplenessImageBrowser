@@ -12,6 +12,8 @@
     
 }
 
+
+
 @end
 
 @implementation GWFCommentViewController
@@ -19,7 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor cyanColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"发表评论";
     
     [self setupSubViews];

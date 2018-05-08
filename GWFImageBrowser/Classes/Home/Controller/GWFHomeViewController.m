@@ -24,6 +24,8 @@ static int tagOfLabelOfHeader = 2000;
     CGFloat topMargin;
     CGFloat bottomMargin;
     CGMutablePathRef pathRef;
+    
+    BOOL  _isPresentVC;
 }
 
 @property (nonatomic,strong) NSArray *localDArray;
@@ -41,14 +43,16 @@ static int tagOfLabelOfHeader = 2000;
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"HIDDENTHEBUTTON" object:nil];
-    
+    if (_isPresentVC) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"HIDDENTHEBUTTON" object:nil];
+    }
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     COMMENTVCNOTIFICATIONJUMP
+    _isPresentVC = NO;
 }
 
 - (void)viewDidLoad {
@@ -57,7 +61,7 @@ static int tagOfLabelOfHeader = 2000;
     self.title = @"首页";
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.collectionView];
-
+    
 }
 
 COMMENTVCNOTIFICATIONJUMPCLICK
@@ -156,6 +160,7 @@ COMMENTVCNOTIFICATIONJUMPCLICK
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     _currentTouchIndexPath = indexPath;
     
+    _isPresentVC = YES;
     
     // 区分点击的是 本地图片 还是 网络图片
     if (indexPath.section == 0) { // 点击本地图片
@@ -185,10 +190,6 @@ COMMENTVCNOTIFICATIONJUMPCLICK
 // 点击浏览本地图片
 -(void)showLocalImageWithBigTouchIndexPath:(NSIndexPath *)indexPath {
     
-//    UICollectionViewCell *cell = [_collectionView cellForItemAtIndexPath:indexPath];
-    
-//    UIImageView *imageView = (UIImageView *)cell.contentView.subviews[0];
-    
     NSString *nameStr = [self.localDArray objectAtIndex:indexPath.row];
     NSLog(@"nameStr === %@",nameStr);
     
@@ -200,7 +201,6 @@ COMMENTVCNOTIFICATIONJUMPCLICK
     transition.duration = 0.5f;
     transition.type = @"Cube";
     [self.navigationController.view.layer addAnimation:transition forKey:nil];
-//    [self.navigationController pushViewController:imageBrowserVC animated:NO];
     [self presentViewController:imageBrowserVC animated:NO completion:nil];
     
     
@@ -208,10 +208,6 @@ COMMENTVCNOTIFICATIONJUMPCLICK
 // 点击浏览网络图片
 -(void)showWebImageWithBigTouchIndexPath:(NSIndexPath *)indexPath {
 
-//    UICollectionViewCell *cell = [_collectionView cellForItemAtIndexPath:indexPath];
-    
-    //    UIImageView *imageView = (UIImageView *)cell.contentView.subviews[0];
-    
     NSString *nameStr = [self.dataArray objectAtIndex:indexPath.row];
     NSLog(@"nameStr === %@",nameStr);
     
@@ -223,9 +219,9 @@ COMMENTVCNOTIFICATIONJUMPCLICK
     transition.duration = 0.5f;
     transition.type = @"Cube";
     [self.navigationController.view.layer addAnimation:transition forKey:nil];
-//    [self.navigationController pushViewController:imageBrowserVC animated:NO];
     [self presentViewController:imageBrowserVC animated:NO completion:nil];
 }
+
 
 #pragma mark ---  懒加载collectionView
 -(UICollectionView *)collectionView {
