@@ -4,5 +4,6 @@ use_frameworks!
 
 pod 'SDWebImage'
 pod 'FLAnimatedImage'
+pod 'Masonry'
 
 end

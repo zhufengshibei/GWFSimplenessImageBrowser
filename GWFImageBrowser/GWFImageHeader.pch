@@ -12,6 +12,9 @@
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
 
+#define isIPhoneX (SCREEN_HEIGHT == 812)
+#define subViewsY isIPhoneX ? 88 : 64
+
 #define defaultWith 750 //根据iphone6而来 可根据具体情况修改
 #define LabelFont(I)  [UIFont systemFontOfSize:(int)(SCREEN_WIDTH/defaultWith*I)]
 #define GENERAL_SIZE(I)  (int)(SCREEN_WIDTH/defaultWith*I)
@@ -42,6 +45,7 @@ dispatch_async(dispatch_get_main_queue(), block);\
 #import "UIImage+GIF.h"
 #import "FLAnimatedImage.h"
 #import <WebKit/WebKit.h>
+#import <Masonry/Masonry.h>
 
 #define COMMENTVCNOTIFICATIONJUMP [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(jumpButton) name:@"JUMPOTHERCONTROLLER" object:nil];
 
