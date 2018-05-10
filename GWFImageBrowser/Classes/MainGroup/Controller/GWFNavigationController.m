@@ -37,16 +37,13 @@
     
     //设置 全屏滑动手势返回上一层
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self.interactivePopGestureRecognizer.delegate action:@selector(handleNavigationTransition:)];
-    
+
     //控制手势的触发时机
     pan.delegate = self;
-    
+
     [self.view addGestureRecognizer:pan];
-    
-    
-//    self.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, 200);
-    
 }
+
 
 /**
  *  重写Push方法(隐藏底部的tabbar)

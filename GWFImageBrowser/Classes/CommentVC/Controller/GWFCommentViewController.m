@@ -11,10 +11,15 @@
 
 #import "GWFCommentViewController.h"
 
-@interface GWFCommentViewController () {
+@interface GWFCommentViewController ()<UITextViewDelegate,ZYQAssetPickerControllerDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate> {
     UITextField  *_titleTF;
     UITextView   *_contentTextView;
+    UILabel      *_placeHolderLabel;
 }
+
+@property (nonatomic,strong) NSMutableArray *dataArray;
+
+@property (nonatomic, strong)  ZYQAssetPickerController *pickerController;
 
 @end
 
@@ -25,6 +30,8 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"发布帖子";
+    
+    _dataArray = [NSMutableArray array];
     
     [self setupSubViews];
 }
@@ -64,20 +71,37 @@
     _contentTextView = [[UITextView alloc] init];
     _contentTextView.textColor = TEXTCOLOR;
     _contentTextView.font = TEXTFONT;
-    _contentTextView.backgroundColor = [UIColor clearColor];
+    _contentTextView.backgroundColor = [UIColor cyanColor];
+    _contentTextView.delegate = self;
     [self.view addSubview:_contentTextView];
     
-    UILabel *placeHolderLabel = [[UILabel alloc] init];
-    placeHolderLabel.text = @"请输入文本...";
-    placeHolderLabel.textColor = RGBACOLOR(201, 201, 201, 1.0);
-    placeHolderLabel.font = TEXTFONT;
-    [_contentTextView addSubview:placeHolderLabel];
+    _placeHolderLabel = [[UILabel alloc] init];
+    _placeHolderLabel.text = @"请输入文本...";
+    _placeHolderLabel.textColor = RGBACOLOR(201, 201, 201, 1.0);
+    _placeHolderLabel.font = TEXTFONT;
+    [_contentTextView addSubview:_placeHolderLabel];
     
+    UIView *lineView1 = [[UIView alloc] init];
+    lineView1.backgroundColor =RGBACOLOR(246, 246, 246, 1.0);
+    [self.view addSubview:lineView1];
     
     // 设置控件布局
-    [self setupLayoutControlsWithTitleLabel:titleLabel titleTF:_titleTF lineView:lineView contentTextView:_contentTextView placeHolderLabel:placeHolderLabel];
+    [self setupLayoutControlsWithTitleLabel:titleLabel titleTF:_titleTF lineView:lineView contentTextView:_contentTextView placeHolderLabel:_placeHolderLabel];
+    
+    [self setupPictureLayoutControlsWithLine:lineView1 view:nil contentTextView:_contentTextView];
+    
 }
-
+// 底部图片区域的布局
+- (void)setupPictureLayoutControlsWithLine:(UIView *)lineView view:(UICollectionView *)collectionView contentTextView:(UITextView *)contentTextView {
+    
+    CGFloat margin = GENERAL_SIZE(30);
+    [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(contentTextView.mas_bottom).offset(margin);
+        make.left.right.equalTo(self.view);
+        make.height.mas_equalTo(GENERAL_SIZE(2));
+    }];
+}
+// 标题及输入文本的布局
 - (void)setupLayoutControlsWithTitleLabel:(UILabel *)titleLabel titleTF:(UITextField *)_titleTF lineView:(UIView *)lineView contentTextView:(UITextView *)_contentTextView placeHolderLabel:(UILabel *)placeHolderLabel {
     CGFloat margin = GENERAL_SIZE(30);
     CGFloat Y = subViewsY + margin;
@@ -98,8 +122,8 @@
     }];
     [_contentTextView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(lineView.mas_bottom).offset(margin);
-        make.left.equalTo(titleLabel);
-        make.right.equalTo(_titleTF);
+        make.left.equalTo(self.view.mas_left).offset(GENERAL_SIZE(20));
+        make.right.equalTo(self.view.mas_right).offset(-GENERAL_SIZE(20));
         make.height.mas_equalTo(GENERAL_SIZE(241));
     }];
     [placeHolderLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -107,6 +131,15 @@
         make.left.equalTo(_contentTextView.mas_left).offset(GENERAL_SIZE(GENERAL_SIZE(20)));
         make.height.mas_equalTo(GENERAL_SIZE(60));
     }];
+}
+
+#pragma mark --  UITextViewDelegate
+- (void)textViewDidChange:(UITextView *)textView {
+    if ([textView.text length]) {
+        _placeHolderLabel.alpha = 0;
+    } else {
+        _placeHolderLabel.alpha = 1;
+    }
 }
 
 - (void)setupRightButton {
@@ -120,7 +153,46 @@
 }
 #pragma mark --  发送按钮的点击事件
 - (void)sendContent:(id)sender {
+    // 图片
+    self.pickerController = [[ZYQAssetPickerController alloc] init];
+    _pickerController.maximumNumberOfSelection = 9;
+    _pickerController.assetsFilter = ZYQAssetsFilterAllAssets;
+    _pickerController.showEmptyGroups=YES;
+    _pickerController.delegate=self;
+    _pickerController.selectionFilter = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        if ([(ZYQAsset*)evaluatedObject mediaType]==ZYQAssetMediaTypeVideo) {
+            NSTimeInterval duration = [(ZYQAsset*)evaluatedObject duration];
+            return duration >= 9;
+        } else {
+            return YES;
+        }
+    }];
+    [self presentViewController:self.pickerController animated:YES completion:nil];
+}
+
+#pragma mark ------相册回调方法----------
+// 多图片选择
+-(void)assetPickerController:(ZYQAssetPickerController *)picker didFinishPickingAssets:(NSArray *)assets{
+    NSLog(@"assets === %@",assets);
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        for (int i=0; i<assets.count; i++) {
+            ZYQAsset *asset=assets[i];
+            [asset setGetFullScreenImage:^(UIImage *result) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (result) {
+                        [self.dataArray addObject:result];
+                    }
+                });
+                
+            }];
+        }
+//    });
     
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+//    NSLog(@"data ==== %@",self.dataArray);
 }
 
 @end

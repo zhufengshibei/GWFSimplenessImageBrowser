@@ -4,23 +4,27 @@ PODS:
   - SDWebImage (4.3.3):
     - SDWebImage/Core (= 4.3.3)
   - SDWebImage/Core (4.3.3)
+  - ZYQAssetPickerController (1.2.0)
 
 DEPENDENCIES:
   - FLAnimatedImage
   - Masonry
   - SDWebImage
+  - ZYQAssetPickerController
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - FLAnimatedImage
     - Masonry
     - SDWebImage
+    - ZYQAssetPickerController
 
 SPEC CHECKSUMS:
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   SDWebImage: de4d90b5bff3571eae7bd16202b1f43135409fa5
+  ZYQAssetPickerController: dc692a6fb421c0dc0efcabd43eb260cfb073f7fd
 
-PODFILE CHECKSUM: 03ac2312781741fdb8d62f85789cf7cd03e50b40
+PODFILE CHECKSUM: 12c1b792959390c58b4ee3d180414827bdc9b3c6
 
 COCOAPODS: 1.5.0

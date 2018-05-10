@@ -5,5 +5,6 @@ use_frameworks!
 pod 'SDWebImage'
 pod 'FLAnimatedImage'
 pod 'Masonry'
+pod 'ZYQAssetPickerController'
 
 end

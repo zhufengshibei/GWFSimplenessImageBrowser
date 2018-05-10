@@ -1,0 +1,6 @@
+framework module ZYQAssetPickerController {
+  umbrella header "ZYQAssetPickerController-umbrella.h"
+
+  export *
+  module * { export * }
+}

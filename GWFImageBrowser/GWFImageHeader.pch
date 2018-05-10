@@ -36,6 +36,7 @@ dispatch_async(dispatch_get_main_queue(), block);\
 #import "GWFDiscoverViewController.h"
 #import "GWFMeViewController.h"
 #import "GWFCommentViewController.h"
+#import "ZYQAssetPickerController.h"
 
 
 #import "UIBarButtonItem+GWFItem.h"
