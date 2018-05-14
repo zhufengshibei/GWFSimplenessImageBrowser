@@ -12,6 +12,8 @@
 		CE487788209993E60027E109 /* JYCWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CE487787209993E60027E109 /* JYCWindow.m */; };
 		CE48778F2099951A0027E109 /* GWFCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE48778E2099951A0027E109 /* GWFCommentViewController.m */; };
 		CE4877962099A6FB0027E109 /* GWFImageBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4877952099A6FB0027E109 /* GWFImageBrowserViewController.m */; };
+		CE73631320A91DFA00DCEAB0 /* GWFAddButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE73631220A91DFA00DCEAB0 /* GWFAddButtonCell.m */; };
+		CE73631620A91E1000DCEAB0 /* GWFImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE73631520A91E1000DCEAB0 /* GWFImageCell.m */; };
 		CEB7E6F3208EBED300DBACD4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEB7E6F1208EBED300DBACD4 /* Main.storyboard */; };
 		CEB7E6F5208EBED400DBACD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEB7E6F4208EBED400DBACD4 /* Assets.xcassets */; };
 		CEB7E6F8208EBED400DBACD4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEB7E6F6208EBED400DBACD4 /* LaunchScreen.storyboard */; };
@@ -61,6 +63,10 @@
 		CE48778E2099951A0027E109 /* GWFCommentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GWFCommentViewController.m; sourceTree = "<group>"; };
 		CE4877942099A6FB0027E109 /* GWFImageBrowserViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GWFImageBrowserViewController.h; sourceTree = "<group>"; };
 		CE4877952099A6FB0027E109 /* GWFImageBrowserViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GWFImageBrowserViewController.m; sourceTree = "<group>"; };
+		CE73631120A91DFA00DCEAB0 /* GWFAddButtonCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GWFAddButtonCell.h; sourceTree = "<group>"; };
+		CE73631220A91DFA00DCEAB0 /* GWFAddButtonCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GWFAddButtonCell.m; sourceTree = "<group>"; };
+		CE73631420A91E1000DCEAB0 /* GWFImageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GWFImageCell.h; sourceTree = "<group>"; };
+		CE73631520A91E1000DCEAB0 /* GWFImageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GWFImageCell.m; sourceTree = "<group>"; };
 		CEB7E6E8208EBED200DBACD4 /* GWFImageBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GWFImageBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEB7E6F2208EBED300DBACD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CEB7E6F4208EBED400DBACD4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -172,6 +178,10 @@
 		CE48778C209995020027E109 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CE73631120A91DFA00DCEAB0 /* GWFAddButtonCell.h */,
+				CE73631220A91DFA00DCEAB0 /* GWFAddButtonCell.m */,
+				CE73631420A91E1000DCEAB0 /* GWFImageCell.h */,
+				CE73631520A91E1000DCEAB0 /* GWFImageCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -630,6 +640,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE73631320A91DFA00DCEAB0 /* GWFAddButtonCell.m in Sources */,
 				CED85A57209AE69E00DC473A /* GWFSettingViewController.m in Sources */,
 				CE4877962099A6FB0027E109 /* GWFImageBrowserViewController.m in Sources */,
 				CEB7E757208EC43600DBACD4 /* UIBarButtonItem+GWFItem.m in Sources */,
@@ -642,6 +653,7 @@
 				CE487788209993E60027E109 /* JYCWindow.m in Sources */,
 				CEB7E724208EBFC500DBACD4 /* AppDelegate.m in Sources */,
 				CEB7E6FB208EBED400DBACD4 /* main.m in Sources */,
+				CE73631620A91E1000DCEAB0 /* GWFImageCell.m in Sources */,
 				CEC3991F209AFF4500A8BFD7 /* GWFImageBrowserCell.m in Sources */,
 				CED85A5A209AEDAC00DC473A /* ProgressView.m in Sources */,
 				CEB7E754208EC3D100DBACD4 /* UIImage+GWFUIImage.m in Sources */,
@@ -816,8 +828,9 @@
 			baseConfigurationReference = 093EDCB5B10E6F42E57F8AD2 /* Pods-GWFImageBrowser.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RDN9E95292;
+				DEVELOPMENT_TEAM = 829A926U4N;
 				GCC_PREFIX_HEADER = GWFImageBrowser/GWFImageHeader.pch;
 				INFOPLIST_FILE = GWFImageBrowser/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -826,6 +839,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = first.GWFImageBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -835,8 +849,9 @@
 			baseConfigurationReference = 68CAE6FEF5B9D4A970BCDA65 /* Pods-GWFImageBrowser.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RDN9E95292;
+				DEVELOPMENT_TEAM = 829A926U4N;
 				GCC_PREFIX_HEADER = GWFImageBrowser/GWFImageHeader.pch;
 				INFOPLIST_FILE = GWFImageBrowser/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -845,6 +860,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = first.GWFImageBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
