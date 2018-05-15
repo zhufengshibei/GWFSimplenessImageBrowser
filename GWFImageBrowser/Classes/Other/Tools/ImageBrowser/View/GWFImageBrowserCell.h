@@ -21,6 +21,8 @@
 
 @property (nonatomic, assign) BOOL isLocal;
 
-@property (nonatomic, copy) NSString *imageString;
+//@property (nonatomic, assign) id imageString;
+
+-(void)setImageString:(id)imageString;
 
 @end

@@ -53,6 +53,7 @@
 {
     if (self.viewControllers.count) { //避免一开始就隐藏了
         
+        [(AppDelegate*)[UIApplication sharedApplication].delegate setIsPresent:NO];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"HIDDENTHEBUTTON" object:nil];
         
         viewController.hidesBottomBarWhenPushed = YES;

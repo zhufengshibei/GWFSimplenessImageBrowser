@@ -83,9 +83,18 @@
     _isLocal = isLocal;
 }
 
--(void)setImageString:(NSString *)imageString {
+-(void)setImageString:(id)imageString {
+    
+    NSLog(@"id === %@",imageString);
+    
     if (self.isLocal) {
-        UIImage *image1 = [UIImage imageNamed:imageString];
+        
+        UIImage *image1;
+        if ([imageString isKindOfClass:[UIImage class]]) {
+            image1 = imageString;
+        } else {
+            image1 = [UIImage imageNamed:imageString];
+        }
         
         // 大图等比例缩小
         UIImage *result = [UIImage scaleToSizeWithImage:image1 size:CGSizeMake(image1.size.width, image1.size.height)];

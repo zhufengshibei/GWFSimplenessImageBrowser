@@ -30,6 +30,7 @@ block();\
 dispatch_async(dispatch_get_main_queue(), block);\
 }
 
+#import "AppDelegate.h"
 
 #import "GWFNavigationController.h"
 #import "GWFHomeViewController.h"

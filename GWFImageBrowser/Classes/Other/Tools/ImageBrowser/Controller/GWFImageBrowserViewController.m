@@ -12,8 +12,6 @@
 
 @interface GWFImageBrowserViewController ()<UIScrollViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,GWFImageBrowserCellDelegate> {
 
-    
-    
     UILabel      *indexLabel;
 }
 @property (nonatomic, strong) UICollectionView  *browserCollectionView;

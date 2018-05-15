@@ -38,7 +38,7 @@
 +(instancetype)setupCircleImageNamed:(NSString *)name {
     return [[self imageNamed:name] setupImageCircle];
 }
-
+#pragma mark -----改变显示图片的尺寸----------
 + (UIImage *)scaleToSizeWithImage:(UIImage *)image size:(CGSize)size {
     UIGraphicsBeginImageContext(size);
     [image drawInRect:CGRectMake(0, 0, size.width, size.height)];

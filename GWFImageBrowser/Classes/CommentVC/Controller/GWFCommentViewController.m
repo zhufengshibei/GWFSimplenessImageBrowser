@@ -13,6 +13,8 @@
 #import "GWFAddButtonCell.h"
 #import "GWFImageCell.h"
 
+#import "GWFImageBrowserViewController.h"
+
 @interface GWFCommentViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UITextViewDelegate,ZYQAssetPickerControllerDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate> {
     UITextField  *_titleTF;
     UITextView   *_contentTextView;
@@ -21,6 +23,8 @@
 }
 
 @property (nonatomic,strong) NSMutableArray *dataArray;
+@property (nonatomic,strong) NSMutableArray *bigDataArray;
+@property (nonatomic,strong) NSMutableArray *assetsDataArray;
 
 @property (nonatomic, strong)  ZYQAssetPickerController *pickerController;
 
@@ -30,6 +34,11 @@
 
 @implementation GWFCommentViewController
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -37,6 +46,8 @@
     self.title = @"发布帖子";
     
     _dataArray = [NSMutableArray array];
+    _bigDataArray = [NSMutableArray array];
+    _assetsDataArray = [NSMutableArray array];
     
     [self setupSubViews];
 }
@@ -101,7 +112,7 @@
 //    flowLayout.minimumInteritemSpacing = 0;
     flowLayout.sectionInset = UIEdgeInsetsMake(GENERAL_SIZE(20), GENERAL_SIZE(20), 0, GENERAL_SIZE(20));
     _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(GENERAL_SIZE(20), CGRectGetMaxY(lineView1.frame)+GENERAL_SIZE(margin), SCREEN_WIDTH-GENERAL_SIZE(20)*2, CollectionViewH) collectionViewLayout:flowLayout];
-    _collectionView.backgroundColor = [UIColor purpleColor];//RGBACOLOR(241, 241, 241, 1.0);
+    _collectionView.backgroundColor = RGBACOLOR(241, 241, 241, 1.0);
     _collectionView.dataSource = self;
     _collectionView.delegate = self;
     
@@ -143,10 +154,15 @@
 //    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         for (int i=0; i<assets.count; i++) {
             ZYQAsset *asset=assets[i];
+            
+            [self.assetsDataArray addObject:asset];
+            
             [asset setGetFullScreenImage:^(UIImage *result) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if (result) {
-                        [self.dataArray addObject:result];
+                        UIImage *image = [UIImage scaleToSizeWithImage:result size:CGSizeMake(GENERAL_SIZE(160), GENERAL_SIZE(160))];
+                        [self.dataArray addObject:image];
+                        [self.bigDataArray addObject:result];
                         [self.collectionView reloadData];
                     }
                 });
@@ -204,6 +220,17 @@
             }
         }];
         [self presentViewController:self.pickerController animated:YES completion:nil];
+    } else {
+        NSLog(@"===== %@",self.dataArray);
+        GWFImageBrowserViewController *imageBrowserVC = [[GWFImageBrowserViewController alloc] init];
+        imageBrowserVC.imageIndex = indexPath.item;
+        imageBrowserVC.isLocal = YES;
+        imageBrowserVC.dataArray = self.bigDataArray;
+        CATransition *transition = [CATransition animation];
+        transition.duration = 0.5f;
+        transition.type = @"Cube";
+        [self.navigationController.view.layer addAnimation:transition forKey:nil];
+        [self presentViewController:imageBrowserVC animated:NO completion:nil];
     }
 }
 - (void)deleteImage:(UIButton *)deleteBtn {

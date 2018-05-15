@@ -9,6 +9,7 @@
 #import "GWFHomeViewController.h"
 #import "GWFImageBrowserViewController.h"
 
+
 static NSString *const kReuseIdentifierOfCell = @"kReuseIdentifierOfCell";
 static NSString *const kReuseIdentifierOfHeader = @"kReuseIdentifierOfHeader";
 static int tagOfImageOfCell = 1000;
@@ -161,6 +162,8 @@ COMMENTVCNOTIFICATIONJUMPCLICK
     _currentTouchIndexPath = indexPath;
     
     _isPresentVC = YES;
+    NSLog(@"55555555");
+    [(AppDelegate*)[UIApplication sharedApplication].delegate setIsPresent:_isPresentVC] ;
     
     // 区分点击的是 本地图片 还是 网络图片
     if (indexPath.section == 0) { // 点击本地图片
@@ -202,7 +205,6 @@ COMMENTVCNOTIFICATIONJUMPCLICK
     transition.type = @"Cube";
     [self.navigationController.view.layer addAnimation:transition forKey:nil];
     [self presentViewController:imageBrowserVC animated:NO completion:nil];
-    
     
 }
 // 点击浏览网络图片
