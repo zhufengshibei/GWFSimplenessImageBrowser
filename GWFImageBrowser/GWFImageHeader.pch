@@ -48,6 +48,9 @@ dispatch_async(dispatch_get_main_queue(), block);\
 #import "FLAnimatedImage.h"
 #import <WebKit/WebKit.h>
 #import <Masonry/Masonry.h>
+#import "MJExtension.h"
+
+#import "ModelToJson.h"
 
 #define COMMENTVCNOTIFICATIONJUMP [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(jumpButton) name:@"JUMPOTHERCONTROLLER" object:nil];
 

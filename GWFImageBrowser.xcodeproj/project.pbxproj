@@ -29,6 +29,8 @@
 		CEB7E74F208EC0AD00DBACD4 /* GWFDiscoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E747208EC0AD00DBACD4 /* GWFDiscoverViewController.m */; };
 		CEB7E754208EC3D100DBACD4 /* UIImage+GWFUIImage.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E753208EC3D100DBACD4 /* UIImage+GWFUIImage.m */; };
 		CEB7E757208EC43600DBACD4 /* UIBarButtonItem+GWFItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E756208EC43600DBACD4 /* UIBarButtonItem+GWFItem.m */; };
+		CEC0A47B20AAC9DF00FDABB5 /* GWFCommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC0A47A20AAC9DF00FDABB5 /* GWFCommentModel.m */; };
+		CEC0A48020AACCE400FDABB5 /* ModelToJson.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC0A47F20AACCE400FDABB5 /* ModelToJson.m */; };
 		CEC3991F209AFF4500A8BFD7 /* GWFImageBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC3991E209AFF4500A8BFD7 /* GWFImageBrowserCell.m */; };
 		CED85A57209AE69E00DC473A /* GWFSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED85A56209AE69E00DC473A /* GWFSettingViewController.m */; };
 		CED85A5A209AEDAC00DC473A /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = CED85A58209AEDAC00DC473A /* ProgressView.m */; };
@@ -98,6 +100,10 @@
 		CEB7E753208EC3D100DBACD4 /* UIImage+GWFUIImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+GWFUIImage.m"; sourceTree = "<group>"; };
 		CEB7E755208EC43600DBACD4 /* UIBarButtonItem+GWFItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+GWFItem.h"; sourceTree = "<group>"; };
 		CEB7E756208EC43600DBACD4 /* UIBarButtonItem+GWFItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+GWFItem.m"; sourceTree = "<group>"; };
+		CEC0A47920AAC9DF00FDABB5 /* GWFCommentModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GWFCommentModel.h; sourceTree = "<group>"; };
+		CEC0A47A20AAC9DF00FDABB5 /* GWFCommentModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GWFCommentModel.m; sourceTree = "<group>"; };
+		CEC0A47E20AACCE400FDABB5 /* ModelToJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelToJson.h; sourceTree = "<group>"; };
+		CEC0A47F20AACCE400FDABB5 /* ModelToJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelToJson.m; sourceTree = "<group>"; };
 		CEC3991D209AFF4500A8BFD7 /* GWFImageBrowserCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GWFImageBrowserCell.h; sourceTree = "<group>"; };
 		CEC3991E209AFF4500A8BFD7 /* GWFImageBrowserCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GWFImageBrowserCell.m; sourceTree = "<group>"; };
 		CED85A55209AE69E00DC473A /* GWFSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GWFSettingViewController.h; sourceTree = "<group>"; };
@@ -171,6 +177,8 @@
 		CE48778B209995020027E109 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CEC0A47920AAC9DF00FDABB5 /* GWFCommentModel.h */,
+				CEC0A47A20AAC9DF00FDABB5 /* GWFCommentModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -285,6 +293,7 @@
 				CEB7E73E208EC0AD00DBACD4 /* Home */,
 				CEB7E744208EC0AD00DBACD4 /* Discover */,
 				CEB7E738208EC0AD00DBACD4 /* Me */,
+				CEC0A47C20AACCE400FDABB5 /* lib */,
 				CEB7E720208EBFC500DBACD4 /* Other */,
 			);
 			path = Classes;
@@ -453,6 +462,23 @@
 			path = Tools;
 			sourceTree = "<group>";
 		};
+		CEC0A47C20AACCE400FDABB5 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				CEC0A47D20AACCE400FDABB5 /* ModelToJson */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		CEC0A47D20AACCE400FDABB5 /* ModelToJson */ = {
+			isa = PBXGroup;
+			children = (
+				CEC0A47E20AACCE400FDABB5 /* ModelToJson.h */,
+				CEC0A47F20AACCE400FDABB5 /* ModelToJson.m */,
+			);
+			path = ModelToJson;
+			sourceTree = "<group>";
+		};
 		CED85A54209AE69000DC473A /* SettingVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -599,6 +625,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-GWFImageBrowser/Pods-GWFImageBrowser-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
+				"${BUILT_PRODUCTS_DIR}/MJExtension/MJExtension.framework",
 				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/ZYQAssetPickerController/ZYQAssetPickerController.framework",
@@ -606,6 +633,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJExtension.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZYQAssetPickerController.framework",
@@ -648,6 +676,7 @@
 				CEB7E74F208EC0AD00DBACD4 /* GWFDiscoverViewController.m in Sources */,
 				CE48778F2099951A0027E109 /* GWFCommentViewController.m in Sources */,
 				CE04EAE820A43D6100C0B080 /* UIViewController+Basic.m in Sources */,
+				CEC0A47B20AAC9DF00FDABB5 /* GWFCommentModel.m in Sources */,
 				CEB7E74C208EC0AD00DBACD4 /* GWFTabbar.m in Sources */,
 				CEB7E74B208EC0AD00DBACD4 /* GWFTabBarController.m in Sources */,
 				CE487788209993E60027E109 /* JYCWindow.m in Sources */,
@@ -657,6 +686,7 @@
 				CEC3991F209AFF4500A8BFD7 /* GWFImageBrowserCell.m in Sources */,
 				CED85A5A209AEDAC00DC473A /* ProgressView.m in Sources */,
 				CEB7E754208EC3D100DBACD4 /* UIImage+GWFUIImage.m in Sources */,
+				CEC0A48020AACCE400FDABB5 /* ModelToJson.m in Sources */,
 				CEB7E74E208EC0AD00DBACD4 /* GWFHomeViewController.m in Sources */,
 				CEB7E74A208EC0AD00DBACD4 /* GWFNavigationController.m in Sources */,
 			);
@@ -833,10 +863,7 @@
 				DEVELOPMENT_TEAM = 829A926U4N;
 				GCC_PREFIX_HEADER = GWFImageBrowser/GWFImageHeader.pch;
 				INFOPLIST_FILE = GWFImageBrowser/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = first.GWFImageBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -854,10 +881,7 @@
 				DEVELOPMENT_TEAM = 829A926U4N;
 				GCC_PREFIX_HEADER = GWFImageBrowser/GWFImageHeader.pch;
 				INFOPLIST_FILE = GWFImageBrowser/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = first.GWFImageBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -872,11 +896,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RDN9E95292;
 				INFOPLIST_FILE = GWFImageBrowserTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = first.GWFImageBrowserTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -891,11 +911,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RDN9E95292;
 				INFOPLIST_FILE = GWFImageBrowserTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = first.GWFImageBrowserTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -909,11 +925,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RDN9E95292;
 				INFOPLIST_FILE = GWFImageBrowserUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = first.GWFImageBrowserUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -927,11 +939,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RDN9E95292;
 				INFOPLIST_FILE = GWFImageBrowserUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = first.GWFImageBrowserUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -16,7 +16,7 @@
 - (void)didMoveToParentViewController:(UIViewController*)parent{
 
     BOOL isP = [(AppDelegate *)[UIApplication sharedApplication].delegate isPresent];
-    NSLog(@"parent ==== %@  ==== %@",parent,parent.childViewControllers);
+//    NSLog(@"parent ==== %@  ==== %@",parent,parent.childViewControllers);
     
     if (!isP) {
         if (parent.childViewControllers.count == 1 && ([parent.childViewControllers.lastObject isKindOfClass:[GWFHomeViewController class]] || [parent.childViewControllers.lastObject isKindOfClass:[GWFDiscoverViewController class]] || [parent.childViewControllers.lastObject isKindOfClass:[GWFMeViewController class]])) {

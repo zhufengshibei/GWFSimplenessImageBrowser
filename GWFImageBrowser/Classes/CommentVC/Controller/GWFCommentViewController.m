@@ -12,6 +12,7 @@
 #import "GWFCommentViewController.h"
 #import "GWFAddButtonCell.h"
 #import "GWFImageCell.h"
+#import "GWFCommentModel.h"
 
 #import "GWFImageBrowserViewController.h"
 
@@ -144,6 +145,67 @@
 }
 #pragma mark --  发送按钮的点击事件
 - (void)sendContent:(id)sender {
+    
+    [_titleTF endEditing:YES];
+    [_contentTextView endEditing:YES];
+    
+    NSMutableArray *tempImageArr = [NSMutableArray array];
+    
+    for (UIImage *originImage in self.dataArray) {
+//        NSData *data = UIImageJPEGRepresentation(originImage, 1.0f);
+//        NSData *encodedImageData = [data base64EncodedDataWithOptions:0];
+//        // Data转字符串
+//        NSString *decodeStr = [[NSString alloc] initWithData:encodedImageData encoding:NSUTF8StringEncoding];
+        
+        
+        NSData *licenseData = UIImageJPEGRepresentation(originImage, 0.7f);
+        
+        
+        Byte *bytes = (Byte *)[licenseData bytes];
+        NSString *hexStr=@"";
+        for(int i=0;i<[licenseData length];i++)
+        {
+            NSString *newHexStr = [NSString stringWithFormat:@"%x",bytes[i]&0xff]; ///16进制数
+            if([newHexStr length]==1)
+                hexStr = [NSString stringWithFormat:@"%@0%@",hexStr,newHexStr];
+            else
+                hexStr = [NSString stringWithFormat:@"%@%@",hexStr,newHexStr];
+        }
+//        NSLog(@"bytes 的16进制数为:%@",hexStr);
+        
+        
+        [tempImageArr addObject:hexStr];
+    }
+    
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+    NSMutableArray *arry = tempImageArr;
+    [dictionary setValue:_titleTF.text forKey:@"topTitle"];
+    [dictionary setValue:_contentTextView.text forKey:@"topContent"];
+    [dictionary setValue:arry forKey:@"imageArray"];
+    NSData *data=[NSJSONSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *jsonStr=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    
+    
+//    GWFCommentModel *model = [[GWFCommentModel alloc] init];
+//    model.topTitle = _titleTF.text;
+//    model.topContent = _contentTextView.text;
+//
+//    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+//    NSMutableArray *arry = tempImageArr;
+//    [model setValue:arry forKey:model.imageJsonStr];
+
+    
+//    NSData *modelData = [ModelToJson getJSON:dictionary options:NSJSONWritingPrettyPrinted error:nil];
+//    NSString *modelJsonStr = [[NSString alloc] initWithData:modelData encoding:NSUTF8StringEncoding];
+    
+    NSLog(@"modelJsonStr  == %@",jsonStr);
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:jsonStr forKey:@"TESTDATA"];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.navigationController popViewControllerAnimated:YES];
+    });
     
 }
 

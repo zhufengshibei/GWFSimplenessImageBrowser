@@ -6,5 +6,6 @@ pod 'SDWebImage'
 pod 'FLAnimatedImage'
 pod 'Masonry'
 pod 'ZYQAssetPickerController'
+pod 'MJExtension'
 
 end

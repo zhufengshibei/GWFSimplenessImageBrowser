@@ -72,7 +72,12 @@
 
     [self popViewControllerAnimated:YES];
 }
-
+//-(UIViewController *)popViewControllerAnimated:(BOOL)animated {
+//    [super popViewControllerAnimated:animated];
+//
+//    NSLog(@"==== %@",self.viewControllers);
+//    return self;
+//}
 //决定手势是否触发
 //如果返回 NO 则说明所有的手势都不触发
 // self.childViewControllers.count > 1 表示根控制器不触发
