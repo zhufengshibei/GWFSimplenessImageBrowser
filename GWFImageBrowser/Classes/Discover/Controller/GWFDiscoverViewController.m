@@ -132,7 +132,7 @@
     }
 }
 
-#pragma mark --- GWFDiscoverCellDelegate
+#pragma mark --- GWFDiscoverCellDelegate  点击图片加载图片浏览器
 -(void)didImageItemWithIndexPath:(NSIndexPath *)currentIndexPath imageArray:(NSMutableArray *)imageArr {
     _isPresentVC = YES;
     [(AppDelegate*)[UIApplication sharedApplication].delegate setIsPresent:_isPresentVC] ;
