@@ -162,7 +162,6 @@ COMMENTVCNOTIFICATIONJUMPCLICK
     _currentTouchIndexPath = indexPath;
     
     _isPresentVC = YES;
-    NSLog(@"55555555");
     [(AppDelegate*)[UIApplication sharedApplication].delegate setIsPresent:_isPresentVC] ;
     
     // 区分点击的是 本地图片 还是 网络图片
@@ -179,12 +178,12 @@ COMMENTVCNOTIFICATIONJUMPCLICK
 //        NSData *imageData = UIImageJPEGRepresentation(imageView.image, 0.5);
 //
 //        // 获取沙盒目录
-//        NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:[NSString stringWithFormat:@"Picture%ld_%ld.png",indexPath.section,indexPath.row]];
+        NSString *fullPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
 //
 //
 //        // 将图片写入文件
 //        [imageData writeToFile:fullPath atomically:YES];
-//        NSLog(@"%ld",cell.tag);
+        NSLog(@"%@",fullPath);
     
     
         

@@ -7,5 +7,7 @@ pod 'FLAnimatedImage'
 pod 'Masonry'
 pod 'ZYQAssetPickerController'
 pod 'MJExtension'
+pod 'FMDB'
+pod 'MBProgressHUD'
 
 end

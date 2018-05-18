@@ -8,20 +8,46 @@
 
 #import "GWFDiscoverViewController.h"
 #import "GWFCommentModel.h"
+#import "GWFDiscoverCell.h"
 
-@interface GWFDiscoverViewController ()
+#import "GWFImageBrowserViewController.h"
+
+@interface GWFDiscoverViewController ()<UITableViewDelegate,UITableViewDataSource,GWFDiscoverCellDelegate> {
+    BOOL  _isPresentVC;
+}
+
+@property (nonatomic,strong) UITableView  *tableView;
+
+
+@property (nonatomic,strong) NSArray  *dataArray;
 
 @end
 
 @implementation GWFDiscoverViewController
 
+-(NSArray *)dataArray {
+    if (!_dataArray) {
+        _dataArray = [NSArray array];
+    }
+    return _dataArray;
+}
+
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     COMMENTVCNOTIFICATIONJUMP
+    
+    
+    _isPresentVC = NO;
+    [self loadData];
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    if (_isPresentVC) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"HIDDENTHEBUTTON" object:nil];
+    }
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -30,74 +56,109 @@
     
     self.title = @"发现";
     self.view.backgroundColor = [UIColor brownColor];
-    
+
+    [self.view addSubview:self.tableView];
     
     
 }
 
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    id result = [defaults objectForKey:@"TESTDATA"];
+- (void)loadData {
     
-//    NSLog(@"==== %@",result);
     
-    GWFCommentModel *model = [GWFCommentModel mj_objectWithKeyValues:result];
     
-    NSMutableArray *imageA = [NSMutableArray array];
+//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    id result = [defaults objectForKey:@"TESTDATA"];
+//
+//    GWFCommentModel *model = [GWFCommentModel mj_objectWithKeyValues:result];
+//
+//    NSMutableArray *imageA = [NSMutableArray array];
+//
+//    //    NSLog(@"imageStrArr === %@",model.imageArray);
+//    for (NSString *imageStr in model.imageArray) {
+//        NSData *imageData = [self transStrHexToData:imageStr];
+//        UIImage *image = [UIImage imageWithData:imageData];
+//        [imageA addObject:image];
+//    }
+//
+//    [MBProgressHUD showMessag:@"正在加载数据..." toView:[UIApplication sharedApplication].keyWindow];
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//
+//        [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
+//
+//        [MBProgressHUD showSuccess:@"数据加载成功!" toView:[UIApplication sharedApplication].keyWindow];
+//
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
     
-//    NSLog(@"imageStrArr === %@",model.imageArray);
-    for (NSString *imageStr in model.imageArray) {
-        NSData *imageData = [self transStrHexToData:imageStr];
-        UIImage *image = [UIImage imageWithData:imageData];
-        [imageA addObject:image];
-    }
+            self.dataArray = [[GWFDataBaseManager shareManager] loadDataForTopDetails];
+            [self.tableView reloadData];
+            
+//        });
+//    });
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.dataArray.count;
+}
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    GWFDiscoverCell *cell = [GWFDiscoverCell cellWithTableView:tableView];
+    cell.delegate = self;
+    GWFCommentModel *model = self.dataArray[indexPath.row];
+    [cell setCommentModel:model];
     
-    NSLog(@"==== %@",imageA);
+    return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
 }
-/// 将十六进制的字符串转化为NSData
-- (NSData *)transStrHexToData:(NSString *)strHex
-{
-    /// bytes索引
-    NSUInteger j = 0;
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    GWFCommentModel *model = self.dataArray[indexPath.row];
     
-    NSInteger len = strHex.length;
-    
-    if (len % 2 == 1) {
-        /// 若不能被2整除则说明16进制的字符串不满足图片图。特此说明，假如只是单纯的把十六进制转换为NSData就把这个if干掉即可，
-        return nil;
+    CGFloat H = 0.0;
+    if (model.imageArray.count > 0) {
+
+        //重新计算collectionview的高度  = 总行数(rows) * itemH
+        // rows = (item的总个数(count) - 1) / 列数(column) + 1
+        NSInteger count = model.imageArray.count;
+        NSInteger rows = (count - 1) / 3 + 1;
+
+        CGFloat collectionViewH = rows * SCREEN_WIDTH/3;
+        H += model.cellHeight;
+        H += collectionViewH;
+        return H;
+    } else {
+        return model.cellHeight;
     }
+}
+
+#pragma mark --- GWFDiscoverCellDelegate
+-(void)didImageItemWithIndexPath:(NSIndexPath *)currentIndexPath imageArray:(NSMutableArray *)imageArr {
+    _isPresentVC = YES;
+    [(AppDelegate*)[UIApplication sharedApplication].delegate setIsPresent:_isPresentVC] ;
     
-    /// 动态分配内存
-    Byte *bytes = (Byte *)malloc((len / 2 + 1) * sizeof(Byte));
-    
-    /// 初始化内存 其中memset的作用是在一段内存块中填充某个给定的值，它是对较大的结构体或数组进行清零操作的一种最快方法
-    memset(bytes, '\0', (len / 2 + 1) * sizeof(Byte));
-    
-    /// for循环里面其实就是把16进制的字符串转化为字节数组的过程
-    for (NSUInteger i = 0; i < strHex.length; i += 2) {
-        
-        /// 一字节byte是8位(比特)bit 一位就代表一个0或者1(即二进制) 每8位(bit)组成一个字节(Byte) 所以每一次取2为字符组合成一个字节 其实就是2个16进制的字符其实就是8位(bit)即一个字节byte
-        NSString *str = [strHex substringWithRange:NSMakeRange(i, 2)];
-        
-        /// 将16进制字符串转化为十进制
-        unsigned long uint_ch = strtoul([str UTF8String], 0, 16);
-        
-        bytes[j] = uint_ch;
-        
-        /// 自增
-        j ++;
-    }
-    
-    /// 将字节数组转化为NSData
-    NSData *data = [[NSData alloc] initWithBytes:bytes length:len / 2];
-    
-    /// 释放内存
-    free(bytes);
-    
-    return data;
+    GWFImageBrowserViewController *imageBrowserVC = [[GWFImageBrowserViewController alloc] init];
+    imageBrowserVC.imageIndex = currentIndexPath.item;
+    imageBrowserVC.isLocal = YES;
+    imageBrowserVC.dataArray = imageArr;
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.5f;
+    transition.type = @"Cube";
+    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    [self presentViewController:imageBrowserVC animated:NO completion:nil];
 }
 
 COMMENTVCNOTIFICATIONJUMPCLICK
+
+#pragma mark --- 懒加载
+-(UITableView *)tableView {
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        _tableView.dataSource = self;
+        _tableView.delegate = self;
+        _tableView.tableFooterView = [[UIView alloc] init];
+    }
+    return _tableView;
+}
 
 @end

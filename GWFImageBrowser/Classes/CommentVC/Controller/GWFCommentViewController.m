@@ -37,7 +37,8 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"HIDDENTHEBUTTON" object:nil];
 }
 
 - (void)viewDidLoad {
@@ -148,72 +149,47 @@
     
     [_titleTF endEditing:YES];
     [_contentTextView endEditing:YES];
-    
-    NSMutableArray *tempImageArr = [NSMutableArray array];
-    
-    for (UIImage *originImage in self.dataArray) {
-//        NSData *data = UIImageJPEGRepresentation(originImage, 1.0f);
-//        NSData *encodedImageData = [data base64EncodedDataWithOptions:0];
-//        // Data转字符串
-//        NSString *decodeStr = [[NSString alloc] initWithData:encodedImageData encoding:NSUTF8StringEncoding];
-        
-        
-        NSData *licenseData = UIImageJPEGRepresentation(originImage, 0.7f);
-        
-        
-        Byte *bytes = (Byte *)[licenseData bytes];
-        NSString *hexStr=@"";
-        for(int i=0;i<[licenseData length];i++)
-        {
-            NSString *newHexStr = [NSString stringWithFormat:@"%x",bytes[i]&0xff]; ///16进制数
-            if([newHexStr length]==1)
-                hexStr = [NSString stringWithFormat:@"%@0%@",hexStr,newHexStr];
-            else
-                hexStr = [NSString stringWithFormat:@"%@%@",hexStr,newHexStr];
-        }
-//        NSLog(@"bytes 的16进制数为:%@",hexStr);
-        
-        
-        [tempImageArr addObject:hexStr];
-    }
-    
-    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-    NSMutableArray *arry = tempImageArr;
-    [dictionary setValue:_titleTF.text forKey:@"topTitle"];
-    [dictionary setValue:_contentTextView.text forKey:@"topContent"];
-    [dictionary setValue:arry forKey:@"imageArray"];
-    NSData *data=[NSJSONSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:nil];
-    NSString *jsonStr=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-    
-    
-//    GWFCommentModel *model = [[GWFCommentModel alloc] init];
-//    model.topTitle = _titleTF.text;
-//    model.topContent = _contentTextView.text;
-//
-//    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-//    NSMutableArray *arry = tempImageArr;
-//    [model setValue:arry forKey:model.imageJsonStr];
 
+    NSMutableArray *tempImageArr = [NSMutableArray array];
+    NSMutableArray *origionTempImageArr = [NSMutableArray array];
+    // 等比缩小后的图片
+    for (UIImage *originImage in self.dataArray) {
+        NSData *imageData = UIImageJPEGRepresentation(originImage, 1.0);
+        NSString *image64 = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+        [tempImageArr addObject:image64];
+    }
+    // 原图数组
+    for (UIImage *originImage in self.bigDataArray) {
+        NSData *imageData = UIImageJPEGRepresentation(originImage, 1.0);
+        NSString *image64 = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+        [origionTempImageArr addObject:image64];
+    }
+    // 等比缩小后的图片的jsonStr
+    NSData *data=[NSJSONSerialization dataWithJSONObject:tempImageArr options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *jsonStr=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    // 原图片的jsonStr
+    NSData *origionDdata=[NSJSONSerialization dataWithJSONObject:origionTempImageArr options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *origionJsonStr=[[NSString alloc]initWithData:origionDdata encoding:NSUTF8StringEncoding];
     
-//    NSData *modelData = [ModelToJson getJSON:dictionary options:NSJSONWritingPrettyPrinted error:nil];
-//    NSString *modelJsonStr = [[NSString alloc] initWithData:modelData encoding:NSUTF8StringEncoding];
+    GWFCommentModel *model = [[GWFCommentModel alloc] init];
+    model.topTitle = _titleTF.text;  // 标题
+    model.topContent = _contentTextView.text;  // 文本
+    model.jsonStr = jsonStr;  // 图片
+    model.origionImageJsonStr = origionJsonStr;
+    model.postTime = [self currentTimer]; // 帖子发布时间
     
-    NSLog(@"modelJsonStr  == %@",jsonStr);
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:jsonStr forKey:@"TESTDATA"];
-    
+    [[GWFDataBaseManager shareManager] setDataForDataBase:model];
+
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.navigationController popViewControllerAnimated:YES];
     });
-    
 }
 
 #pragma mark ------相册回调方法----------
 // 多图片选择
 -(void)assetPickerController:(ZYQAssetPickerController *)picker didFinishPickingAssets:(NSArray *)assets{
     NSLog(@"assets === %@",assets);
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         for (int i=0; i<assets.count; i++) {
             ZYQAsset *asset=assets[i];
             
@@ -231,7 +207,7 @@
                 
             }];
         }
-//    });
+    });
 
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -302,7 +278,14 @@
     
     [self.collectionView reloadData];
 }
-
+// 获取当前时间
+- (NSString *)currentTimer {
+    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *nowDate = [NSDate date];
+    NSString *currentTimeString = [dateFormatter stringFromDate:nowDate];
+    return currentTimeString;
+}
 @end
 
 

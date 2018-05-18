@@ -15,6 +15,9 @@
 #define kThumbnailSize      CGSizeMake(kThumbnailLength, kThumbnailLength)
 #define kPopoverContentSize CGSizeMake(320, 480)
 
+#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
+#define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
+
 #pragma mark -
 
 @interface NSDate (TimeInterval)
@@ -116,7 +119,7 @@
             float scale                 = height / kThumbnailLength;
             
             _cacheThumbnail             = [UIImage imageWithCGImage:posterImage scale:scale orientation:UIImageOrientationUp];
-
+            
             _getThumbnail(_cacheThumbnail);
         }
         else if ([_originAssetGroup isKindOfClass:[PHCollection class]]){
@@ -250,7 +253,7 @@
             }];
         }
     }
-
+    
 }
 
 -(void)setGetFullScreenImage:(void (^)(UIImage *))getFullScreenImage{
@@ -258,7 +261,7 @@
 }
 
 -(void)setGetOriginImage:(void (^)(UIImage *))getOriginImage fromNetwokProgressHandler:(void (^)(double ,NSError * , BOOL *, NSDictionary *))progressHandler{
-
+    
 }
 
 -(NSTimeInterval)duration{
@@ -325,7 +328,7 @@
     CGColorSpaceRef baseSpace   = CGColorSpaceCreateDeviceRGB();
     CGGradientRef gradient      = CGGradientCreateWithColorComponents(baseSpace, colors, locations, 2);
     CGColorSpaceRelease(baseSpace);
-
+    
     CGContextRef context    = UIGraphicsGetCurrentContext();
     
     CGFloat height          = rect.size.height;
@@ -335,10 +338,10 @@
     CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, kCGGradientDrawsBeforeStartLocation);
     
     CGGradientRelease(gradient);
-
+    
     CGSize titleSize        = [self.text sizeWithAttributes:@{NSFontAttributeName:self.font}];
     [self.text drawAtPoint:CGPointMake(rect.size.width - titleSize.width - 2 , (height - 12) / 2) withAttributes:@{NSFontAttributeName:self.font}];
-
+    
     UIImage *videoIcon=[UIImage imageWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"ZYQAssetPicker.Bundle/Images/AssetsPickerVideo@2x.png"]];
     
     [videoIcon drawAtPoint:CGPointMake(2, (height - videoIcon.size.height) / 2)];
@@ -363,7 +366,7 @@ static UIColor *disabledColor;
 
 + (void)initialize
 {
-    checkedIcon     = [UIImage imageNamed:@"AssetsPickerChecked"];//[UIImage imageWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:[NSString stringWithFormat:@"ZYQAssetPicker.Bundle/Images/%@@2x.png",(!IS_IOS7) ? @"AssetsPickerChecked~iOS6" : @"AssetsPickerChecked"]]];
+    checkedIcon     = [UIImage imageNamed:@"select"];//[UIImage imageWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:[NSString stringWithFormat:@"ZYQAssetPicker.Bundle/Images/%@@2x.png",(!IS_IOS7) ? @"AssetsPickerChecked~iOS6" : @"AssetsPickerChecked"]]];
     selectedColor   = [UIColor colorWithWhite:1 alpha:0.3];
     disabledColor   = [UIColor colorWithWhite:1 alpha:0.9];
 }
@@ -386,7 +389,7 @@ static UIColor *disabledColor;
             return;
         }
     }
-
+    
     if ((_selected=!_selected)) {
         self.backgroundColor=selectedColor;
         [_selectView setImage:checkedIcon];
@@ -416,7 +419,7 @@ static UIColor *disabledColor;
         [_selectView setImage:nil];
         return;
     }
-
+    
     _selected=selected;
     if (_selected) {
         self.backgroundColor=selectedColor;
@@ -466,7 +469,7 @@ static UIColor *titleColor;
         self.isAccessibilityElement     = YES;
         self.accessibilityTraits        = UIAccessibilityTraitImage;
         
-        _imageView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kThumbnailSize.width, kThumbnailSize.height)];
+        _imageView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, (SCREEN_WIDTH-15)/4, kThumbnailSize.height)];
         [self addSubview:_imageView];
         
         _videoTitle=[[ZYQVideoTitleView alloc] initWithFrame:CGRectMake(0, kThumbnailSize.height-20, kThumbnailSize.width, titleHeight)];
@@ -488,7 +491,7 @@ static UIColor *titleColor;
 - (void)bind:(ZYQAsset*)asset selectionFilter:(NSPredicate*)selectionFilter isSeleced:(BOOL)isSeleced
 {
     self.asset=asset;
-
+    
     __weak typeof(self) weakSelf=self;
     [_asset setGetThumbnail:^(UIImage *result) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -549,16 +552,16 @@ static UIColor *titleColor;
     if (self.contentView.subviews.count<assets.count) {
         for (int i=0; i<assets.count; i++) {
             if (i>((NSInteger)self.contentView.subviews.count-1)) {
-                ZYQAssetView *assetView=[[ZYQAssetView alloc] initWithFrame:CGRectMake(assetViewX+(kThumbnailSize.width+minimumInteritemSpacing)*i, minimumLineSpacing-1, kThumbnailSize.width, kThumbnailSize.height)];
+                ZYQAssetView *assetView=[[ZYQAssetView alloc] initWithFrame:CGRectMake((i+1)*3+i*((SCREEN_WIDTH-15)/4), minimumLineSpacing-1, ((SCREEN_WIDTH-15)/4), kThumbnailSize.height)];
                 [assetView bind:assets[i] selectionFilter:selectionFilter isSeleced:[((ZYQAssetViewController*)_delegate).indexPathsForSelectedItems containsObject:assets[i]]];
                 assetView.delegate=self;
                 [self.contentView addSubview:assetView];
             }
             else{
-                ((ZYQAssetView*)self.contentView.subviews[i]).frame=CGRectMake(assetViewX+(kThumbnailSize.width+minimumInteritemSpacing)*(i), minimumLineSpacing-1, kThumbnailSize.width, kThumbnailSize.height);
+                ((ZYQAssetView*)self.contentView.subviews[i]).frame=CGRectMake((i+1)*3+i*((SCREEN_WIDTH-15)/4), minimumLineSpacing-1, ((SCREEN_WIDTH-15)/4), kThumbnailSize.height);
                 [(ZYQAssetView*)self.contentView.subviews[i] bind:assets[i] selectionFilter:selectionFilter isSeleced:[((ZYQAssetViewController*)_delegate).indexPathsForSelectedItems containsObject:assets[i]]];
             }
-
+            
         }
         
     }
@@ -568,7 +571,7 @@ static UIColor *titleColor;
                 [((ZYQAssetView*)self.contentView.subviews[i-1]) removeFromSuperview];
             }
             else{
-                ((ZYQAssetView*)self.contentView.subviews[i-1]).frame=CGRectMake(assetViewX+(kThumbnailSize.width+minimumInteritemSpacing)*(i-1), minimumLineSpacing-1, kThumbnailSize.width, kThumbnailSize.height);
+                ((ZYQAssetView*)self.contentView.subviews[i-1]).frame=CGRectMake((i)*3+(i-1)*((SCREEN_WIDTH-15)/4), minimumLineSpacing-1, ((SCREEN_WIDTH-15)/4), kThumbnailSize.height);
                 [(ZYQAssetView*)self.contentView.subviews[i-1] bind:assets[i-1] selectionFilter:selectionFilter isSeleced:[((ZYQAssetViewController*)_delegate).indexPathsForSelectedItems containsObject:assets[i-1]]];
             }
         }
@@ -657,7 +660,7 @@ static UIColor *titleColor;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     [self setupViews];
     [self setupButtons];
 }
@@ -695,7 +698,7 @@ static UIColor *titleColor;
     }
     
     columns=floor(self.view.frame.size.width/(kThumbnailSize.width+minimumInteritemSpacing));
-
+    
     [self.tableView reloadData];
 }
 
@@ -802,7 +805,7 @@ static UIColor *titleColor;
         cell=[[ZYQAssetViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     cell.delegate=self;
-
+    
     [cell bind:tempAssets selectionFilter:picker.selectionFilter minimumInteritemSpacing:minimumInteritemSpacing minimumLineSpacing:minimumLineSpacing columns:columns assetViewX:(self.tableView.frame.size.width-kThumbnailSize.width*tempAssets.count-minimumInteritemSpacing*(tempAssets.count-1))/2];
     return cell;
 }
@@ -831,7 +834,7 @@ static UIColor *titleColor;
         
         UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"最多只能选择9张", nil) preferredStyle:UIAlertControllerStyleAlert];
         //从相机拍照
-        [alertVC addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [alertVC addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"好的", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
         }]];
         [self presentViewController:alertVC animated:YES completion:nil];
@@ -907,7 +910,7 @@ static UIColor *titleColor;
         format = (indexPaths.count > 1) ? NSLocalizedString(@"已选择 %ld 部视频", nil) : NSLocalizedString(@"已选择 %ld 部视频 ", nil);
     
     self.title = [NSString stringWithFormat:format, (long)indexPaths.count];
-
+    
 }
 
 
@@ -924,7 +927,7 @@ static UIColor *titleColor;
         }
     }
     
-
+    
     if ([picker.delegate respondsToSelector:@selector(assetPickerController:didFinishPickingAssets:)])
         [picker.delegate assetPickerController:picker didFinishPickingAssets:_indexPathsForSelectedItems];
     
@@ -1094,7 +1097,7 @@ static UIColor *titleColor;
         PHFetchResult *customAlbumsFetchResult = [PHAssetCollection fetchTopLevelUserCollectionsWithOptions:fetchOptions];
         [customAlbumsFetchResult enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull collection, NSUInteger idx, BOOL *stop) {
             showNotAllowed=NO;
-
+            
             PHFetchOptions *fetchOptionsAlbums=[[PHFetchOptions alloc] init];
             
             switch (picker.assetsFilter) {
@@ -1115,7 +1118,7 @@ static UIColor *titleColor;
                 tmpGroup.originFetchResult=fetchResult;
                 [self.groups addObject:tmpGroup];
             }
-
+            
         }];
         
         if (showNotAllowed) {

@@ -63,6 +63,8 @@
     
     [self.window makeKeyAndVisible];
     
+    // 创建数据库
+    [[GWFDataBaseManager shareManager] createdDataBase];
     return YES;
 }
 

@@ -9,6 +9,12 @@
 //把数据写入到本地，调用时只需传入写入到本地的文件夹路径及文件名即可
 #define GWFWriteToFile(filePath) [responseObject writeToFile:[NSString stringWithFormat:@"%@",filePath] atomically:YES];
 
+#define CACHEPATH NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).lastObject
+#define DocumentPath  [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]
+
+#define DataBasePath  [NSString stringWithFormat:@"%@/topDataBase.db",DocumentPath]
+
+
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
 
@@ -21,7 +27,7 @@
 
 #define RGBACOLOR(r,g,b,a) [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:(a)]
 
-#define CELLSIZE CGSizeMake(SCREEN_WIDTH/3, (SCREEN_WIDTH/3))
+#define CELLSIZE CGSizeMake(SCREEN_WIDTH/3, SCREEN_WIDTH/3)
 
 #define GWF_MAINTHREAD_ASYNC(block)\
 if ([NSThread isMainThread]) {\
@@ -39,9 +45,10 @@ dispatch_async(dispatch_get_main_queue(), block);\
 #import "GWFCommentViewController.h"
 #import "ZYQAssetPickerController.h"
 
-
+#import "UIViewController+Basic.h"
 #import "UIBarButtonItem+GWFItem.h"
 #import "UIImage+GWFUIImage.h"
+#import "NSDate+MJ.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "UIImage+GIF.h"
@@ -49,6 +56,11 @@ dispatch_async(dispatch_get_main_queue(), block);\
 #import <WebKit/WebKit.h>
 #import <Masonry/Masonry.h>
 #import "MJExtension.h"
+#import "FMDB.h"
+#import "MBProgressHUD.h"
+#import "MBProgressHUD+Add.h"
+
+#import "GWFDataBaseManager.h"
 
 #import "ModelToJson.h"
 

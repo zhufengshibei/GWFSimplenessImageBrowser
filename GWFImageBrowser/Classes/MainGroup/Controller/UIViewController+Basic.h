@@ -13,4 +13,8 @@
 - (void)willMoveToParentViewController:(UIViewController*)parent;
 - (void)didMoveToParentViewController:(UIViewController*)parent;
 
+/// 将十六进制的字符串转化为NSData
+- (NSData *)transStrHexToData:(NSString *)strHex;
+
+
 @end

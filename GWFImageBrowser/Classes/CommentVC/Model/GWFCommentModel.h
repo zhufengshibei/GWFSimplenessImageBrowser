@@ -12,7 +12,15 @@
 
 @property (nonatomic, copy) NSString *topTitle;
 @property (nonatomic, copy) NSString *topContent;
-@property (nonatomic, strong) NSArray *imageArray;
+@property (nonatomic, strong) NSMutableArray *imageArray;
+@property (nonatomic, strong) NSMutableArray *origionImageArray;
+@property (nonatomic, copy) NSString *topID;
+@property (nonatomic, copy) NSString *jsonStr;
+@property (nonatomic, copy) NSString *origionImageJsonStr;
+
+@property (nonatomic, copy) NSString *postTime;
+
+@property (nonatomic, assign) CGFloat cellHeight;
 
 @end
 
