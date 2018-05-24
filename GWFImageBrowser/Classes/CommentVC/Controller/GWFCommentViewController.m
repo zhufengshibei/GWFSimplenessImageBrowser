@@ -16,11 +16,12 @@
 
 #import "GWFImageBrowserViewController.h"
 
-@interface GWFCommentViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UITextViewDelegate,ZYQAssetPickerControllerDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate> {
+@interface GWFCommentViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UITextFieldDelegate,UITextViewDelegate,ZYQAssetPickerControllerDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate> {
     UITextField  *_titleTF;
     UITextView   *_contentTextView;
     UILabel      *_placeHolderLabel;
     UIView       *lineView1;
+    UIView       *_shawView;
 }
 
 @property (nonatomic,strong) NSMutableArray *dataArray;
@@ -60,6 +61,12 @@
 }
 
 - (void)setupContentSubViews {
+    
+    _shawView = [[UIView alloc] initWithFrame:self.view.bounds];
+    _shawView.hidden = YES;
+    [self.view addSubview:_shawView];
+    
+    
     CGFloat margin = GENERAL_SIZE(30);
     CGFloat Y = subViewsY + margin;
     // 创建控件
@@ -76,6 +83,7 @@
     _titleTF.layer.cornerRadius = GENERAL_SIZE(5);
     _titleTF.layer.masksToBounds = YES;
     _titleTF.layer.borderWidth = 0.5;
+    _titleTF.delegate = self;
     _titleTF.layer.borderColor = TEXTCOLOR.CGColor;
     //左端缩进15像素
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, GENERAL_SIZE(10), GENERAL_SIZE(30))];
@@ -123,6 +131,8 @@
     
     [self.view addSubview:_collectionView];
 
+    [self.view bringSubviewToFront:_shawView];
+    
 }
 
 
@@ -134,6 +144,16 @@
         _placeHolderLabel.alpha = 1;
     }
 }
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+    _shawView.hidden = NO;
+    _shawView.backgroundColor = [UIColor clearColor];
+    return YES;
+}
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    _shawView.hidden = NO;
+    _shawView.backgroundColor = [UIColor clearColor];
+    return YES;
+}
 
 - (void)setupRightButton {
     UIButton *sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -144,12 +164,20 @@
     
     [sendBtn addTarget:self action:@selector(sendContent:) forControlEvents:UIControlEventTouchUpInside];
 }
+- (void)endEditView {
+    _shawView.hidden = YES;
+    [_titleTF endEditing:YES];
+    [_contentTextView endEditing:YES];
+}
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self endEditView];
+}
 #pragma mark --  发送按钮的点击事件
 - (void)sendContent:(id)sender {
     
-    [_titleTF endEditing:YES];
-    [_contentTextView endEditing:YES];
+    [self endEditView];
 
+    [MBProgressHUD showMessag:@"正在发送..." toView:self.view];
     NSMutableArray *tempImageArr = [NSMutableArray array];
     NSMutableArray *origionTempImageArr = [NSMutableArray array];
     // 等比缩小后的图片
@@ -179,7 +207,11 @@
     model.postTime = [self currentTimer]; // 帖子发布时间
     
     [[GWFDataBaseManager shareManager] setDataForDataBase:model];
-
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showSuccess:@"发送成功！" toView:self.view];
+    });
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.navigationController popViewControllerAnimated:YES];
     });

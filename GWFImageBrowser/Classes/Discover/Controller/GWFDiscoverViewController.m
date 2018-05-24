@@ -64,37 +64,22 @@
 
 - (void)loadData {
     
-    
-    
-//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//    id result = [defaults objectForKey:@"TESTDATA"];
-//
-//    GWFCommentModel *model = [GWFCommentModel mj_objectWithKeyValues:result];
-//
-//    NSMutableArray *imageA = [NSMutableArray array];
-//
-//    //    NSLog(@"imageStrArr === %@",model.imageArray);
-//    for (NSString *imageStr in model.imageArray) {
-//        NSData *imageData = [self transStrHexToData:imageStr];
-//        UIImage *image = [UIImage imageWithData:imageData];
-//        [imageA addObject:image];
-//    }
-//
-//    [MBProgressHUD showMessag:@"正在加载数据..." toView:[UIApplication sharedApplication].keyWindow];
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//
-//        [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
-//
-//        [MBProgressHUD showSuccess:@"数据加载成功!" toView:[UIApplication sharedApplication].keyWindow];
-//
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
+    [MBProgressHUD showMessag:@"正在加载数据..." toView:[UIApplication sharedApplication].keyWindow];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
+        [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
+
+        [MBProgressHUD showSuccess:@"数据加载成功!" toView:[UIApplication sharedApplication].keyWindow];
+
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
     
             self.dataArray = [[GWFDataBaseManager shareManager] loadDataForTopDetails];
+            self.dataArray = [[self.dataArray reverseObjectEnumerator] allObjects];
             [self.tableView reloadData];
             
-//        });
-//    });
+        });
+    });
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

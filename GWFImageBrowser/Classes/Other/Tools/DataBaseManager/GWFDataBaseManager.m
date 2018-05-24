@@ -49,6 +49,7 @@
 //    [_db executeUpdate:@"DELETE FROM t_topDetails;"];
     [_db executeUpdate:@"INSERT INTO t_topDetails (topTitle, topContent, jsonStr, origionJsonStr, postTime) VALUES (?, ?, ?, ?, ?);",model.topTitle,model.topContent,model.jsonStr,model.origionImageJsonStr,model.postTime];
     
+    
 }
 
 #pragma mark -- 查询数据
