@@ -91,6 +91,52 @@
 
 }
 
+-(void)longPressSaveImageToAlbum:(id)objc string:(NSString *)imageStr {
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"保存到本地相册" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    //保存图片
+    [alertVC addAction:[UIAlertAction actionWithTitle:@"保存图片" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        if ([imageStr hasSuffix:@".gif"]) {
+            NSData *imageData = (NSData *)objc;
+            // 保存到本地相册
+            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+            [library writeImageDataToSavedPhotosAlbum:imageData metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
+                
+                if (error) {
+                    NSLog(@"保存过程中发生错误，错误信息:%@",error.localizedDescription);
+                    [MBProgressHUD showError:@"图片保存失败" toView:self.view];
+                } else {
+                    NSLog(@"图片保存成功");
+                    [MBProgressHUD showSuccess:@"图片保存成功" toView:self.view];
+                }
+            }] ;
+            
+        } else {
+            UIImage *image = (UIImage *)objc;
+            UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+        }
+    }]];
+
+    //取消
+    [alertVC addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    [self presentViewController:alertVC animated:YES completion:nil];
+    
+    
+    
+}
+#pragma mark - 自定义方法
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
+    if (error) {
+        NSLog(@"保存过程中发生错误，错误信息:%@",error.localizedDescription);
+        [MBProgressHUD showError:@"图片保存失败" toView:self.view];
+    } else {
+        NSLog(@"图片保存成功");
+        [MBProgressHUD showSuccess:@"图片保存成功" toView:self.view];
+    }
+}
+
 - (void)dissMissVC {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOWTHEBUTTON" object:nil];
     [self dismissViewControllerAnimated:NO completion:nil];

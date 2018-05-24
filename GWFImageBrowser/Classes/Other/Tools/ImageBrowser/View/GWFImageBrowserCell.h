@@ -12,6 +12,7 @@
 @optional
 
 - (void)dissMissVC;
+- (void)longPressSaveImageToAlbum:(id)objc string:(NSString *)imageStr;
 
 @end
 
@@ -21,7 +22,7 @@
 
 @property (nonatomic, assign) BOOL isLocal;
 
-//@property (nonatomic, assign) id imageString;
+
 
 -(void)setImageString:(id)imageString;
 

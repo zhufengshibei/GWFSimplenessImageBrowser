@@ -104,12 +104,23 @@ static NSString *const kReuseIdentifierOfCell = @"kReuseIdentifierOfGWFDiscoverC
     CGSize textSize = CGSizeMake(SCREEN_WIDTH-GENERAL_SIZE(40)*2, MAXFLOAT);
     // 高度自适应
     CGSize LabelSize = [self sizeWithText:_titleLabel.text textFont:_titleLabel.font MaxSize:textSize].size;
-    _titleLabel.frame = CGRectMake(GENERAL_SIZE(40), Y, LabelSize.width, LabelSize.height);
+    
+    if ([_commentModel.topContent isEqualToString:@""]) {
+        _titleLabel.frame = CGRectMake(GENERAL_SIZE(40), Y, LabelSize.width, 0);
+    } else {
+        _titleLabel.frame = CGRectMake(GENERAL_SIZE(40), Y, LabelSize.width, LabelSize.height);
+    }
+    
     
     CGFloat Y1 = CGRectGetMaxY(_titleLabel.frame)+GENERAL_SIZE(20);
     // 高度自适应
     CGSize LabelSize1 = [self sizeWithText:_contentLabel.text textFont:_contentLabel.font MaxSize:textSize].size;
-    _contentLabel.frame = CGRectMake(GENERAL_SIZE(40), Y1, LabelSize1.width, LabelSize1.height);
+    
+    if ([_commentModel.topContent isEqualToString:@""]) {
+        _contentLabel.frame = CGRectMake(GENERAL_SIZE(40), Y1, LabelSize1.width, 0);
+    } else {
+        _contentLabel.frame = CGRectMake(GENERAL_SIZE(40), Y1, LabelSize1.width, LabelSize1.height);
+    }
     
     
     //重新计算collectionview的高度  = 总行数(rows) * itemH
@@ -120,7 +131,12 @@ static NSString *const kReuseIdentifierOfCell = @"kReuseIdentifierOfGWFDiscoverC
     CGFloat collectionViewH = rows * ((SCREEN_WIDTH-GENERAL_SIZE(20)*2)/3);
     CGRect frame = _collectionView.frame;
     frame.size.height = collectionViewH;
-    frame.origin.y = CGRectGetMaxY(_contentLabel.frame)+GENERAL_SIZE(20);
+    if ([_commentModel.topContent isEqualToString:@""]) {
+        frame.origin.y = CGRectGetMaxY(_contentLabel.frame);
+    } else {
+        frame.origin.y = CGRectGetMaxY(_contentLabel.frame)+GENERAL_SIZE(20);
+    }
+    
     _collectionView.frame = frame;
 }
 

@@ -366,7 +366,7 @@ static UIColor *disabledColor;
 
 + (void)initialize
 {
-    checkedIcon     = [UIImage imageNamed:@"select"];//[UIImage imageWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:[NSString stringWithFormat:@"ZYQAssetPicker.Bundle/Images/%@@2x.png",(!IS_IOS7) ? @"AssetsPickerChecked~iOS6" : @"AssetsPickerChecked"]]];
+    checkedIcon     = [UIImage imageNamed:@"AssetsPickerChecked"];//[UIImage imageWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:[NSString stringWithFormat:@"ZYQAssetPicker.Bundle/Images/%@@2x.png",(!IS_IOS7) ? @"AssetsPickerChecked~iOS6" : @"AssetsPickerChecked"]]];
     selectedColor   = [UIColor colorWithWhite:1 alpha:0.3];
     disabledColor   = [UIColor colorWithWhite:1 alpha:0.9];
 }
@@ -469,7 +469,7 @@ static UIColor *titleColor;
         self.isAccessibilityElement     = YES;
         self.accessibilityTraits        = UIAccessibilityTraitImage;
         
-        _imageView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, (SCREEN_WIDTH-15)/4, kThumbnailSize.height)];
+        _imageView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, (SCREEN_WIDTH-15)/4, (SCREEN_WIDTH-15)/4)];
         [self addSubview:_imageView];
         
         _videoTitle=[[ZYQVideoTitleView alloc] initWithFrame:CGRectMake(0, kThumbnailSize.height-20, kThumbnailSize.width, titleHeight)];
@@ -552,13 +552,13 @@ static UIColor *titleColor;
     if (self.contentView.subviews.count<assets.count) {
         for (int i=0; i<assets.count; i++) {
             if (i>((NSInteger)self.contentView.subviews.count-1)) {
-                ZYQAssetView *assetView=[[ZYQAssetView alloc] initWithFrame:CGRectMake((i+1)*3+i*((SCREEN_WIDTH-15)/4), minimumLineSpacing-1, ((SCREEN_WIDTH-15)/4), kThumbnailSize.height)];
+                ZYQAssetView *assetView=[[ZYQAssetView alloc] initWithFrame:CGRectMake((i+1)*3+i*((SCREEN_WIDTH-15)/4), minimumLineSpacing-1, ((SCREEN_WIDTH-15)/4), (SCREEN_WIDTH-15)/4)];
                 [assetView bind:assets[i] selectionFilter:selectionFilter isSeleced:[((ZYQAssetViewController*)_delegate).indexPathsForSelectedItems containsObject:assets[i]]];
                 assetView.delegate=self;
                 [self.contentView addSubview:assetView];
             }
             else{
-                ((ZYQAssetView*)self.contentView.subviews[i]).frame=CGRectMake((i+1)*3+i*((SCREEN_WIDTH-15)/4), minimumLineSpacing-1, ((SCREEN_WIDTH-15)/4), kThumbnailSize.height);
+                ((ZYQAssetView*)self.contentView.subviews[i]).frame=CGRectMake((i+1)*3+i*((SCREEN_WIDTH-15)/4), minimumLineSpacing-1, ((SCREEN_WIDTH-15)/4), (SCREEN_WIDTH-15)/4);
                 [(ZYQAssetView*)self.contentView.subviews[i] bind:assets[i] selectionFilter:selectionFilter isSeleced:[((ZYQAssetViewController*)_delegate).indexPathsForSelectedItems containsObject:assets[i]]];
             }
             
@@ -571,7 +571,7 @@ static UIColor *titleColor;
                 [((ZYQAssetView*)self.contentView.subviews[i-1]) removeFromSuperview];
             }
             else{
-                ((ZYQAssetView*)self.contentView.subviews[i-1]).frame=CGRectMake((i)*3+(i-1)*((SCREEN_WIDTH-15)/4), minimumLineSpacing-1, ((SCREEN_WIDTH-15)/4), kThumbnailSize.height);
+                ((ZYQAssetView*)self.contentView.subviews[i-1]).frame=CGRectMake((i)*3+(i-1)*((SCREEN_WIDTH-15)/4), minimumLineSpacing-1, ((SCREEN_WIDTH-15)/4), (SCREEN_WIDTH-15)/4);
                 [(ZYQAssetView*)self.contentView.subviews[i-1] bind:assets[i-1] selectionFilter:selectionFilter isSeleced:[((ZYQAssetViewController*)_delegate).indexPathsForSelectedItems containsObject:assets[i-1]]];
             }
         }

@@ -153,7 +153,7 @@ COMMENTVCNOTIFICATIONJUMPCLICK
 #pragma mark --- 懒加载
 -(UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-49)];
         _tableView.dataSource = self;
         _tableView.delegate = self;
         _tableView.tableFooterView = [[UIView alloc] init];

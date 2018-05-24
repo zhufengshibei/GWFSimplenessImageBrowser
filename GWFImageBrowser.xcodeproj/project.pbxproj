@@ -921,6 +921,7 @@
 				DEVELOPMENT_TEAM = 829A926U4N;
 				GCC_PREFIX_HEADER = GWFImageBrowser/GWFImageHeader.pch;
 				INFOPLIST_FILE = GWFImageBrowser/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -942,6 +943,7 @@
 				DEVELOPMENT_TEAM = 829A926U4N;
 				GCC_PREFIX_HEADER = GWFImageBrowser/GWFImageHeader.pch;
 				INFOPLIST_FILE = GWFImageBrowser/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -17,6 +17,8 @@
 
 @property (nonatomic,strong) WKWebView *webView;
 
+@property (nonatomic, copy) NSString *imageString;
+
 @end
 
 @implementation GWFImageBrowserCell
@@ -117,6 +119,8 @@
             //进度条 KVO
             [_webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
             
+            _imageString = urlStr;
+            
         } else {
             _imageView.hidden = NO;
             _webView.hidden = YES;
@@ -154,7 +158,34 @@
 // 长按
 - (void)longPressToDo {
     
+//    NSLog(@"==   %@",[_webView.URL absoluteString]);
+//
+    NSData *imageData = [NSData dataWithContentsOfURL:_webView.URL];
+////    UIImage *tempImage =  [UIImage imageWithData:imageData];
+//
+//    // 保存到本地相册
+//    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+//    [library writeImageDataToSavedPhotosAlbum:imageData metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
+//        NSLog(@"Success at %@", [assetURL path] );
+//    }] ;
+//
+//
+    
+    
+    id objc;
+    if ([_imageString hasSuffix:@".gif"]) {
+        objc = imageData;
+    } else {
+        objc = _imageView.image;
+    }
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(longPressSaveImageToAlbum:string:)]) {
+        [self.delegate longPressSaveImageToAlbum:objc string:_imageString];
+    }
+
 }
+
+
 // 单击
 - (void)didClickCancel {
     if (self.delegate && [self.delegate respondsToSelector:@selector(dissMissVC)]) {
