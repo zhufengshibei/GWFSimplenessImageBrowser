@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8543BB812A25FDD1F01438B85057774E"
+               BlueprintIdentifier = "D9738427A9297BECBB120D275D4216A7"
                BlueprintName = "ZYQAssetPickerController"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "ZYQAssetPickerController.framework">

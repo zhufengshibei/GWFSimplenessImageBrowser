@@ -12,4 +12,6 @@
 
 @property (nonatomic, strong) UIImage *discoverImage;
 
+@property (nonatomic, copy) NSString *videoPath;
+
 @end

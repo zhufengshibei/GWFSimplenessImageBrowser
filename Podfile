@@ -9,5 +9,6 @@ pod 'ZYQAssetPickerController'
 pod 'MJExtension'
 pod 'FMDB'
 pod 'MBProgressHUD'
+pod 'JSONModel', '~> 1.0.1'
 
 end

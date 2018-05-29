@@ -16,21 +16,24 @@
 
 #import "GWFImageBrowserViewController.h"
 
-@interface GWFCommentViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UITextFieldDelegate,UITextViewDelegate,ZYQAssetPickerControllerDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate> {
+// UICollectionViewDelegate,UICollectionViewDataSource,UITextFieldDelegate,UITextViewDelegate,ZYQAssetPickerControllerDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate，
+
+@interface GWFCommentViewController ()<UITextFieldDelegate,UITextViewDelegate,HXPhotoViewDelegate,UIImagePickerControllerDelegate> {
     UITextField  *_titleTF;
     UITextView   *_contentTextView;
     UILabel      *_placeHolderLabel;
     UIView       *lineView1;
     UIView       *_shawView;
+    
 }
 
 @property (nonatomic,strong) NSMutableArray *dataArray;
 @property (nonatomic,strong) NSMutableArray *bigDataArray;
-@property (nonatomic,strong) NSMutableArray *assetsDataArray;
 
-@property (nonatomic, strong)  ZYQAssetPickerController *pickerController;
-
-@property (nonatomic,strong) UICollectionView *collectionView;;
+@property (strong, nonatomic) HXPhotoManager *manager;
+@property (strong, nonatomic) HXPhotoView *photoView;
+@property (strong, nonatomic) HXDatePhotoToolManager *toolManager;
+@property (assign, nonatomic) BOOL isVideo;
 
 @end
 
@@ -48,9 +51,9 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"发布帖子";
     
+    self.isVideo = NO;
     _dataArray = [NSMutableArray array];
     _bigDataArray = [NSMutableArray array];
-    _assetsDataArray = [NSMutableArray array];
     
     [self setupSubViews];
 }
@@ -68,7 +71,8 @@
     
     
     CGFloat margin = GENERAL_SIZE(30);
-    CGFloat Y = subViewsY + margin;
+    CGFloat Y1 = subViewsY;
+    CGFloat Y = Y1+14;
     // 创建控件
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(GENERAL_SIZE(40), Y, GENERAL_SIZE(80), GENERAL_SIZE(40))];
     titleLabel.text = @"标题:";
@@ -76,9 +80,9 @@
     titleLabel.font = TEXTFONT;
     [self.view addSubview:titleLabel];
     
-    _titleTF = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleLabel.frame)+GENERAL_SIZE(20), Y, SCREEN_WIDTH - GENERAL_SIZE(80) - GENERAL_SIZE(40)*2-GENERAL_SIZE(20), GENERAL_SIZE(40))];
+    _titleTF = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleLabel.frame)+GENERAL_SIZE(20), Y-7, SCREEN_WIDTH - GENERAL_SIZE(80) - GENERAL_SIZE(40)*2-GENERAL_SIZE(20), GENERAL_SIZE(60))];
     _titleTF.textColor = TEXTCOLOR;
-    _titleTF.placeholder = @"请输入帖子标题...";
+    _titleTF.placeholder = @" 请输入帖子标题...";
     _titleTF.font = TEXTFONT;
     _titleTF.layer.cornerRadius = GENERAL_SIZE(5);
     _titleTF.layer.masksToBounds = YES;
@@ -99,7 +103,7 @@
     _contentTextView = [[UITextView alloc] initWithFrame:CGRectMake(GENERAL_SIZE(20), CGRectGetMaxY(lineView.frame)+GENERAL_SIZE(margin), SCREEN_WIDTH - GENERAL_SIZE(20)*2, GENERAL_SIZE(241))];
     _contentTextView.textColor = TEXTCOLOR;
     _contentTextView.font = TEXTFONT;
-    _contentTextView.backgroundColor = [UIColor cyanColor];
+    _contentTextView.backgroundColor = [UIColor clearColor];
     _contentTextView.delegate = self;
     [self.view addSubview:_contentTextView];
     
@@ -112,29 +116,145 @@
     lineView1 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_contentTextView.frame)+GENERAL_SIZE(margin), SCREEN_WIDTH, GENERAL_SIZE(2))];
     lineView1.backgroundColor =RGBACOLOR(246, 246, 246, 1.0);
     [self.view addSubview:lineView1];
-    
-   
-    CGFloat CollectionViewH = SCREEN_HEIGHT-CGRectGetMaxY(lineView1.frame)-GENERAL_SIZE(margin)*2;
 
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.itemSize = CGSizeMake(GENERAL_SIZE(160), GENERAL_SIZE(160));
-//    flowLayout.minimumLineSpacing = 0;
-//    flowLayout.minimumInteritemSpacing = 0;
-    flowLayout.sectionInset = UIEdgeInsetsMake(GENERAL_SIZE(20), GENERAL_SIZE(20), 0, GENERAL_SIZE(20));
-    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(GENERAL_SIZE(20), CGRectGetMaxY(lineView1.frame)+GENERAL_SIZE(margin), SCREEN_WIDTH-GENERAL_SIZE(20)*2, CollectionViewH) collectionViewLayout:flowLayout];
-    _collectionView.backgroundColor = RGBACOLOR(241, 241, 241, 1.0);
-    _collectionView.dataSource = self;
-    _collectionView.delegate = self;
+    HXPhotoView *photoView = [HXPhotoView photoManager:self.manager];
+    photoView.frame = CGRectMake(GENERAL_SIZE(20), CGRectGetMaxY(lineView1.frame)+margin*2, SCREEN_WIDTH-GENERAL_SIZE(20)*2, 0);
+    photoView.delegate = self;
+    photoView.outerCamera = YES;
+    photoView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:photoView];
+    self.photoView = photoView;
     
-    [_collectionView registerClass:[GWFAddButtonCell class] forCellWithReuseIdentifier:@"GWFAddButtonCellIdentifier"];
-    [_collectionView registerClass:[GWFImageCell class] forCellWithReuseIdentifier:@"GWFImageCellIdentifier"];
     
-    [self.view addSubview:_collectionView];
-
     [self.view bringSubviewToFront:_shawView];
-    
+}
+- (HXDatePhotoToolManager *)toolManager {
+    if (!_toolManager) {
+        _toolManager = [[HXDatePhotoToolManager alloc] init];
+    }
+    return _toolManager;
 }
 
+- (HXPhotoManager *)manager {
+    if (!_manager) {
+        _manager = [[HXPhotoManager alloc] initWithType:HXPhotoManagerSelectedTypePhotoAndVideo];
+        _manager.configuration.openCamera = YES;
+        _manager.configuration.lookLivePhoto = YES;
+        _manager.configuration.photoMaxNum = 9;
+        _manager.configuration.videoMaxNum = 6;
+        _manager.configuration.maxNum = 10;
+        _manager.configuration.videoMaxDuration = 500.f;
+        _manager.configuration.saveSystemAblum = NO;
+        _manager.configuration.showDateSectionHeader = NO;
+        _manager.configuration.selectTogether = NO;
+        __weak typeof(self) weakSelf = self;
+        _manager.configuration.shouldUseCamera = ^(UIViewController *viewController, HXPhotoConfigurationCameraType cameraType, HXPhotoManager *manager) {
+            
+            // 这里拿使用系统相机做例子
+            UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+            imagePickerController.delegate = (id)weakSelf;
+            imagePickerController.allowsEditing = NO;
+            NSString *requiredMediaTypeImage = ( NSString *)kUTTypeImage;
+            NSString *requiredMediaTypeMovie = ( NSString *)kUTTypeMovie;
+            NSArray *arrMediaTypes;
+            if (cameraType == HXPhotoConfigurationCameraTypePhoto) {
+                arrMediaTypes=[NSArray arrayWithObjects:requiredMediaTypeImage,nil];
+            }else if (cameraType == HXPhotoConfigurationCameraTypeVideo) {
+                arrMediaTypes=[NSArray arrayWithObjects:requiredMediaTypeMovie,nil];
+            }else {
+                arrMediaTypes=[NSArray arrayWithObjects:requiredMediaTypeImage, requiredMediaTypeMovie,nil];
+            }
+            [imagePickerController setMediaTypes:arrMediaTypes];
+            // 设置录制视频的质量
+            [imagePickerController setVideoQuality:UIImagePickerControllerQualityTypeHigh];
+            //设置最长摄像时间
+            [imagePickerController setVideoMaximumDuration:60.f];
+            imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+            imagePickerController.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+            imagePickerController.modalPresentationStyle=UIModalPresentationOverCurrentContext;
+            [viewController presentViewController:imagePickerController animated:YES completion:nil];
+        };
+    }
+    return _manager;
+}
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    
+    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+    HXPhotoModel *model;
+    if ([mediaType isEqualToString:(NSString *)kUTTypeImage]) {
+        UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+        model = [HXPhotoModel photoModelWithImage:image];
+        if (self.manager.configuration.saveSystemAblum) {
+            [HXPhotoTools savePhotoToCustomAlbumWithName:self.manager.configuration.customAlbumName photo:model.thumbPhoto];
+        }
+    }else  if ([mediaType isEqualToString:(NSString *)kUTTypeMovie]) {
+        NSURL *url = info[UIImagePickerControllerMediaURL];
+        NSDictionary *opts = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO]
+                                                         forKey:AVURLAssetPreferPreciseDurationAndTimingKey];
+        AVURLAsset *urlAsset = [AVURLAsset URLAssetWithURL:url options:opts];
+        float second = 0;
+        second = urlAsset.duration.value/urlAsset.duration.timescale;
+        model = [HXPhotoModel photoModelWithVideoURL:url videoTime:second];
+        if (self.manager.configuration.saveSystemAblum) {
+            [HXPhotoTools saveVideoToCustomAlbumWithName:self.manager.configuration.customAlbumName videoURL:url];
+        }
+    }
+    if (self.manager.configuration.useCameraComplete) {
+        self.manager.configuration.useCameraComplete(model);
+    }
+}
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)photoView:(HXPhotoView *)photoView changeComplete:(NSArray<HXPhotoModel *> *)allList photos:(NSArray<HXPhotoModel *> *)photos videos:(NSArray<HXPhotoModel *> *)videos original:(BOOL)isOriginal {
+    
+    NSSLog(@"所有:%ld - 照片:%ld - 视频:%ld",allList.count,photos.count,videos.count);
+    NSSLog(@"所有:%@ - 照片:%@ - 视频:%@",allList,photos,videos);
+    
+    [HXPhotoTools selectListWriteToTempPath:allList requestList:^(NSArray *imageRequestIds, NSArray *videoSessions) {
+        
+        NSSLog(@"requestIds - image : %@ \nsessions - video : %@",imageRequestIds,videoSessions);
+        
+    } completion:^(NSArray<NSURL *> *allUrl, NSArray<NSURL *> *imageUrls, NSArray<NSURL *> *videoUrls) {
+        
+        NSSLog(@"allUrl - %@\nimageUrls - %@\nvideoUrls - %@",allUrl,imageUrls,videoUrls);
+        if (imageUrls.count > 0) {
+            self.isVideo = NO;
+            for (NSURL *url in imageUrls) {
+                UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
+                [self.dataArray addObject:image];
+            }
+        }
+        if (videoUrls.count > 0) {
+            self.isVideo = YES;
+            for (NSURL *videoUrl in videoUrls) {
+                NSString *videoStr = [videoUrl absoluteString];
+                [self.dataArray addObject:videoStr];
+            }
+            
+            
+        }
+        NSLog(@"dataArray === %@",self.dataArray);
+        
+    } error:^{
+        NSSLog(@"失败");
+    }];
+}
+//- (void)photoView:(HXPhotoView *)photoView deleteNetworkPhoto:(NSString *)networkPhotoUrl {
+//    NSSLog(@"%@",networkPhotoUrl);
+//}
+//
+//- (void)photoView:(HXPhotoView *)photoView updateFrame:(CGRect)frame {
+//    NSSLog(@"%@",NSStringFromCGRect(frame));
+////    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, CGRectGetMaxY(frame) + kPhotoViewMargin);
+//
+//}
+//
+//- (void)photoView:(HXPhotoView *)photoView currentDeleteModel:(HXPhotoModel *)model currentIndex:(NSInteger)index {
+//    NSSLog(@"%@ --> index - %ld",model,index);
+//}
 
 #pragma mark --  UITextViewDelegate
 - (void)textViewDidChange:(UITextView *)textView {
@@ -172,144 +292,76 @@
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self endEditView];
 }
+
 #pragma mark --  发送按钮的点击事件
 - (void)sendContent:(id)sender {
     
     [self endEditView];
 
-    [MBProgressHUD showMessag:@"正在发送..." toView:self.view];
-    NSMutableArray *tempImageArr = [NSMutableArray array];
-    NSMutableArray *origionTempImageArr = [NSMutableArray array];
-    // 等比缩小后的图片
-    for (UIImage *originImage in self.dataArray) {
-        NSData *imageData = UIImageJPEGRepresentation(originImage, 1.0);
-        NSString *image64 = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-        [tempImageArr addObject:image64];
-    }
-    // 原图数组
-    for (UIImage *originImage in self.bigDataArray) {
-        NSData *imageData = UIImageJPEGRepresentation(originImage, 1.0);
-        NSString *image64 = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-        [origionTempImageArr addObject:image64];
-    }
-    // 等比缩小后的图片的jsonStr
-    NSData *data=[NSJSONSerialization dataWithJSONObject:tempImageArr options:NSJSONWritingPrettyPrinted error:nil];
-    NSString *jsonStr=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-    // 原图片的jsonStr
-    NSData *origionDdata=[NSJSONSerialization dataWithJSONObject:origionTempImageArr options:NSJSONWritingPrettyPrinted error:nil];
-    NSString *origionJsonStr=[[NSString alloc]initWithData:origionDdata encoding:NSUTF8StringEncoding];
+    NSCharacterSet *chat = [NSCharacterSet whitespaceCharacterSet];
+    NSString *titleText = [_titleTF.text stringByTrimmingCharactersInSet:chat];
     
-    GWFCommentModel *model = [[GWFCommentModel alloc] init];
-    model.topTitle = _titleTF.text;  // 标题
-    model.topContent = _contentTextView.text;  // 文本
-    model.jsonStr = jsonStr;  // 图片
-    model.origionImageJsonStr = origionJsonStr;
-    model.postTime = [self currentTimer]; // 帖子发布时间
-    
-    [[GWFDataBaseManager shareManager] setDataForDataBase:model];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showSuccess:@"发送成功！" toView:self.view];
-    });
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.navigationController popViewControllerAnimated:YES];
-    });
-}
-
-#pragma mark ------相册回调方法----------
-// 多图片选择
--(void)assetPickerController:(ZYQAssetPickerController *)picker didFinishPickingAssets:(NSArray *)assets{
-    NSLog(@"assets === %@",assets);
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        for (int i=0; i<assets.count; i++) {
-            ZYQAsset *asset=assets[i];
-            
-            [self.assetsDataArray addObject:asset];
-            
-            [asset setGetFullScreenImage:^(UIImage *result) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if (result) {
-                        UIImage *image = [UIImage scaleToSizeWithImage:result size:CGSizeMake(GENERAL_SIZE(160), GENERAL_SIZE(160))];
-                        [self.dataArray addObject:image];
-                        [self.bigDataArray addObject:result];
-                        [self.collectionView reloadData];
-                    }
-                });
-                
-            }];
-        }
-    });
-
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-//定义展示的UICollectionViewCell的个数
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return self.dataArray.count + 1;
-}
-
-//每个UICollectionView展示的内容
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    GWFAddButtonCell *addCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"GWFAddButtonCellIdentifier" forIndexPath:indexPath];
-    GWFImageCell *imageCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"GWFImageCellIdentifier" forIndexPath:indexPath];
-    
-    if (self.dataArray.count == 0) {
-        return addCell;
+    if (titleText.length <= 0) {
+        [MBProgressHUD showError:@"标题不能为空" toView:self.view];
+        return;
     } else {
         
-        if (indexPath.item + 1 > self.dataArray.count) {
-            return addCell;
-        } else {
-            imageCell.imageView.image = self.dataArray[indexPath.item];
-//            [imageCell.imageView addSubview:imageCell.deleteBtn];
-            imageCell.deleteBtn.tag = indexPath.item+100;
-            [imageCell.deleteBtn addTarget:self action:@selector(deleteImage:) forControlEvents:UIControlEventTouchUpInside];
+        NSString *contentText = [_contentTextView.text stringByTrimmingCharactersInSet:chat];
+        if (contentText.length <= 0 && self.dataArray.count == 0) {
+            [MBProgressHUD showError:@"请输入文本或添加图片" toView:self.view];
+            return;
         }
-        return imageCell;
-
-    }
-
-}
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.item + 1 > self.dataArray.count) {
-        // 图片
-        self.pickerController = [[ZYQAssetPickerController alloc] init];
-        _pickerController.maximumNumberOfSelection = 9;
-        _pickerController.assetsFilter = ZYQAssetsFilterAllAssets;
-        _pickerController.showEmptyGroups=YES;
-        _pickerController.delegate=self;
-        _pickerController.selectionFilter = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-            if ([(ZYQAsset*)evaluatedObject mediaType]==ZYQAssetMediaTypeVideo) {
-                NSTimeInterval duration = [(ZYQAsset*)evaluatedObject duration];
-                return duration >= 9;
-            } else {
-                return YES;
+        [MBProgressHUD showMessag:@"正在发送..." toView:self.view];
+        NSString *jsonStr;
+        NSString *videoStr;
+        GWFCommentModel *model = [[GWFCommentModel alloc] init];
+        
+        if (!self.isVideo) {
+            NSMutableArray *tempImageArr = [NSMutableArray array];
+            // 等比缩小后的图片
+            for (UIImage *originImage in self.dataArray) {
+                NSData *imageData = UIImageJPEGRepresentation(originImage, 1.0);
+                NSString *image64 = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+                [tempImageArr addObject:image64];
             }
-        }];
-        [self presentViewController:self.pickerController animated:YES completion:nil];
-    } else {
-        NSLog(@"===== %@",self.dataArray);
-        GWFImageBrowserViewController *imageBrowserVC = [[GWFImageBrowserViewController alloc] init];
-        imageBrowserVC.imageIndex = indexPath.item;
-        imageBrowserVC.isLocal = YES;
-        imageBrowserVC.dataArray = self.bigDataArray;
-        CATransition *transition = [CATransition animation];
-        transition.duration = 0.5f;
-        transition.type = @"Cube";
-        [self.navigationController.view.layer addAnimation:transition forKey:nil];
-        [self presentViewController:imageBrowserVC animated:NO completion:nil];
+            // 等比缩小后的图片的jsonStr
+            NSData *data=[NSJSONSerialization dataWithJSONObject:tempImageArr options:NSJSONWritingPrettyPrinted error:nil];
+            jsonStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+            videoStr = @"";
+            model.topType = @"1";
+            
+        } else {
+            videoStr = [self.dataArray componentsJoinedByString:@","];
+            jsonStr = @"";
+            model.topType = @"2";
+        }
+        if (self.dataArray.count == 0) {
+            model.topType = @"0";
+        }
+        model.topTitle = _titleTF.text;  // 标题
+        model.topContent = _contentTextView.text;  // 文本
+        model.jsonStr = jsonStr;  // 图片
+        model.videoString = videoStr;// 视频连接
+        model.postTime = [self currentTimer]; // 帖子发布时间
+        
+        [[GWFDataBaseManager shareManager] setDataForDataBase:model];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [MBProgressHUD showSuccess:@"发送成功！" toView:self.view];
+        });
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.navigationController popViewControllerAnimated:YES];
+            
+            if (self.doneBlack) {
+                self.doneBlack();
+            }
+        });
     }
-}
-- (void)deleteImage:(UIButton *)deleteBtn {
-    NSInteger index = deleteBtn.tag - 100;
     
-    [self.dataArray removeObjectAtIndex:index];
     
-    [self.collectionView reloadData];
 }
+
 // 获取当前时间
 - (NSString *)currentTimer {
     NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];

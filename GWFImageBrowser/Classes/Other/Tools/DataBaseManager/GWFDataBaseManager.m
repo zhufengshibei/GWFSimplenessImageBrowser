@@ -41,15 +41,13 @@
 }
 // 创建数据库
 - (void)createdDataBaseTable {
-    [_db executeUpdate:@"CREATE TABLE IF NOT EXISTS t_topDetails (id integer PRIMARY KEY AUTOINCREMENT, topTitle text NOT NULL, topContent text NOT NULL, jsonStr text NOT NULL, origionJsonStr text NOT NULL, postTime text NOT NULL);"];
+    [_db executeUpdate:@"CREATE TABLE IF NOT EXISTS t_topDetails (id integer PRIMARY KEY AUTOINCREMENT, topTitle text NOT NULL, topContent text NOT NULL, jsonStr text, videoString text, topType text, postTime text NOT NULL);"];
 }
 - (void)setDataForDataBase:(id)objc {
     GWFCommentModel *model = (GWFCommentModel *)objc;
     // 插入数据前先清空表中的数据
 //    [_db executeUpdate:@"DELETE FROM t_topDetails;"];
-    [_db executeUpdate:@"INSERT INTO t_topDetails (topTitle, topContent, jsonStr, origionJsonStr, postTime) VALUES (?, ?, ?, ?, ?);",model.topTitle,model.topContent,model.jsonStr,model.origionImageJsonStr,model.postTime];
-    
-    
+    [_db executeUpdate:@"INSERT INTO t_topDetails (topTitle, topContent, jsonStr, videoString, topType, postTime) VALUES (?, ?, ?, ?, ?, ?);",model.topTitle, model.topContent, model.jsonStr, model.videoString, model.topType,  model.postTime];
 }
 
 #pragma mark -- 查询数据
@@ -67,7 +65,7 @@
         GWFCommentModel *model = [[GWFCommentModel alloc] init];
         
         model.jsonStr = [set objectForColumn:@"jsonStr"];
-        model.origionImageJsonStr = [set objectForColumn:@"origionJsonStr"];
+        model.videoString = [set objectForColumn:@"videoString"];
         
         id tmp = [NSJSONSerialization JSONObjectWithData:[model.jsonStr dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments | NSJSONReadingMutableLeaves | NSJSONReadingMutableContainers error:nil];
         
@@ -80,19 +78,8 @@
                 }
             }
         }
-        // 原图
-        id oriTmp = [NSJSONSerialization JSONObjectWithData:[model.origionImageJsonStr dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments | NSJSONReadingMutableLeaves | NSJSONReadingMutableContainers error:nil];
-        
-        if (oriTmp) {
-            if ([oriTmp isKindOfClass:[NSArray class]]) {
-                for (NSString *str in oriTmp) {
-                    NSData * imageData =[[NSData alloc] initWithBase64EncodedString:str options:NSDataBase64DecodingIgnoreUnknownCharacters];
-                    UIImage *photo = [UIImage imageWithData:imageData];
-                    [model.origionImageArray addObject:photo];
-                }
-            }
-        }
-        
+        model.topType = [set stringForColumn:@"topType"];
+        model.videoArray = [model.videoString componentsSeparatedByString:@","];
         model.topTitle = [set stringForColumn:@"topTitle"];
         model.topContent = [set stringForColumn:@"topContent"];
         model.topID = [set stringForColumn:@"id"];

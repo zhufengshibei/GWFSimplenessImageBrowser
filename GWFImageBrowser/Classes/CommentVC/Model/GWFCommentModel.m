@@ -16,11 +16,11 @@
     }
     return _imageArray;
 }
--(NSMutableArray *)origionImageArray {
-    if (!_origionImageArray) {
-        _origionImageArray = [NSMutableArray array];
+-(NSArray *)videoArray {
+    if (!_videoArray) {
+        _videoArray = [NSArray array];
     }
-    return _origionImageArray;
+    return _videoArray;
 }
 
 -(CGFloat)cellHeight {

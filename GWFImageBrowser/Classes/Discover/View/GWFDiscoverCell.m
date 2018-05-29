@@ -87,12 +87,12 @@ static NSString *const kReuseIdentifierOfCell = @"kReuseIdentifierOfGWFDiscoverC
     _titleLabel.text = commentModel.topTitle;
     _contentLabel.text = commentModel.topContent;
     
-    if (self.commentModel.imageArray.count == 0) {
-        _collectionView.hidden = YES;
-    } else {
-        _collectionView.hidden = NO;
+//    if (self.commentModel.imageArray.count == 0) {
+//        _collectionView.hidden = YES;
+//    } else {
+//        _collectionView.hidden = NO;
         [_collectionView reloadData];
-    }
+//    }
     
 }
 
@@ -143,18 +143,34 @@ static NSString *const kReuseIdentifierOfCell = @"kReuseIdentifierOfGWFDiscoverC
 #pragma mark ---  collectionView 的数据源方法
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.commentModel.imageArray.count;
+    if ([self.commentModel.topType isEqualToString:@"1"]) {
+        return self.commentModel.imageArray.count;
+    } else if ([self.commentModel.topType isEqualToString:@"2"]) {
+        return self.commentModel.videoArray.count;
+    } else {
+        return 0;
+    }
+    
 }
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     GWFdiscoverImageItemCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kReuseIdentifierOfCell forIndexPath:indexPath];
     
-    [cell setDiscoverImage:self.commentModel.imageArray[indexPath.item]];
+    if ([self.commentModel.topType isEqualToString:@"1"]) {
+        [cell setDiscoverImage:self.commentModel.imageArray[indexPath.item]];
+        return cell;
+    } else if ([self.commentModel.topType isEqualToString:@"2"]) {
+        [cell setVideoPath:self.commentModel.videoArray[indexPath.item]];
+        return cell;
+    } else {
+        return cell;
+    }
     
-    return cell;
+    
+    
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (self.delegate && [self.delegate respondsToSelector:@selector(didImageItemWithIndexPath:imageArray:)]) {
-        [self.delegate didImageItemWithIndexPath:indexPath imageArray:self.commentModel.origionImageArray];
+        [self.delegate didImageItemWithIndexPath:indexPath imageArray:self.commentModel.imageArray];
     }
 }
 

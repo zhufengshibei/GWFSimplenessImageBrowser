@@ -62,9 +62,7 @@ static int tagOfLabelOfHeader = 2000;
     self.title = @"首页";
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.collectionView];
-    
 }
-
 COMMENTVCNOTIFICATIONJUMPCLICK
 
 #pragma mark ---  collectionView 的数据源方法

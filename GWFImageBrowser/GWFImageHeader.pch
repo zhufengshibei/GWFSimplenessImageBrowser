@@ -45,6 +45,10 @@ dispatch_async(dispatch_get_main_queue(), block);\
 #import "GWFCommentViewController.h"
 #import "ZYQAssetPickerController.h"
 
+#import "HXPhotoPicker.h"
+
+#import <AssetsLibrary/AssetsLibrary.h>
+
 #import "UIViewController+Basic.h"
 #import "UIBarButtonItem+GWFItem.h"
 #import "UIImage+GWFUIImage.h"

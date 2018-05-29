@@ -38,7 +38,7 @@
     
     
     _isPresentVC = NO;
-    [self loadData];
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -55,10 +55,11 @@
     [super viewDidLoad];
     
     self.title = @"发现";
-    self.view.backgroundColor = [UIColor brownColor];
+    self.view.backgroundColor = [UIColor whiteColor];
 
     [self.view addSubview:self.tableView];
     
+    [self loadData];
     
 }
 
@@ -75,6 +76,7 @@
             [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
     
             self.dataArray = [[GWFDataBaseManager shareManager] loadDataForTopDetails];
+            // 数组逆序
             self.dataArray = [[self.dataArray reverseObjectEnumerator] allObjects];
             [self.tableView reloadData];
             
@@ -101,11 +103,20 @@
     GWFCommentModel *model = self.dataArray[indexPath.row];
     
     CGFloat H = 0.0;
-    if (model.imageArray.count > 0) {
+    if (model.imageArray.count > 0 || model.videoArray.count > 0) {
 
         //重新计算collectionview的高度  = 总行数(rows) * itemH
         // rows = (item的总个数(count) - 1) / 列数(column) + 1
-        NSInteger count = model.imageArray.count;
+        NSInteger count = 0;
+        
+        if ([model.topType isEqualToString:@"1"]) {
+            count = model.imageArray.count;
+        } else if ([model.topType isEqualToString:@"2"]) {
+            count = model.videoArray.count;
+        } else {
+            count = 0;
+        }
+        
         NSInteger rows = (count - 1) / 3 + 1;
 
         CGFloat collectionViewH = rows * SCREEN_WIDTH/3;
@@ -133,7 +144,13 @@
     [self presentViewController:imageBrowserVC animated:NO completion:nil];
 }
 
-COMMENTVCNOTIFICATIONJUMPCLICK
+-(void)jumpButton {
+    GWFCommentViewController *commentVC= [[GWFCommentViewController alloc] init];
+    commentVC.doneBlack = ^{
+        [self loadData];
+    };
+    [self.navigationController pushViewController:commentVC animated:YES];
+}
 
 #pragma mark --- 懒加载
 -(UITableView *)tableView {

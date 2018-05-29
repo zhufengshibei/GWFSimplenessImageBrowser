@@ -13,12 +13,18 @@
 @property (nonatomic, copy) NSString *topTitle;
 @property (nonatomic, copy) NSString *topContent;
 @property (nonatomic, strong) NSMutableArray *imageArray;
-@property (nonatomic, strong) NSMutableArray *origionImageArray;
+@property (nonatomic, strong) NSArray *videoArray;
 @property (nonatomic, copy) NSString *topID;
 @property (nonatomic, copy) NSString *jsonStr;
-@property (nonatomic, copy) NSString *origionImageJsonStr;
+@property (nonatomic, copy) NSString *videoString;
 
 @property (nonatomic, copy) NSString *postTime;
+
+/**
+ * 帖子类型
+ * 0：无图无视频； 1：图片； 2：视频
+ */
+@property (nonatomic, copy) NSString *topType;
 
 @property (nonatomic, assign) CGFloat cellHeight;
 
