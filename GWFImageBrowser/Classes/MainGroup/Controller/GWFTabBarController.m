@@ -72,7 +72,7 @@
     GWFNavigationController *navNewInvitation = self.childViewControllers[1];
     navNewInvitation.tabBarItem.image = [UIImage imageOriginalWithUIImageName:@"tabBar_new_icon"];
     navNewInvitation.tabBarItem.selectedImage = [UIImage imageOriginalWithUIImageName:@"tabBar_new_click_icon"];
-    navNewInvitation.tabBarItem.title = @"发现";
+    navNewInvitation.tabBarItem.title = @"圈子";
     
     GWFNavigationController *navfriendsTrend = self.childViewControllers[2];
     navfriendsTrend.tabBarItem.image = [UIImage imageOriginalWithUIImageName:@"tabBar_friendTrends_icon"];

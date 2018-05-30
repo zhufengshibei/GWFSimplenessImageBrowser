@@ -14,9 +14,14 @@
 @property (nonatomic, copy) NSString *topContent;
 @property (nonatomic, strong) NSMutableArray *imageArray;
 @property (nonatomic, strong) NSArray *videoArray;
+@property (nonatomic, strong) NSArray *timesArray;
+@property (nonatomic, strong) NSMutableArray *thumbsArray;
 @property (nonatomic, copy) NSString *topID;
 @property (nonatomic, copy) NSString *jsonStr;
 @property (nonatomic, copy) NSString *videoString;
+
+@property (nonatomic, copy) NSString *timesJsonStr;
+@property (nonatomic, copy) NSString *thumbImagesJsonStr;
 
 @property (nonatomic, copy) NSString *postTime;
 

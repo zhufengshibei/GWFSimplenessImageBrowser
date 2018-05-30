@@ -36,6 +36,7 @@
  @param index 下标
  */
 - (void)photoView:(HXPhotoView *)photoView currentDeleteModel:(HXPhotoModel *)model currentIndex:(NSInteger)index;
+//-(void)deleteAttach:(NSInteger)index;
 @end
 
 @interface HXPhotoView : UIView

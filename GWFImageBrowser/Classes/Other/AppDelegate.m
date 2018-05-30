@@ -65,6 +65,18 @@
     
     // 创建数据库
     [[GWFDataBaseManager shareManager] createdDataBase];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    if(![fileManager fileExistsAtPath:kVideoPath])  // 视频文件夹
+    {
+        [fileManager createDirectoryAtPath:kVideoPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    if(![fileManager fileExistsAtPath:kImagePath])  // 图片文件夹
+    {
+        [fileManager createDirectoryAtPath:kImagePath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    
     return YES;
 }
 

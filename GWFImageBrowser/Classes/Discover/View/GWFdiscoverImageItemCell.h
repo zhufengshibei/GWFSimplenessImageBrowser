@@ -14,4 +14,11 @@
 
 @property (nonatomic, copy) NSString *videoPath;
 
+@property (nonatomic, strong) UIImage *thumbImage;
+
+@property (nonatomic, copy) NSString *durationtimer;
+
+
+@property (nonatomic, copy) NSString *isType;
+
 @end

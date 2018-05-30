@@ -22,6 +22,18 @@
     }
     return _videoArray;
 }
+-(NSMutableArray *)thumbsArray {
+    if (!_thumbsArray) {
+        _thumbsArray = [NSMutableArray array];
+    }
+    return _thumbsArray;
+}
+-(NSArray *)timesArray {
+    if (!_timesArray) {
+        _timesArray = [NSArray array];
+    }
+    return _timesArray;
+}
 
 -(CGFloat)cellHeight {
     _cellHeight = 0;
@@ -38,9 +50,8 @@
     }
     if (![self.topContent isEqualToString:@""]) {
         _cellHeight += [self.topContent boundingRectWithSize:textMaxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : LabelFont(28)} context:nil].size.height + GENERAL_SIZE(20);
-        _cellHeight += GENERAL_SIZE(20);
     }
-    
+    _cellHeight += GENERAL_SIZE(20);
     return _cellHeight;
 }
 

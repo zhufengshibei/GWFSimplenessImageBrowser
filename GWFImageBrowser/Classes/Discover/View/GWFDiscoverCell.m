@@ -105,7 +105,7 @@ static NSString *const kReuseIdentifierOfCell = @"kReuseIdentifierOfGWFDiscoverC
     // 高度自适应
     CGSize LabelSize = [self sizeWithText:_titleLabel.text textFont:_titleLabel.font MaxSize:textSize].size;
     
-    if ([_commentModel.topContent isEqualToString:@""]) {
+    if ([_commentModel.topTitle isEqualToString:@""]) {
         _titleLabel.frame = CGRectMake(GENERAL_SIZE(40), Y, LabelSize.width, 0);
     } else {
         _titleLabel.frame = CGRectMake(GENERAL_SIZE(40), Y, LabelSize.width, LabelSize.height);
@@ -123,21 +123,32 @@ static NSString *const kReuseIdentifierOfCell = @"kReuseIdentifierOfGWFDiscoverC
     }
     
     
-    //重新计算collectionview的高度  = 总行数(rows) * itemH
-    // rows = (item的总个数(count) - 1) / 列数(column) + 1
-    NSInteger count = self.commentModel.imageArray.count;
-    NSInteger rows = (count - 1) / 3 + 1;
-    
-    CGFloat collectionViewH = rows * ((SCREEN_WIDTH-GENERAL_SIZE(20)*2)/3);
-    CGRect frame = _collectionView.frame;
-    frame.size.height = collectionViewH;
-    if ([_commentModel.topContent isEqualToString:@""]) {
-        frame.origin.y = CGRectGetMaxY(_contentLabel.frame);
-    } else {
-        frame.origin.y = CGRectGetMaxY(_contentLabel.frame)+GENERAL_SIZE(20);
+    if (_commentModel.imageArray.count > 0 || _commentModel.videoArray.count > 0) {
+        
+        //重新计算collectionview的高度  = 总行数(rows) * itemH
+        // rows = (item的总个数(count) - 1) / 列数(column) + 1
+        NSInteger count = 0;
+        
+        if ([_commentModel.topType isEqualToString:@"1"]) {
+            count = _commentModel.imageArray.count;
+        } else if ([_commentModel.topType isEqualToString:@"2"]) {
+            count = _commentModel.videoArray.count;
+        }
+        
+        NSInteger rows = (count - 1) / 3 + 1;
+        CGFloat collectionViewH = rows * ((SCREEN_WIDTH-GENERAL_SIZE(20)*2)/3);
+        CGRect frame = _collectionView.frame;
+        frame.size.height = collectionViewH;
+        if ([_commentModel.topContent isEqualToString:@""]) {
+            frame.origin.y = CGRectGetMaxY(_contentLabel.frame);
+        } else {
+            frame.origin.y = CGRectGetMaxY(_contentLabel.frame)+GENERAL_SIZE(20);
+        }
+        
+        _collectionView.frame = frame;
+        
     }
     
-    _collectionView.frame = frame;
 }
 
 #pragma mark ---  collectionView 的数据源方法
@@ -155,22 +166,23 @@ static NSString *const kReuseIdentifierOfCell = @"kReuseIdentifierOfGWFDiscoverC
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     GWFdiscoverImageItemCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kReuseIdentifierOfCell forIndexPath:indexPath];
     
+    [cell setIsType:self.commentModel.topType];
+    
     if ([self.commentModel.topType isEqualToString:@"1"]) {
         [cell setDiscoverImage:self.commentModel.imageArray[indexPath.item]];
         return cell;
     } else if ([self.commentModel.topType isEqualToString:@"2"]) {
+        [cell setThumbImage:self.commentModel.thumbsArray[indexPath.item]];
+        [cell setDurationtimer:self.commentModel.timesArray[indexPath.item]];
         [cell setVideoPath:self.commentModel.videoArray[indexPath.item]];
         return cell;
     } else {
         return cell;
     }
-    
-    
-    
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(didImageItemWithIndexPath:imageArray:)]) {
-        [self.delegate didImageItemWithIndexPath:indexPath imageArray:self.commentModel.imageArray];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didImageItemWithIndexPath:imageArray:dataModel:)]) {
+        [self.delegate didImageItemWithIndexPath:indexPath imageArray:self.commentModel.imageArray dataModel:self.commentModel];
     }
 }
 

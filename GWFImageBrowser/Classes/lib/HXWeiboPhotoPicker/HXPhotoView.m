@@ -414,6 +414,12 @@ static NSString *HXPhotoSubViewCellId = @"photoSubViewCellId";
         HXPhotoSubViewCell *myCell = (HXPhotoSubViewCell *)cell;
         myCell.imageView.image = nil;
         [mirrorView removeFromSuperview];
+        
+//        if ([self.delegate respondsToSelector:@selector(deleteAttach:)]) {
+//            [self.delegate deleteAttach:indexPath.item];
+//        }
+        
+        
     }];
     [self.dataList removeObjectAtIndex:indexPath.item];
     [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
@@ -439,6 +445,8 @@ static NSString *HXPhotoSubViewCellId = @"photoSubViewCellId";
     model.previewPhoto = nil;
     model = nil;
     [self setupNewFrame];
+    
+    
 }
 
 - (void)changeSelectedListModelIndex {

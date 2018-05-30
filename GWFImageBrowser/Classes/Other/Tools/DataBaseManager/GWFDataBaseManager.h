@@ -16,4 +16,5 @@
 - (void)createdDataBase;
 - (void)setDataForDataBase:(id)objc;
 - (NSMutableArray *)loadDataForTopDetails;
+-(void)removeCurrentDataWithTopicId:(NSString *)topId;
 @end

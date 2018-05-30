@@ -182,6 +182,7 @@
         self.bottomMaskLayer.hidden = NO;
     }else {
         if (model.subType == HXPhotoModelMediaSubTypeVideo) {
+            NSLog(@"model.videoTime === %@",model.videoTime);
             self.stateLb.text = model.videoTime;
             self.stateLb.hidden = NO;
             self.bottomMaskLayer.hidden = NO;
