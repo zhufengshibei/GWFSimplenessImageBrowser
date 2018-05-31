@@ -29,7 +29,6 @@
     [super viewDidLoad];
     
     self.title = @"我的";
-    self.view.backgroundColor = [UIColor whiteColor];
     
     [self setupRightButton];
 }

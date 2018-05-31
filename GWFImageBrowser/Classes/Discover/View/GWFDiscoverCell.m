@@ -181,8 +181,16 @@ static NSString *const kReuseIdentifierOfCell = @"kReuseIdentifierOfGWFDiscoverC
     }
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(didImageItemWithIndexPath:imageArray:dataModel:)]) {
-        [self.delegate didImageItemWithIndexPath:indexPath imageArray:self.commentModel.imageArray dataModel:self.commentModel];
+    
+    NSString *videoName;
+    if ([self.commentModel.topType isEqualToString:@"2"]) {
+        videoName = [self.commentModel.videoArray[indexPath.item] lastPathComponent];
+    } else {
+        videoName = @"";
+    }
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didImageItemWithIndexPath:imageArray:dataModel:attachName:)]) {
+        [self.delegate didImageItemWithIndexPath:indexPath imageArray:self.commentModel.imageArray dataModel:self.commentModel attachName:videoName];
     }
 }
 

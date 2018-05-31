@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GWFBaseViewController.h"
 
-@interface GWFDiscoverViewController : UIViewController
+@interface GWFDiscoverViewController : GWFBaseViewController
 
 @end

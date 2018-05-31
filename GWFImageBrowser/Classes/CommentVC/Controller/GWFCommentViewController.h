@@ -6,14 +6,12 @@
 //  Copyright © 2018年 user. All rights reserved.
 //
 
-
-
-
 #import <UIKit/UIKit.h>
+#import "GWFBaseViewController.h"
 
 typedef void(^EditDoneBlock)(void);
 
-@interface GWFCommentViewController : UIViewController
+@interface GWFCommentViewController : GWFBaseViewController
 
 @property (nonatomic,copy) EditDoneBlock doneBlack;
 

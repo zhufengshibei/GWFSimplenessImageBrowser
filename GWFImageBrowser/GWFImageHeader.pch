@@ -28,6 +28,8 @@
 #define GENERAL_SIZE(I)  (int)(SCREEN_WIDTH/defaultWith*I)
 
 #define RGBACOLOR(r,g,b,a) [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:(a)]
+#define BACKGROUNDCOLOR [UIColor colorWithRed:(241)/255.0f green:(241)/255.0f blue:(241)/255.0f alpha:(1)]
+#define COMMONBLUECOLOR [UIColor colorWithRed:66/255.0f green:133/255.0f blue:244/255.0f alpha:1]
 
 #define CELLSIZE CGSizeMake(SCREEN_WIDTH/3, SCREEN_WIDTH/3)
 
@@ -45,7 +47,6 @@ dispatch_async(dispatch_get_main_queue(), block);\
 #import "GWFDiscoverViewController.h"
 #import "GWFMeViewController.h"
 #import "GWFCommentViewController.h"
-#import "ZYQAssetPickerController.h"
 
 #import "HXPhotoPicker.h"
 

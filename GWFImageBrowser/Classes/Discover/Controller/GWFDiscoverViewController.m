@@ -12,12 +12,17 @@
 
 #import "GWFImageBrowserViewController.h"
 
+#import "MoviePlayerViewController.h"
+
+
 @interface GWFDiscoverViewController ()<UITableViewDelegate,UITableViewDataSource,GWFDiscoverCellDelegate> {
     BOOL  _isPresentVC;
 }
 
 @property (nonatomic,strong) UITableView  *tableView;
 
+@property (nonatomic,strong) UIImageView  *defaultView;
+@property (nonatomic,strong) UIButton  *refreshBtn;
 
 @property (nonatomic,strong) NSArray  *dataArray;
 
@@ -31,11 +36,30 @@
     }
     return _dataArray;
 }
-
+-(UIImageView *)defaultView {
+    if (!_defaultView) {
+        _defaultView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
+        _defaultView.frame = self.view.bounds;
+        _defaultView.userInteractionEnabled = YES;
+        _refreshBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _refreshBtn.frame = CGRectMake((SCREEN_WIDTH-GENERAL_SIZE(280))/2, SCREEN_HEIGHT/3, GENERAL_SIZE(280), GENERAL_SIZE(280));
+        [_refreshBtn setImage:[UIImage imageNamed:@"ic_refresh"] forState:UIControlStateNormal];
+        _refreshBtn.layer.cornerRadius = GENERAL_SIZE(280)/2;
+        _refreshBtn.layer.masksToBounds = YES;
+        [_defaultView addSubview:_refreshBtn];
+        [_refreshBtn addTarget:self action:@selector(reloadViewData) forControlEvents:UIControlEventTouchUpInside];
+        UILabel *promtLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT/3+GENERAL_SIZE(220), SCREEN_WIDTH, GENERAL_SIZE(40))];
+        promtLabel.text = @"点击刷新试试看";
+        promtLabel.textColor = RGBACOLOR(0, 117, 211, 1.0);
+        promtLabel.textAlignment = NSTextAlignmentCenter;
+        promtLabel.font = LabelFont(34);
+        [_defaultView addSubview:promtLabel];
+    }
+    return _defaultView;
+}
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     COMMENTVCNOTIFICATIONJUMP
-    
     
     _isPresentVC = NO;
     
@@ -55,32 +79,40 @@
     [super viewDidLoad];
     
     self.title = @"圈子";
-    self.view.backgroundColor = [UIColor whiteColor];
 
     [self.view addSubview:self.tableView];
+    self.defaultView.hidden = YES;
+    [self.view addSubview:self.defaultView];
     
+    [self setupLoadingView];
     [self loadDataState:@"正在加载数据..." done:@"数据加载成功!"];
-    
 }
-
+-(void)reloadViewData {
+    self.defaultView.hidden = YES;
+    [self setupLoadingView];
+    [self loadDataState:@"正在加载数据..." done:@"数据加载成功!"];
+    [self loadingFailed];
+}
 - (void)loadDataState:(NSString *)promt done:(NSString *)doneStr {
-    
     [MBProgressHUD showMessag:promt toView:[UIApplication sharedApplication].keyWindow];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-
-        [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
-
-        [MBProgressHUD showSuccess:doneStr toView:[UIApplication sharedApplication].keyWindow];
-
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        self.dataArray = [[GWFDataBaseManager shareManager] loadDataForTopDetails];
+        // 数组逆序
+        self.dataArray = [[self.dataArray reverseObjectEnumerator] allObjects];
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            [self loadingSuccess];
             [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
-    
-            self.dataArray = [[GWFDataBaseManager shareManager] loadDataForTopDetails];
-            // 数组逆序
-            self.dataArray = [[self.dataArray reverseObjectEnumerator] allObjects];
-            [self.tableView reloadData];
-            
-        });
+            if (self.dataArray.count == 0) {
+                [MBProgressHUD showError:@"暂无数据" toView:self.view];
+                self.defaultView.hidden = NO;
+            } else {
+                [MBProgressHUD showSuccess:doneStr toView:[UIApplication sharedApplication].keyWindow];
+                self.defaultView.hidden = YES;
+                [self.tableView reloadData];
+            }
+        }];
     });
 }
 
@@ -146,11 +178,12 @@
 }
 
 #pragma mark --- GWFDiscoverCellDelegate  点击图片加载图片浏览器
--(void)didImageItemWithIndexPath:(NSIndexPath *)currentIndexPath imageArray:(NSMutableArray *)imageArr dataModel:(GWFCommentModel *)model {
+-(void)didImageItemWithIndexPath:(NSIndexPath *)currentIndexPath imageArray:(NSMutableArray *)imageArr dataModel:(GWFCommentModel *)model attachName:(NSString *)attachName {
+    _isPresentVC = YES;
+    [(AppDelegate*)[UIApplication sharedApplication].delegate setIsPresent:_isPresentVC];
+    
     if ([model.topType isEqualToString:@"1"]) {
-        _isPresentVC = YES;
-        [(AppDelegate*)[UIApplication sharedApplication].delegate setIsPresent:_isPresentVC] ;
-        
+    
         GWFImageBrowserViewController *imageBrowserVC = [[GWFImageBrowserViewController alloc] init];
         imageBrowserVC.imageIndex = currentIndexPath.item;
         imageBrowserVC.isLocal = YES;
@@ -161,9 +194,15 @@
         [self.navigationController.view.layer addAnimation:transition forKey:nil];
         [self presentViewController:imageBrowserVC animated:NO completion:nil];
     } else if ([model.topType isEqualToString:@"2"]) {
-        [MBProgressHUD showError:@"正在努力开发中..." toView:self.view];
+        // 视频播放
+        MoviePlayerViewController *movie = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MoviePlayerViewController"];
+        
+        NSString *urlStr = [kVideoPath stringByAppendingPathComponent:attachName];
+        NSURL *URL = [NSURL fileURLWithPath:urlStr];
+        movie.videoURL = URL;
+        movie.videoName = [attachName stringByReplacingOccurrencesOfString:@".mp4" withString:@""];
+        [self.navigationController pushViewController:movie animated:YES];
     }
-    
 }
 
 -(void)jumpButton {

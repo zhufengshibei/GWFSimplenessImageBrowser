@@ -16,8 +16,6 @@
 
 #import "GWFImageBrowserViewController.h"
 
-// UICollectionViewDelegate,UICollectionViewDataSource,UITextFieldDelegate,UITextViewDelegate,ZYQAssetPickerControllerDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate，
-
 @interface GWFCommentViewController ()<UITextFieldDelegate,UITextViewDelegate,HXPhotoViewDelegate,UIImagePickerControllerDelegate> {
     UITextField  *_titleTF;
     UITextView   *_contentTextView;
@@ -35,6 +33,8 @@
 @property (copy, nonatomic) NSString *topicType;
 @property (strong, nonatomic) GWFCommentModel *commentModel;
 
+@property (nonatomic,assign) BOOL isFinish;
+
 @end
 
 @implementation GWFCommentViewController
@@ -47,10 +47,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.view.backgroundColor = [UIColor whiteColor];
+
     self.title = @"发布帖子";
-    
+    self.isFinish = NO;
     self.topicType = @"0";
     _dataArray = [NSMutableArray array];
     
@@ -214,9 +213,6 @@
     
     NSSLog(@"所有:%ld - 照片:%ld - 视频:%ld",allList.count,photos.count,videos.count);
     NSSLog(@"所有:%@ - 照片:%@ - 视频:%@",allList,photos,videos);
-    
-    [self.dataArray removeAllObjects];
-    
     NSMutableArray *seconds = [NSMutableArray array];
     NSMutableArray *thumbImages = [NSMutableArray array];
     if (videos.count > 0) {
@@ -238,7 +234,7 @@
         NSSLog(@"requestIds - image : %@ \nsessions - video : %@",imageRequestIds,videoSessions);
         
     } completion:^(NSArray<NSURL *> *allUrl, NSArray<NSURL *> *imageUrls, NSArray<NSURL *> *videoUrls) {
-        
+        [self.dataArray removeAllObjects];
         NSSLog(@"allUrl - %@\nimageUrls - %@\nvideoUrls - %@",allUrl,imageUrls,videoUrls);
         if (imageUrls.count > 0) {
             self.topicType = @"1";
@@ -275,14 +271,17 @@
             }
         }
         NSLog(@"dataArray === %@",self.dataArray);
+        if (self.dataArray.count == videoUrls.count || self.dataArray.count == imageUrls.count) {
+            self.isFinish = YES;
+        }
         
     } error:^{
         NSSLog(@"失败");
     }];
 }
-- (void)photoView:(HXPhotoView *)photoView deleteNetworkPhoto:(NSString *)networkPhotoUrl {
-    NSSLog(@"networkPhotoUrl === %@",networkPhotoUrl);
-}
+//- (void)photoView:(HXPhotoView *)photoView deleteNetworkPhoto:(NSString *)networkPhotoUrl {
+//    NSSLog(@"networkPhotoUrl === %@",networkPhotoUrl);
+//}
 //
 //- (void)photoView:(HXPhotoView *)photoView updateFrame:(CGRect)frame {
 //    NSSLog(@"%@",NSStringFromCGRect(frame));
@@ -335,70 +334,68 @@
 - (void)sendContent:(id)sender {
     
     [self endEditView];
-
-    NSLog(@"dataArray2121212 === %@",self.dataArray);
     
-    NSCharacterSet *chat = [NSCharacterSet whitespaceCharacterSet];
-    NSString *titleText = [_titleTF.text stringByTrimmingCharactersInSet:chat];
-
-    if (titleText.length <= 0) {
-        [MBProgressHUD showError:@"标题不能为空" toView:self.view];
-        return;
-    } else {
-
-        NSString *contentText = [_contentTextView.text stringByTrimmingCharactersInSet:chat];
-        if (contentText.length <= 0 && self.dataArray.count == 0) {
-            [MBProgressHUD showError:@"请输入文本或添加图片" toView:self.view];
-            return;
-        }
-        [MBProgressHUD showMessag:@"正在发送..." toView:self.view];
-        NSString *jsonStr;
-        NSString *videoStr;
+    if (self.isFinish) {
+        NSLog(@"dataArray2121212 === %@",self.dataArray);
+        NSCharacterSet *chat = [NSCharacterSet whitespaceCharacterSet];
+        NSString *titleText = [_titleTF.text stringByTrimmingCharactersInSet:chat];
         
-
-        if ([self.topicType isEqualToString:@"1"]) {
-            NSMutableArray *tempImageArr = [NSMutableArray array];
-            // 等比缩小后的图片
-            for (UIImage *originImage in self.dataArray) {
-                NSData *imageData = UIImageJPEGRepresentation(originImage, 1.0);
-                NSString *image64 = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-                [tempImageArr addObject:image64];
+        if (titleText.length <= 0) {
+            [MBProgressHUD showError:@"标题不能为空" toView:self.view];
+            return;
+        } else {
+            NSString *contentText = [_contentTextView.text stringByTrimmingCharactersInSet:chat];
+            if (contentText.length <= 0 && self.dataArray.count == 0) {
+                [MBProgressHUD showError:@"请输入文本或添加图片" toView:self.view];
+                return;
             }
-            // 等比缩小后的图片的jsonStr
-            NSData *data=[NSJSONSerialization dataWithJSONObject:tempImageArr options:NSJSONWritingPrettyPrinted error:nil];
-            jsonStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-            videoStr = @"";
-            _commentModel.topType = @"1";
-
-        } else if ([self.topicType isEqualToString:@"2"]) {
-            videoStr = [self.dataArray componentsJoinedByString:@","];
-            jsonStr = @"";
-            _commentModel.topType = @"2";
-        } else if ([self.topicType isEqualToString:@"0"]) {
-            _commentModel.topType = @"0";
+            [MBProgressHUD showMessag:@"正在发送..." toView:self.view];
+            NSString *jsonStr;
+            NSString *videoStr;
+        
+            if ([self.topicType isEqualToString:@"1"]) {
+                NSMutableArray *tempImageArr = [NSMutableArray array];
+                // 等比缩小后的图片
+                for (UIImage *originImage in self.dataArray) {
+                    NSData *imageData = UIImageJPEGRepresentation(originImage, 1.0);
+                    NSString *image64 = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+                    [tempImageArr addObject:image64];
+                }
+                // 等比缩小后的图片的jsonStr
+                NSData *data=[NSJSONSerialization dataWithJSONObject:tempImageArr options:NSJSONWritingPrettyPrinted error:nil];
+                jsonStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                videoStr = @"";
+                _commentModel.topType = @"1";
+                
+            } else if ([self.topicType isEqualToString:@"2"]) {
+                videoStr = [self.dataArray componentsJoinedByString:@","];
+                jsonStr = @"";
+                _commentModel.topType = @"2";
+            } else if ([self.topicType isEqualToString:@"0"]) {
+                _commentModel.topType = @"0";
+            }
+            _commentModel.topTitle = _titleTF.text;  // 标题
+            _commentModel.topContent = _contentTextView.text;  // 文本
+            _commentModel.jsonStr = jsonStr;  // 图片
+            _commentModel.videoString = videoStr;// 视频连接
+            _commentModel.postTime = [self currentTimer]; // 帖子发布时间
+            
+            [[GWFDataBaseManager shareManager] setDataForDataBase:_commentModel];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                [MBProgressHUD showSuccess:@"发送成功！" toView:self.view];
+            });
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+                
+                if (self.doneBlack) {
+                    self.doneBlack();
+                }
+            });
         }
-        _commentModel.topTitle = _titleTF.text;  // 标题
-        _commentModel.topContent = _contentTextView.text;  // 文本
-        _commentModel.jsonStr = jsonStr;  // 图片
-        _commentModel.videoString = videoStr;// 视频连接
-        _commentModel.postTime = [self currentTimer]; // 帖子发布时间
 
-        [[GWFDataBaseManager shareManager] setDataForDataBase:_commentModel];
-
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            [MBProgressHUD showSuccess:@"发送成功！" toView:self.view];
-        });
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self.navigationController popViewControllerAnimated:YES];
-
-            if (self.doneBlack) {
-                self.doneBlack();
-            }
-        });
     }
-    
-    
 }
 
 // 获取当前时间
