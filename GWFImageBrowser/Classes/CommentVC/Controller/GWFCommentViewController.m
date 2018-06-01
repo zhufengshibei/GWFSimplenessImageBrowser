@@ -335,6 +335,10 @@
     
     [self endEditView];
     
+    if ([self.topicType isEqualToString:@"0"]) {
+        self.isFinish = YES;
+    }
+    
     if (self.isFinish) {
         NSLog(@"dataArray2121212 === %@",self.dataArray);
         NSCharacterSet *chat = [NSCharacterSet whitespaceCharacterSet];

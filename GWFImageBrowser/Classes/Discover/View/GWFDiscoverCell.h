@@ -12,7 +12,7 @@
 @protocol GWFDiscoverCellDelegate <NSObject>
 
 @optional
-- (void)didImageItemWithIndexPath:(NSIndexPath *)currentIndexPath imageArray:(NSMutableArray *)imageArr dataModel:(GWFCommentModel *)model attachName:(NSString *)attachName;
+- (void)didImageItemWithIndexPath:(NSIndexPath *)currentIndexPath imageArray:(NSMutableArray *)imageArr dataModel:(GWFCommentModel *)model attachName:(NSString *)attachName firstImage:(UIImage *)firstImage;
 
 @end
 

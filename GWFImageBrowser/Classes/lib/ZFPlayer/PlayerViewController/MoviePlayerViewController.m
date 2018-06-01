@@ -121,7 +121,7 @@
         _playerModel                  = [[ZFPlayerModel alloc] init];
         _playerModel.title            = self.videoName;//@"这里设置视频标题";
         _playerModel.videoURL         = self.videoURL;
-        _playerModel.placeholderImage = [UIImage imageNamed:@"loading_bgView1"];
+        _playerModel.placeholderImage = self.firstImage;//[UIImage imageNamed:@"loading_bgView1"];
         _playerModel.fatherView       = self.playerFatherView;
 //        _playerModel.resolutionDic = @{@"高清" : self.videoURL.absoluteString,
 //                                       @"标清" : self.videoURL.absoluteString};
@@ -149,7 +149,9 @@
         // _playerView.playerLayerGravity = ZFPlayerLayerGravityResize;
         
         // 打开下载功能（默认没有这个功能）
-        _playerView.hasDownload    = YES;
+//        _playerView.hasDownload    = YES;
+        // 关闭下载功能
+        _playerView.hasDownload    = NO;
         
         // 打开预览图
         _playerView.hasPreviewView = YES;

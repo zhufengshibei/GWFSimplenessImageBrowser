@@ -400,8 +400,14 @@ typedef NS_ENUM(NSInteger, PanDirection){
         self.isLocalVideo = NO;
         [self.controlView zf_playerDownloadBtnState:YES];
     }
-    // 开始播放
-    [self play];
+#warning 手动添加了一个加载中的播放延迟效果
+    [MBProgressHUD showMessag:@"加载中..." toView:self];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        // 开始播放
+        [self play];
+        [MBProgressHUD hideHUDForView:self animated:YES];
+    });
+    
     self.isPauseByUser = NO;
 }
 

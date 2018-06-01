@@ -26,6 +26,8 @@
 
 @property (nonatomic,strong) NSArray  *dataArray;
 
+@property (nonatomic,strong) MPMoviePlayerViewController *playerVC;
+
 @end
 
 @implementation GWFDiscoverViewController
@@ -72,7 +74,10 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"HIDDENTHEBUTTON" object:nil];
     }
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    NSLog(@"vc === %@",self);
+//    if ([self isKindOfClass:[GWFDiscoverViewController class]]) {
+//        [[NSNotificationCenter defaultCenter] removeObserver:self];
+//    }
 }
 
 - (void)viewDidLoad {
@@ -178,7 +183,7 @@
 }
 
 #pragma mark --- GWFDiscoverCellDelegate  点击图片加载图片浏览器
--(void)didImageItemWithIndexPath:(NSIndexPath *)currentIndexPath imageArray:(NSMutableArray *)imageArr dataModel:(GWFCommentModel *)model attachName:(NSString *)attachName {
+-(void)didImageItemWithIndexPath:(NSIndexPath *)currentIndexPath imageArray:(NSMutableArray *)imageArr dataModel:(GWFCommentModel *)model attachName:(NSString *)attachName firstImage:(UIImage *)firstImage {
     _isPresentVC = YES;
     [(AppDelegate*)[UIApplication sharedApplication].delegate setIsPresent:_isPresentVC];
     
@@ -194,14 +199,35 @@
         [self.navigationController.view.layer addAnimation:transition forKey:nil];
         [self presentViewController:imageBrowserVC animated:NO completion:nil];
     } else if ([model.topType isEqualToString:@"2"]) {
-        // 视频播放
-        MoviePlayerViewController *movie = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MoviePlayerViewController"];
         
         NSString *urlStr = [kVideoPath stringByAppendingPathComponent:attachName];
         NSURL *URL = [NSURL fileURLWithPath:urlStr];
+#pragma mark --- 视频播放方法一 : 使用 MediaPlayer 播放视频
+        self.playerVC = [[MPMoviePlayerViewController alloc] initWithContentURL:URL];
+        [[NSNotificationCenter defaultCenter] removeObserver:self.playerVC name:MPMoviePlayerPlaybackDidFinishNotification object:self.playerVC.moviePlayer];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(finishedPlay:) name:MPMoviePlayerPlaybackDidFinishNotification object:self.playerVC.moviePlayer];
+        [self presentMoviePlayerViewControllerAnimated:self.playerVC];
+
+#pragma mark --- 视频播放方法二 : 使用 AVPlayer 播放视频
+/**
+        //视频播放
+        MoviePlayerViewController *movie = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MoviePlayerViewController"];
         movie.videoURL = URL;
         movie.videoName = [attachName stringByReplacingOccurrencesOfString:@".mp4" withString:@""];
+        // 获取视频首帧图片用于下一页展示
+        movie.firstImage = firstImage;
         [self.navigationController pushViewController:movie animated:YES];
+*/
+    }
+}
+// 播放完成后手动关闭播放器
+-(void)finishedPlay:(NSNotification*)aNotification {
+    
+    int value = [[aNotification.userInfo valueForKey:MPMoviePlayerPlaybackDidFinishReasonUserInfoKey] intValue];
+    if (value == MPMovieFinishReasonUserExited) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOWTHEBUTTON" object:nil];
+        [self dismissMoviePlayerViewControllerAnimated];
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
     }
 }
 

@@ -183,14 +183,17 @@ static NSString *const kReuseIdentifierOfCell = @"kReuseIdentifierOfGWFDiscoverC
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
     NSString *videoName;
+    UIImage *image;
     if ([self.commentModel.topType isEqualToString:@"2"]) {
         videoName = [self.commentModel.videoArray[indexPath.item] lastPathComponent];
+        image = self.commentModel.thumbsArray[indexPath.item];
     } else {
         videoName = @"";
+        image = nil;
     }
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(didImageItemWithIndexPath:imageArray:dataModel:attachName:)]) {
-        [self.delegate didImageItemWithIndexPath:indexPath imageArray:self.commentModel.imageArray dataModel:self.commentModel attachName:videoName];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didImageItemWithIndexPath:imageArray:dataModel:attachName:firstImage:)]) {
+        [self.delegate didImageItemWithIndexPath:indexPath imageArray:self.commentModel.imageArray dataModel:self.commentModel attachName:videoName firstImage:image];
     }
 }
 

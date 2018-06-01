@@ -27,4 +27,7 @@
 /** 视频URL */
 @property (nonatomic, strong) NSURL *videoURL;
 @property (nonatomic, copy) NSString *videoName;
+@property (nonatomic, copy) UIImage *firstImage;
+
+
 @end
