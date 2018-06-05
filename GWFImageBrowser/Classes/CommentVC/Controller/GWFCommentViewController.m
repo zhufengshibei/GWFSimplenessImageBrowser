@@ -22,6 +22,7 @@
     UILabel      *_placeHolderLabel;
     UIView       *lineView1;
     UIView       *_shawView;
+    UIButton     *_sendBtn;
     
 }
 
@@ -47,7 +48,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     self.title = @"发布帖子";
     self.isFinish = NO;
     self.topicType = @"0";
@@ -95,7 +96,7 @@
     _titleTF.leftViewMode = UITextFieldViewModeAlways;
     
     [self.view addSubview:_titleTF];
-
+    
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_titleTF.frame)+GENERAL_SIZE(margin), SCREEN_WIDTH, GENERAL_SIZE(2))];
     lineView.backgroundColor =RGBACOLOR(246, 246, 246, 1.0);
     [self.view addSubview:lineView];
@@ -116,7 +117,7 @@
     lineView1 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_contentTextView.frame)+GENERAL_SIZE(margin), SCREEN_WIDTH, GENERAL_SIZE(2))];
     lineView1.backgroundColor =RGBACOLOR(246, 246, 246, 1.0);
     [self.view addSubview:lineView1];
-
+    
     HXPhotoView *photoView = [HXPhotoView photoManager:self.manager];
     photoView.frame = CGRectMake(GENERAL_SIZE(20), CGRectGetMaxY(lineView1.frame)+margin*2, SCREEN_WIDTH-GENERAL_SIZE(20)*2, 0);
     photoView.delegate = self;
@@ -196,7 +197,7 @@
         float second = 0;
         second = urlAsset.duration.value/urlAsset.duration.timescale;
         model = [HXPhotoModel photoModelWithVideoURL:url videoTime:second];
-
+        
         if (self.manager.configuration.saveSystemAblum) {
             [HXPhotoTools saveVideoToCustomAlbumWithName:self.manager.configuration.customAlbumName videoURL:url];
         }
@@ -228,7 +229,7 @@
         NSData *data=[NSJSONSerialization dataWithJSONObject:thumbImages options:NSJSONWritingPrettyPrinted error:nil];
         _commentModel.thumbImagesJsonStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
     }
-
+    
     [HXPhotoTools selectListWriteToTempPath:allList requestList:^(NSArray *imageRequestIds, NSArray *videoSessions) {
         
         NSSLog(@"requestIds - image : %@ \nsessions - video : %@",imageRequestIds,videoSessions);
@@ -238,13 +239,13 @@
         NSSLog(@"allUrl - %@\nimageUrls - %@\nvideoUrls - %@",allUrl,imageUrls,videoUrls);
         if (imageUrls.count > 0) {
             self.topicType = @"1";
-
+            
             for (NSURL *url in imageUrls) {
                 UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
                 [self.dataArray addObject:image];
                 NSString *imageStr = [url path];
                 NSFileManager *manager = [NSFileManager defaultManager];
-
+                
                 BOOL isMove = [manager removeItemAtPath:imageStr error:nil];
                 if (isMove) {
                     NSLog(@"移除成功");
@@ -313,13 +314,13 @@
 }
 
 - (void)setupRightButton {
-    UIButton *sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [sendBtn setTitle:@"发送" forState:UIControlStateNormal];
-    [sendBtn setTitleColor:RGBACOLOR(4, 140, 248, 1.0) forState:UIControlStateNormal];
-    sendBtn.frame = CGRectMake(0, 0, 44, 44);
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:sendBtn];
+    _sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_sendBtn setTitle:@"发送" forState:UIControlStateNormal];
+    [_sendBtn setTitleColor:RGBACOLOR(4, 140, 248, 1.0) forState:UIControlStateNormal];
+    _sendBtn.frame = CGRectMake(0, 0, 44, 44);
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_sendBtn];
     
-    [sendBtn addTarget:self action:@selector(sendContent:) forControlEvents:UIControlEventTouchUpInside];
+    [_sendBtn addTarget:self action:@selector(sendContent:) forControlEvents:UIControlEventTouchUpInside];
 }
 - (void)endEditView {
     _shawView.hidden = YES;
@@ -339,67 +340,72 @@
         self.isFinish = YES;
     }
     
-    if (self.isFinish) {
-        NSLog(@"dataArray2121212 === %@",self.dataArray);
-        NSCharacterSet *chat = [NSCharacterSet whitespaceCharacterSet];
-        NSString *titleText = [_titleTF.text stringByTrimmingCharactersInSet:chat];
-        
-        if (titleText.length <= 0) {
-            [MBProgressHUD showError:@"标题不能为空" toView:self.view];
+    //    if (self.isFinish) {
+    NSLog(@"dataArray2121212 === %@",self.dataArray);
+    NSCharacterSet *chat = [NSCharacterSet whitespaceCharacterSet];
+    NSString *titleText = [_titleTF.text stringByTrimmingCharactersInSet:chat];
+    
+    if (titleText.length <= 0) {
+        [MBProgressHUD showError:@"标题不能为空" toView:self.view];
+        return;
+    } else {
+        NSString *contentText = [_contentTextView.text stringByTrimmingCharactersInSet:chat];
+        if (contentText.length <= 0 && self.dataArray.count == 0) {
+            [MBProgressHUD showError:@"请输入文本或添加图片" toView:self.view];
             return;
         } else {
-            NSString *contentText = [_contentTextView.text stringByTrimmingCharactersInSet:chat];
-            if (contentText.length <= 0 && self.dataArray.count == 0) {
-                [MBProgressHUD showError:@"请输入文本或添加图片" toView:self.view];
-                return;
-            }
-            [MBProgressHUD showMessag:@"正在发送..." toView:self.view];
-            NSString *jsonStr;
-            NSString *videoStr;
-        
-            if ([self.topicType isEqualToString:@"1"]) {
-                NSMutableArray *tempImageArr = [NSMutableArray array];
-                // 等比缩小后的图片
-                for (UIImage *originImage in self.dataArray) {
-                    NSData *imageData = UIImageJPEGRepresentation(originImage, 1.0);
-                    NSString *image64 = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-                    [tempImageArr addObject:image64];
+            if (_isFinish) {
+                [MBProgressHUD showMessag:@"正在发送..." toView:self.view];
+                NSString *jsonStr;
+                NSString *videoStr;
+                _sendBtn.userInteractionEnabled = NO;
+                if ([self.topicType isEqualToString:@"1"]) {
+                    NSMutableArray *tempImageArr = [NSMutableArray array];
+                    // 等比缩小后的图片
+                    for (UIImage *originImage in self.dataArray) {
+                        NSData *imageData = UIImageJPEGRepresentation(originImage, 1.0);
+                        NSString *image64 = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+                        [tempImageArr addObject:image64];
+                    }
+                    // 等比缩小后的图片的jsonStr
+                    NSData *data=[NSJSONSerialization dataWithJSONObject:tempImageArr options:NSJSONWritingPrettyPrinted error:nil];
+                    jsonStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                    videoStr = @"";
+                    _commentModel.topType = @"1";
+                    
+                } else if ([self.topicType isEqualToString:@"2"]) {
+                    videoStr = [self.dataArray componentsJoinedByString:@","];
+                    jsonStr = @"";
+                    _commentModel.topType = @"2";
+                } else if ([self.topicType isEqualToString:@"0"]) {
+                    _commentModel.topType = @"0";
                 }
-                // 等比缩小后的图片的jsonStr
-                NSData *data=[NSJSONSerialization dataWithJSONObject:tempImageArr options:NSJSONWritingPrettyPrinted error:nil];
-                jsonStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-                videoStr = @"";
-                _commentModel.topType = @"1";
+                _commentModel.topTitle = _titleTF.text;  // 标题
+                _commentModel.topContent = _contentTextView.text;  // 文本
+                _commentModel.jsonStr = jsonStr;  // 图片
+                _commentModel.videoString = videoStr;// 视频连接
+                _commentModel.postTime = [self currentTimer]; // 帖子发布时间
                 
-            } else if ([self.topicType isEqualToString:@"2"]) {
-                videoStr = [self.dataArray componentsJoinedByString:@","];
-                jsonStr = @"";
-                _commentModel.topType = @"2";
-            } else if ([self.topicType isEqualToString:@"0"]) {
-                _commentModel.topType = @"0";
+                [[GWFDataBaseManager shareManager] setDataForDataBase:_commentModel];
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                    [MBProgressHUD showSuccess:@"发送成功！" toView:self.view];
+                });
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.navigationController popViewControllerAnimated:YES];
+                    
+                    if (self.doneBlack) {
+                        self.doneBlack();
+                    }
+                });
             }
-            _commentModel.topTitle = _titleTF.text;  // 标题
-            _commentModel.topContent = _contentTextView.text;  // 文本
-            _commentModel.jsonStr = jsonStr;  // 图片
-            _commentModel.videoString = videoStr;// 视频连接
-            _commentModel.postTime = [self currentTimer]; // 帖子发布时间
             
-            [[GWFDataBaseManager shareManager] setDataForDataBase:_commentModel];
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
-                [MBProgressHUD showSuccess:@"发送成功！" toView:self.view];
-            });
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self.navigationController popViewControllerAnimated:YES];
-                
-                if (self.doneBlack) {
-                    self.doneBlack();
-                }
-            });
         }
-
+        
     }
+    
+    //    }
 }
 
 // 获取当前时间

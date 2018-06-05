@@ -80,7 +80,7 @@
     [super viewDidLoad];
     
     self.title = @"圈子";
-
+    
     [self.view addSubview:self.tableView];
     self.defaultView.hidden = YES;
     [self.view addSubview:self.defaultView];
@@ -150,7 +150,7 @@
     
     CGFloat H = 0.0;
     if (model.imageArray.count > 0 || model.videoArray.count > 0) {
-
+        
         //重新计算collectionview的高度  = 总行数(rows) * itemH
         // rows = (item的总个数(count) - 1) / 列数(column) + 1
         NSInteger count = 0;
@@ -162,7 +162,7 @@
         }
         
         NSInteger rows = (count - 1) / 3 + 1;
-
+        
         CGFloat M = 0.0;
         if (count > 3) {
             M = GENERAL_SIZE(10);
@@ -190,8 +190,8 @@
         imageBrowserVC.imageIndex = currentIndexPath.item;
         imageBrowserVC.dataArray = imageArr;
         CATransition *transition = [CATransition animation];
-        transition.duration = 0.5f;
-        transition.type = @"Cube";
+        transition.duration = 0.25f;
+        transition.type = @"";
         [self.navigationController.view.layer addAnimation:transition forKey:nil];
         [self presentViewController:imageBrowserVC animated:NO completion:nil];
     } else if ([model.topType isEqualToString:@"2"]) {
@@ -205,22 +205,25 @@
         // 添加播放完成后是否关闭播放器的观察者
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(finishedPlay:) name:MPMoviePlayerPlaybackDidFinishNotification object:self.playerVC.moviePlayer];
         [self presentMoviePlayerViewControllerAnimated:self.playerVC];
-
+        
 #pragma mark --- 视频播放方法二 : 使用 AVPlayer 播放视频
-/**
-        //视频播放
-        MoviePlayerViewController *movie = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MoviePlayerViewController"];
-        movie.videoURL = URL;
-        movie.videoName = [attachName stringByReplacingOccurrencesOfString:@".mp4" withString:@""];
-        // 获取视频首帧图片用于下一页展示
-        movie.firstImage = firstImage;
-        [self.navigationController pushViewController:movie animated:YES];
-*/
+        /**
+         //视频播放
+         MoviePlayerViewController *movie = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MoviePlayerViewController"];
+         movie.videoURL = URL;
+         movie.videoName = [attachName stringByReplacingOccurrencesOfString:@".mp4" withString:@""];
+         // 获取视频首帧图片用于下一页展示
+         movie.firstImage = firstImage;
+         [self.navigationController pushViewController:movie animated:YES];
+         */
     }
 }
 // 播放完成后手动关闭播放器
 -(void)finishedPlay:(NSNotification*)aNotification {
+    // 循环播放
+    [self.playerVC.moviePlayer play];
     
+    // 点击完成关闭播放器
     int value = [[aNotification.userInfo valueForKey:MPMoviePlayerPlaybackDidFinishReasonUserInfoKey] intValue];
     if (value == MPMovieFinishReasonUserExited) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOWTHEBUTTON" object:nil];

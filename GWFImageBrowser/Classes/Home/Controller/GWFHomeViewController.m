@@ -165,7 +165,7 @@ static int tagOfLabelOfHeader = 2000;
     imageBrowserVC.dataArray = self.localDArray;
     CATransition *transition = [CATransition animation];
     transition.duration = 0.5f;
-    transition.type = @"Cube";
+    transition.type = @"";
     [self.navigationController.view.layer addAnimation:transition forKey:nil];
     [self presentViewController:imageBrowserVC animated:NO completion:nil];
 }
@@ -177,7 +177,7 @@ static int tagOfLabelOfHeader = 2000;
     imageBrowserVC.dataArray = self.dataArray;
     CATransition *transition = [CATransition animation];
     transition.duration = 0.5f;
-    transition.type = @"Cube";
+    transition.type = @"";
     [self.navigationController.view.layer addAnimation:transition forKey:nil];
     [self presentViewController:imageBrowserVC animated:NO completion:nil];
 }
