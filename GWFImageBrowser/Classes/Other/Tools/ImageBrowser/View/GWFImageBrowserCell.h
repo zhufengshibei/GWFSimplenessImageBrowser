@@ -20,10 +20,6 @@
 
 @property (nonatomic, weak) id <GWFImageBrowserCellDelegate> delegate;
 
-@property (nonatomic, assign) BOOL isLocal;
-
-
-
 -(void)setImageString:(id)imageString;
 
 @end

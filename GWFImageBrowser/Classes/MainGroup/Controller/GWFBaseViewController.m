@@ -21,9 +21,11 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = BACKGROUNDCOLOR;
-    
+
     self.defaultView.hidden = YES;
     [self.view addSubview:self.defaultView];
+    
+    
 }
 - (void)setupLoadingView {
     if (!_defaultView) {
@@ -55,5 +57,6 @@
 -(void)reloadViewData{
     
 }
+
 
 @end

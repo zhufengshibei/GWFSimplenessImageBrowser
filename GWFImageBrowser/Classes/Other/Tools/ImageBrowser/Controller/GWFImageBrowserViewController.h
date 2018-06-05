@@ -12,8 +12,6 @@
 
 @property (nonatomic, assign) NSInteger imageIndex;
 
-@property (nonatomic, assign) BOOL isLocal;
-
 // 图片数据源
 @property (nonatomic, strong) NSArray *dataArray;
 

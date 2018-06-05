@@ -61,8 +61,8 @@
 }
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    COMMENTVCNOTIFICATIONJUMP
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(jumpButton) name:@"JUMPOTHERCONTROLLER" object:nil];
     _isPresentVC = NO;
     
 }
@@ -73,11 +73,7 @@
     if (_isPresentVC) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"HIDDENTHEBUTTON" object:nil];
     }
-    
-    NSLog(@"vc === %@",self);
-//    if ([self isKindOfClass:[GWFDiscoverViewController class]]) {
-//        [[NSNotificationCenter defaultCenter] removeObserver:self];
-//    }
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"JUMPOTHERCONTROLLER" object:nil];
 }
 
 - (void)viewDidLoad {
@@ -103,8 +99,7 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
         self.dataArray = [[GWFDataBaseManager shareManager] loadDataForTopDetails];
-        // 数组逆序
-        self.dataArray = [[self.dataArray reverseObjectEnumerator] allObjects];
+        
         
         [UIView animateWithDuration:0.5 animations:^{
             [self loadingSuccess];
@@ -113,10 +108,12 @@
                 [MBProgressHUD showError:@"暂无数据" toView:self.view];
                 self.defaultView.hidden = NO;
             } else {
+                // 数组逆序
+                self.dataArray = [[self.dataArray reverseObjectEnumerator] allObjects];
                 [MBProgressHUD showSuccess:doneStr toView:[UIApplication sharedApplication].keyWindow];
                 self.defaultView.hidden = YES;
-                [self.tableView reloadData];
             }
+            [self.tableView reloadData];
         }];
     });
 }
@@ -188,10 +185,9 @@
     [(AppDelegate*)[UIApplication sharedApplication].delegate setIsPresent:_isPresentVC];
     
     if ([model.topType isEqualToString:@"1"]) {
-    
+        
         GWFImageBrowserViewController *imageBrowserVC = [[GWFImageBrowserViewController alloc] init];
         imageBrowserVC.imageIndex = currentIndexPath.item;
-        imageBrowserVC.isLocal = YES;
         imageBrowserVC.dataArray = imageArr;
         CATransition *transition = [CATransition animation];
         transition.duration = 0.5f;
@@ -204,7 +200,9 @@
         NSURL *URL = [NSURL fileURLWithPath:urlStr];
 #pragma mark --- 视频播放方法一 : 使用 MediaPlayer 播放视频
         self.playerVC = [[MPMoviePlayerViewController alloc] initWithContentURL:URL];
+        // 移除播放完成后自动关闭播放器的观察者
         [[NSNotificationCenter defaultCenter] removeObserver:self.playerVC name:MPMoviePlayerPlaybackDidFinishNotification object:self.playerVC.moviePlayer];
+        // 添加播放完成后是否关闭播放器的观察者
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(finishedPlay:) name:MPMoviePlayerPlaybackDidFinishNotification object:self.playerVC.moviePlayer];
         [self presentMoviePlayerViewControllerAnimated:self.playerVC];
 

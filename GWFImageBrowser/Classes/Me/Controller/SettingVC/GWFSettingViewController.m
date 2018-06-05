@@ -42,11 +42,15 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    [MBProgressHUD showMessag:@"正在清除..." toView:self.view];
     //清除内存使用SDWebImage缓存的图片
 //    [[SDImageCache sharedImageCache] clearMemory];
     //清除沙盒中所有使用SDWebImage缓存的缓存图片
     [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
-        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [MBProgressHUD showSuccess:@"清除成功" toView:self.view];
+        });
     }];
     //    //清除沙盒中所有使用SDWebImage缓存的已过期(缓存时长超过一星期(60*60*24*7))的图片
     //    [[SDImageCache sharedImageCache] cleanDisk];

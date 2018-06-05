@@ -16,16 +16,7 @@ static int tagOfImageOfCell = 1000;
 static int tagOfImageOfLabel = 1001;
 static int tagOfLabelOfHeader = 2000;
 
-
 @interface GWFHomeViewController ()<UICollectionViewDataSource,UICollectionViewDelegate> {
-    NSIndexPath  *_currentTouchIndexPath;
-    CGPoint beginPoint;
-    CGFloat rightMargin;
-    CGFloat leftMargin;
-    CGFloat topMargin;
-    CGFloat bottomMargin;
-    CGMutablePathRef pathRef;
-    
     BOOL  _isPresentVC;
 }
 
@@ -47,12 +38,12 @@ static int tagOfLabelOfHeader = 2000;
     if (_isPresentVC) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"HIDDENTHEBUTTON" object:nil];
     }
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"JUMPOTHERCONTROLLER" object:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    COMMENTVCNOTIFICATIONJUMP
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(jumpButton) name:@"JUMPOTHERCONTROLLER" object:nil];
     _isPresentVC = NO;
 }
 
@@ -62,7 +53,6 @@ static int tagOfLabelOfHeader = 2000;
     self.title = @"首页";
     [self.view addSubview:self.collectionView];
 }
-COMMENTVCNOTIFICATIONJUMPCLICK
 
 #pragma mark ---  collectionView 的数据源方法
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -156,7 +146,6 @@ COMMENTVCNOTIFICATIONJUMPCLICK
 }
 #pragma mark ---  UICollectionViewDelegate
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    _currentTouchIndexPath = indexPath;
     
     _isPresentVC = YES;
     [(AppDelegate*)[UIApplication sharedApplication].delegate setIsPresent:_isPresentVC] ;
@@ -165,53 +154,26 @@ COMMENTVCNOTIFICATIONJUMPCLICK
     if (indexPath.section == 0) { // 点击本地图片
         [self showLocalImageWithBigTouchIndexPath:indexPath];
     } else {  // 点击网络图片
-    
-       
-        
-        NSLog(@"subView = %@ ==== ",[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]);
-    
         [self showWebImageWithBigTouchIndexPath:indexPath];
-        
-//        NSData *imageData = UIImageJPEGRepresentation(imageView.image, 0.5);
-//
-//        // 获取沙盒目录
-        NSString *fullPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
-//
-//
-//        // 将图片写入文件
-//        [imageData writeToFile:fullPath atomically:YES];
-        NSLog(@"%@",fullPath);
-    
-    
-        
     }
 }
 // 点击浏览本地图片
 -(void)showLocalImageWithBigTouchIndexPath:(NSIndexPath *)indexPath {
     
-    NSString *nameStr = [self.localDArray objectAtIndex:indexPath.row];
-    NSLog(@"nameStr === %@",nameStr);
-    
     GWFImageBrowserViewController *imageBrowserVC = [[GWFImageBrowserViewController alloc] init];
     imageBrowserVC.imageIndex = indexPath.row;
-    imageBrowserVC.isLocal = YES;
     imageBrowserVC.dataArray = self.localDArray;
     CATransition *transition = [CATransition animation];
     transition.duration = 0.5f;
     transition.type = @"Cube";
     [self.navigationController.view.layer addAnimation:transition forKey:nil];
     [self presentViewController:imageBrowserVC animated:NO completion:nil];
-    
 }
 // 点击浏览网络图片
 -(void)showWebImageWithBigTouchIndexPath:(NSIndexPath *)indexPath {
-
-    NSString *nameStr = [self.dataArray objectAtIndex:indexPath.row];
-    NSLog(@"nameStr === %@",nameStr);
     
     GWFImageBrowserViewController *imageBrowserVC = [[GWFImageBrowserViewController alloc] init];
     imageBrowserVC.imageIndex = indexPath.row;
-    imageBrowserVC.isLocal = NO;
     imageBrowserVC.dataArray = self.dataArray;
     CATransition *transition = [CATransition animation];
     transition.duration = 0.5f;
@@ -220,6 +182,10 @@ COMMENTVCNOTIFICATIONJUMPCLICK
     [self presentViewController:imageBrowserVC animated:NO completion:nil];
 }
 
+-(void)jumpButton {
+    GWFCommentViewController *commentVC= [[GWFCommentViewController alloc] init];
+    [self.navigationController pushViewController:commentVC animated:YES];
+}
 
 #pragma mark ---  懒加载collectionView
 -(UICollectionView *)collectionView {
@@ -242,7 +208,7 @@ COMMENTVCNOTIFICATIONJUMPCLICK
 #pragma mark ---  懒加载本地图片数组
 -(NSArray *)localDArray {
     if (!_localDArray) {
-        _localDArray = @[@"localImage0", @"localImage1", @"localImage3", @"localImage2", @"localImage4", @"localImage5", @"localImage6", @"localImage8", @"localBigImage0"];
+        _localDArray = @[@"localImage0", @"localImage1", @"localImage3", @"localImage2", @"localImage4", @"localImage5", @"localImage6", @"localImage8", @"localBigImage0",@"timg.gif"];
     }
     return _localDArray;
 }
@@ -264,3 +230,4 @@ COMMENTVCNOTIFICATIONJUMPCLICK
     return _dataArray;
 }
 @end
+

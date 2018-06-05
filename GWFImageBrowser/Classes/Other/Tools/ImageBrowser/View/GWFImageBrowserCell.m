@@ -81,53 +81,49 @@
     return self;
 }
 
--(void)setIsLocal:(BOOL)isLocal {
-    _isLocal = isLocal;
-}
-
 -(void)setImageString:(id)imageString {
     
     NSLog(@"id === %@",imageString);
-    
-    if (self.isLocal) {
-        
-        UIImage *image1;
-        if ([imageString isKindOfClass:[UIImage class]]) {
-            image1 = imageString;
-        } else {
-            image1 = [UIImage imageNamed:imageString];
-        }
-        
+
+    if ([imageString isKindOfClass:[UIImage class]]) {
+        UIImage *image = (UIImage *)imageString;
+        _imageView.hidden = NO;
+        _webView.hidden = YES;
         // 大图等比例缩小
-        UIImage *result = [UIImage scaleToSizeWithImage:image1 size:CGSizeMake(image1.size.width, image1.size.height)];
+        UIImage *result = [UIImage scaleToSizeWithImage:image size:CGSizeMake(image.size.width, image.size.height)];
         _imageView.image = result;
+
     } else {
-        NSString *urlStr = imageString;
-        NSURL *url = [NSURL URLWithString:urlStr];
-        if ([urlStr hasSuffix:@".gif"]) {
+        if ([imageString hasSuffix:@".gif"]) {
             _imageView.hidden = YES;
             _webView.hidden = NO;
-//            NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:20];
-
-            // 获取沙盒目录
-//            NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:[NSString stringWithFormat:@"353907e7525d4bf320b9a27fce5d71f6.gif"]];
-//
-//            NSURL *testUrl = [NSURL fileURLWithPath:fullPath];
             
-            
+            NSString *urlStr;
+            NSURL *url;
+            if ([imageString hasPrefix:@"https://"] || [imageString hasPrefix:@"http://"]) {
+                urlStr = imageString;
+                url = [NSURL URLWithString:urlStr];
+            } else {
+                urlStr = [[NSBundle mainBundle] pathForResource:imageString ofType:nil];
+                url = [NSURL fileURLWithPath:urlStr];
+            }
             [_webView loadRequest:[NSURLRequest requestWithURL:url]];
             //进度条 KVO
             [_webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
-            
             _imageString = urlStr;
-            
         } else {
+            if ([imageString hasPrefix:@"https://"] || [imageString hasPrefix:@"http://"]) {
+                [_imageView sd_setImageWithURL:[NSURL URLWithString:imageString]];
+            } else {
+                UIImage *image = [UIImage imageNamed:imageString];
+                // 大图等比例缩小
+                UIImage *result = [UIImage scaleToSizeWithImage:image size:CGSizeMake(image.size.width, image.size.height)];
+                _imageView.image = result;
+            }
             _imageView.hidden = NO;
             _webView.hidden = YES;
-            [_imageView sd_setImageWithURL:url];
         }
     }
-    
 }
 /**
  *  页面加载完成之后调用
@@ -157,20 +153,8 @@
 }
 // 长按
 - (void)longPressToDo {
-    
-//    NSLog(@"==   %@",[_webView.URL absoluteString]);
-//
+
     NSData *imageData = [NSData dataWithContentsOfURL:_webView.URL];
-////    UIImage *tempImage =  [UIImage imageWithData:imageData];
-//
-//    // 保存到本地相册
-//    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-//    [library writeImageDataToSavedPhotosAlbum:imageData metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
-//        NSLog(@"Success at %@", [assetURL path] );
-//    }] ;
-//
-//
-    
     
     id objc;
     if ([_imageString hasSuffix:@".gif"]) {

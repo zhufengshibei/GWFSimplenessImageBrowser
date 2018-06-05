@@ -38,7 +38,6 @@
     
     cell.backgroundColor = [UIColor clearColor];
     cell.delegate = self;
-    [cell setIsLocal:self.isLocal];
     
     [cell setImageString:self.dataArray[indexPath.row]];
     
@@ -49,8 +48,6 @@
     
      int currentPage = floor((_browserCollectionView.contentOffset.x - SCREEN_WIDTH / 2) / SCREEN_WIDTH) + 2;
     indexLabel.text = [NSString stringWithFormat:@"%d / %ld",currentPage,self.dataArray.count];
-    
-    NSLog(@"==== %d",currentPage);
     
 }
 
@@ -64,7 +61,7 @@
 
         flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         
-        _browserCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 80, SCREEN_WIDTH, SCREEN_HEIGHT-80) collectionViewLayout:flowLayout];
+        _browserCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) collectionViewLayout:flowLayout];
         _browserCollectionView.backgroundColor = [UIColor clearColor];
         _browserCollectionView.dataSource = self;
         _browserCollectionView.delegate = self;
@@ -82,12 +79,14 @@
     
     // 索引
     indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 30)];
-    indexLabel.center = CGPointMake(self.view.center.x, 40);
+    indexLabel.center = CGPointMake(self.view.center.x, 15);
     indexLabel.text = [NSString stringWithFormat:@"%ld / %ld",self.imageIndex+1,self.dataArray.count];
     indexLabel.textColor = [UIColor whiteColor];
     indexLabel.font = [UIFont systemFontOfSize:18];
     indexLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:indexLabel];
+    
+    
 
 }
 
@@ -119,12 +118,9 @@
 
     //取消
     [alertVC addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self dismissViewControllerAnimated:YES completion:nil];
+        
     }]];
     [self presentViewController:alertVC animated:YES completion:nil];
-    
-    
-    
 }
 #pragma mark - 自定义方法
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
@@ -142,8 +138,17 @@
     [self dismissViewControllerAnimated:NO completion:nil];
 }
 
--(void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
+// 返回值要必须为NO
+- (BOOL)shouldAutorotate {
+    return NO;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return YES;
 }
 
 

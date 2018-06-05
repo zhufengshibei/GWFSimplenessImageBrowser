@@ -72,6 +72,7 @@
 		CE6FC4F420BFC950000E23C1 /* ZFDownloadedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6FC4EF20BFC950000E23C1 /* ZFDownloadedCell.m */; };
 		CE73631320A91DFA00DCEAB0 /* GWFAddButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE73631220A91DFA00DCEAB0 /* GWFAddButtonCell.m */; };
 		CE73631620A91E1000DCEAB0 /* GWFImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE73631520A91E1000DCEAB0 /* GWFImageCell.m */; };
+		CE86117620C657BB00E208FE /* timg.gif in Resources */ = {isa = PBXBuildFile; fileRef = CE86117520C657BA00E208FE /* timg.gif */; };
 		CE9A4F6520ABD25400D96030 /* GWFDataBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9A4F6420ABD25400D96030 /* GWFDataBaseManager.m */; };
 		CE9A4F6820AC032900D96030 /* GWFDiscoverCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9A4F6720AC032900D96030 /* GWFDiscoverCell.m */; };
 		CE9A4F6C20AC061E00D96030 /* NSDate+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9A4F6B20AC061E00D96030 /* NSDate+MJ.m */; };
@@ -248,6 +249,7 @@
 		CE73631220A91DFA00DCEAB0 /* GWFAddButtonCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GWFAddButtonCell.m; sourceTree = "<group>"; };
 		CE73631420A91E1000DCEAB0 /* GWFImageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GWFImageCell.h; sourceTree = "<group>"; };
 		CE73631520A91E1000DCEAB0 /* GWFImageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GWFImageCell.m; sourceTree = "<group>"; };
+		CE86117520C657BA00E208FE /* timg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = timg.gif; sourceTree = "<group>"; };
 		CE9A4F6320ABD25400D96030 /* GWFDataBaseManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GWFDataBaseManager.h; sourceTree = "<group>"; };
 		CE9A4F6420ABD25400D96030 /* GWFDataBaseManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GWFDataBaseManager.m; sourceTree = "<group>"; };
 		CE9A4F6620AC032900D96030 /* GWFDiscoverCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GWFDiscoverCell.h; sourceTree = "<group>"; };
@@ -642,6 +644,7 @@
 			children = (
 				CEB7E71D208EBFC500DBACD4 /* Classes */,
 				CEB7E6F1208EBED300DBACD4 /* Main.storyboard */,
+				CE86117520C657BA00E208FE /* timg.gif */,
 				CEB7E6F4208EBED400DBACD4 /* Assets.xcassets */,
 				CE673BA320BF7D1600A9751A /* dataNull.jpeg */,
 				CEB7E6F6208EBED400DBACD4 /* LaunchScreen.storyboard */,
@@ -994,6 +997,7 @@
 				CEB7E6F5208EBED400DBACD4 /* Assets.xcassets in Resources */,
 				CEB7E6F3208EBED300DBACD4 /* Main.storyboard in Resources */,
 				CE29D9B920BD2FE900A0F6F6 /* HXWeiboPhotoPicker.bundle in Resources */,
+				CE86117620C657BB00E208FE /* timg.gif in Resources */,
 				CE5B796A20BFC15600397015 /* ZFPlayer.bundle in Resources */,
 				CE673BA420BF7D1600A9751A /* dataNull.jpeg in Resources */,
 			);

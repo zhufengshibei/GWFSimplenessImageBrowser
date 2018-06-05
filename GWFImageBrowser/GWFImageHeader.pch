@@ -71,13 +71,7 @@ dispatch_async(dispatch_get_main_queue(), block);\
 
 #import "ModelToJson.h"
 
-#define COMMENTVCNOTIFICATIONJUMP [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(jumpButton) name:@"JUMPOTHERCONTROLLER" object:nil];
 
-// 悬浮按钮点击事件
-#define COMMENTVCNOTIFICATIONJUMPCLICK -(void)jumpButton { \
-    GWFCommentViewController *commentVC= [[GWFCommentViewController alloc] init]; \
-    [self.navigationController pushViewController:commentVC animated:YES]; \
-}
 
 
 

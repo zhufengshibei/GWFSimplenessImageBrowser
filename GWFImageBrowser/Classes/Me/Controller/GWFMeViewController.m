@@ -17,12 +17,12 @@
 
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"JUMPOTHERCONTROLLER" object:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    COMMENTVCNOTIFICATIONJUMP
 }
 
 - (void)viewDidLoad {
@@ -50,6 +50,9 @@
 }
 
 
-COMMENTVCNOTIFICATIONJUMPCLICK
+-(void)jumpButton {
+    GWFCommentViewController *commentVC= [[GWFCommentViewController alloc] init];
+    [self.navigationController pushViewController:commentVC animated:YES];
+}
 
 @end
