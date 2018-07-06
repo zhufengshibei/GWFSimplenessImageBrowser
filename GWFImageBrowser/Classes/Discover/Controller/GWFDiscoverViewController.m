@@ -220,7 +220,7 @@
 }
 // 播放完成后手动关闭播放器
 -(void)finishedPlay:(NSNotification*)aNotification {
-    // 循环播放
+    // 视频循环播放
     [self.playerVC.moviePlayer play];
     
     // 点击完成关闭播放器

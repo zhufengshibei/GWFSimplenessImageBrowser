@@ -87,7 +87,6 @@
         CGContextSetFillColorWithColor(contextRef, color);
         CGContextFillPath(contextRef);
     }
-    
 }
 
 -(void)addCenterBack{

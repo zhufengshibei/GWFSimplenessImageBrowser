@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9FF93115DEE1E0447D91E601 /* Pods_GWFImageBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D80C961AC264EF64005A920 /* Pods_GWFImageBrowser.framework */; };
 		CE04EAE820A43D6100C0B080 /* UIViewController+Basic.m in Sources */ = {isa = PBXBuildFile; fileRef = CE04EAE620A43D6100C0B080 /* UIViewController+Basic.m */; };
+		CE0FE80920CE4D1B0019D765 /* GWFAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0FE80820CE4D1B0019D765 /* GWFAboutViewController.m */; };
 		CE29D9A120BD2FE900A0F6F6 /* HXCustomCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE29D95420BD2FE900A0F6F6 /* HXCustomCameraViewController.m */; };
 		CE29D9A220BD2FE900A0F6F6 /* UIViewController+HXExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = CE29D95520BD2FE900A0F6F6 /* UIViewController+HXExtension.m */; };
 		CE29D9A320BD2FE900A0F6F6 /* HXPhotoConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = CE29D95620BD2FE900A0F6F6 /* HXPhotoConfiguration.m */; };
@@ -123,6 +124,8 @@
 		68CAE6FEF5B9D4A970BCDA65 /* Pods-GWFImageBrowser.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GWFImageBrowser.release.xcconfig"; path = "Pods/Target Support Files/Pods-GWFImageBrowser/Pods-GWFImageBrowser.release.xcconfig"; sourceTree = "<group>"; };
 		CE04EAE620A43D6100C0B080 /* UIViewController+Basic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Basic.m"; sourceTree = "<group>"; };
 		CE04EAE720A43D6100C0B080 /* UIViewController+Basic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Basic.h"; sourceTree = "<group>"; };
+		CE0FE80720CE4D1B0019D765 /* GWFAboutViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GWFAboutViewController.h; sourceTree = "<group>"; };
+		CE0FE80820CE4D1B0019D765 /* GWFAboutViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GWFAboutViewController.m; sourceTree = "<group>"; };
 		CE29D95420BD2FE900A0F6F6 /* HXCustomCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HXCustomCameraViewController.m; sourceTree = "<group>"; };
 		CE29D95520BD2FE900A0F6F6 /* UIViewController+HXExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+HXExtension.m"; sourceTree = "<group>"; };
 		CE29D95620BD2FE900A0F6F6 /* HXPhotoConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HXPhotoConfiguration.m; sourceTree = "<group>"; };
@@ -756,6 +759,8 @@
 				CED85A54209AE69000DC473A /* SettingVC */,
 				CEB7E73A208EC0AD00DBACD4 /* GWFMeViewController.h */,
 				CEB7E73B208EC0AD00DBACD4 /* GWFMeViewController.m */,
+				CE0FE80720CE4D1B0019D765 /* GWFAboutViewController.h */,
+				CE0FE80820CE4D1B0019D765 /* GWFAboutViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1124,6 +1129,7 @@
 				CE5B797C20BFC15700397015 /* UINavigationController+ZFFullscreenPopGesture.m in Sources */,
 				CE29D9AC20BD2FE900A0F6F6 /* HXPhotoModel.m in Sources */,
 				CE29D9BB20BD2FE900A0F6F6 /* HXFullScreenCameraPlayView.m in Sources */,
+				CE0FE80920CE4D1B0019D765 /* GWFAboutViewController.m in Sources */,
 				CE5B796C20BFC15600397015 /* ZFPlayerControlView.m in Sources */,
 				CE29D9C520BD2FE900A0F6F6 /* HXDatePhotoToolManager.m in Sources */,
 				CE29D9C220BD2FE900A0F6F6 /* HXCustomPreviewView.m in Sources */,
